@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BookStoreDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Customer_ID" />
+    </Key>
+    <Property Name="Customer_ID" Type="char" MaxLength="8" Nullable="false" />
+    <Property Name="Customer_Name" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Customer_Address" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Customer_Type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Phone_Number" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Gender" Type="char" MaxLength="6" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Balance" Type="int" />
+  </EntityType>
+  <EntityType Name="CustomerRequest">
+    <Key>
+      <PropertyRef Name="Request_ID" />
+    </Key>
+    <Property Name="Request_ID" Type="char" MaxLength="7" Nullable="false" />
+    <Property Name="Customer_ID" Type="char" MaxLength="8" Nullable="false" />
+    <Property Name="Product_ID" Type="char" MaxLength="8" Nullable="false" />
+    <Property Name="Staff_ID" Type="char" MaxLength="6" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="Req_Status" Type="int" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Product_ID" Type="char" MaxLength="8" Nullable="false" />
+    <Property Name="Product_Title" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Publisher_ID" Type="char" MaxLength="7" Nullable="false" />
+    <Property Name="Category" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Stock_Qty" Type="int" />
+    <Property Name="Price" Type="int" />
+    <Property Name="Date_Publish" Type="date" />
+  </EntityType>
+  <EntityType Name="Publisher">
+    <Key>
+      <PropertyRef Name="Publisher_ID" />
+    </Key>
+    <Property Name="Publisher_ID" Type="char" MaxLength="7" Nullable="false" />
+    <Property Name="Publisher_Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Publisher_Address" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Phone_Number" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="Staff_ID" />
+    </Key>
+    <Property Name="Staff_ID" Type="char" MaxLength="6" Nullable="false" />
+    <Property Name="Staff_Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Staff_Address" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Gender" Type="char" MaxLength="6" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="Position" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TransactionDetails">
+    <Key>
+      <PropertyRef Name="Transaction_ID" />
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Transaction_ID" Type="char" MaxLength="8" Nullable="false" />
+    <Property Name="Product_ID" Type="char" MaxLength="8" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="Price" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TransactionHeader">
+    <Key>
+      <PropertyRef Name="Transaction_ID" />
+    </Key>
+    <Property Name="Transaction_ID" Type="char" MaxLength="8" Nullable="false" />
+    <Property Name="Transaction_Date" Type="date" Nullable="false" />
+    <Property Name="Request_ID" Type="char" MaxLength="7" Nullable="false" />
+    <Property Name="Payment_Type" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="CardNumber" Type="varchar" MaxLength="16" />
+  </EntityType>
+  <Association Name="FK__CustomerR__Custo__5DCAEF64">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Customer_ID" />
+      </Principal>
+      <Dependent Role="CustomerRequest">
+        <PropertyRef Name="Customer_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CustomerR__Produ__5FB337D6">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Product_ID" />
+      </Principal>
+      <Dependent Role="CustomerRequest">
+        <PropertyRef Name="Product_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CustomerR__Staff__619B8048">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+    <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="Staff_ID" />
+      </Principal>
+      <Dependent Role="CustomerRequest">
+        <PropertyRef Name="Staff_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Product__Publish__398D8EEE">
+    <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Publisher">
+        <PropertyRef Name="Publisher_ID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="Publisher_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Produ__02084FDA">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="TransactionDetails" Type="Self.TransactionDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Product_ID" />
+      </Principal>
+      <Dependent Role="TransactionDetails">
+        <PropertyRef Name="Product_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Reque__693CA210">
+    <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="1" />
+    <End Role="TransactionHeader" Type="Self.TransactionHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerRequest">
+        <PropertyRef Name="Request_ID" />
+      </Principal>
+      <Dependent Role="TransactionHeader">
+        <PropertyRef Name="Request_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Trans__00200768">
+    <End Role="TransactionHeader" Type="Self.TransactionHeader" Multiplicity="1" />
+    <End Role="TransactionDetails" Type="Self.TransactionDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TransactionHeader">
+        <PropertyRef Name="Transaction_ID" />
+      </Principal>
+      <Dependent Role="TransactionDetails">
+        <PropertyRef Name="Transaction_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BookStoreDBModelStoreContainer">
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerRequest" EntityType="Self.CustomerRequest" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Publisher" EntityType="Self.Publisher" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TransactionDetails" EntityType="Self.TransactionDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TransactionHeader" EntityType="Self.TransactionHeader" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__CustomerR__Custo__5DCAEF64" Association="Self.FK__CustomerR__Custo__5DCAEF64">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerRequest" EntitySet="CustomerRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CustomerR__Produ__5FB337D6" Association="Self.FK__CustomerR__Produ__5FB337D6">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="CustomerRequest" EntitySet="CustomerRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CustomerR__Staff__619B8048" Association="Self.FK__CustomerR__Staff__619B8048">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="CustomerRequest" EntitySet="CustomerRequest" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Product__Publish__398D8EEE" Association="Self.FK__Product__Publish__398D8EEE">
+      <End Role="Publisher" EntitySet="Publisher" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Produ__02084FDA" Association="Self.FK__Transacti__Produ__02084FDA">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="TransactionDetails" EntitySet="TransactionDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Reque__693CA210" Association="Self.FK__Transacti__Reque__693CA210">
+      <End Role="CustomerRequest" EntitySet="CustomerRequest" />
+      <End Role="TransactionHeader" EntitySet="TransactionHeader" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Trans__00200768" Association="Self.FK__Transacti__Trans__00200768">
+      <End Role="TransactionHeader" EntitySet="TransactionHeader" />
+      <End Role="TransactionDetails" EntitySet="TransactionDetails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
