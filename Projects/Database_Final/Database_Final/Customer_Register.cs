@@ -13,10 +13,24 @@ namespace Database_Final
     public partial class Customer_Register : Form
     {
         BookStoreEntities ent = new BookStoreEntities();
-
+        Login_Form loginForm = new Login_Form();
         public Customer_Register()
         {
             InitializeComponent();
+        }
+
+        private string getLastID()
+        {
+            var query = from c in ent.Customers
+                        orderby c.Customer_ID
+                        select c.Customer_ID;
+            string code = query.ToList().Last();
+            return code;
+        }
+
+        private void addNewID()
+        {
+            getLastID();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -39,9 +53,12 @@ namespace Database_Final
                 if (rbFemale.Checked) gender = "Female";
                 else gender = "Male";
 
+                int id =Int32.Parse( getLastID().Substring(3))+1;
+                String custid = "CST" + id.ToString().PadLeft(5,'0');
+
                 var data = new Customer
                 {
-                    Customer_ID = "default",
+                    Customer_ID = custid,
                     Customer_Name = txtName.Text,
                     Customer_Address = txtAddress.Text,
                     Customer_Type = boxJob.Text,
@@ -50,14 +67,22 @@ namespace Database_Final
                     Username = txtUsername.Text,
                     Password = txtPassword.Text,
                     Email = txtEmail.Text,
-                    Gender = gender
+                    Gender = gender,
+                    Status = "NOT VERIFIED"
                 };
                 ent.Customers.Add(data);
+                VerifyCode verify = new VerifyCode();
                 ent.SaveChanges();
-                MessageBox.Show("Success Registering");
+                MessageBox.Show("Please verify your account to log-in");
+                this.Hide();
+                loginForm.Show();
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            loginForm.Show();
         }
     }
 }
-           
-    

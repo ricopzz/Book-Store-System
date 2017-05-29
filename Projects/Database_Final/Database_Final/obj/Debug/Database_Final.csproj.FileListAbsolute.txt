@@ -23,3 +23,20 @@ C:\Users\enric\Documents\Visual Studio 2017\Projects\Database_Final\Database_Fin
 C:\Users\enric\Documents\Visual Studio 2017\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Admin_MainMenu.resources
 C:\Users\enric\Documents\Visual Studio 2017\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Customer_MainMenu.resources
 C:\Users\enric\Documents\Visual Studio 2017\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Customer_Register.resources
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.csprojResolveAssemblyReference.cache
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Admin_MainMenu.resources
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Customer_MainMenu.resources
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Customer_Register.resources
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Login_Form.resources
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Properties.Resources.resources
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.csproj.GenerateResource.Cache
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.exe
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.pdb
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\Database_Final.exe.config
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\Database_Final.exe
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\Database_Final.pdb
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\EntityFramework.dll
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\EntityFramework.xml
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.VerifyCode.resources

@@ -116,6 +116,12 @@
     <Compile Include="TransactionHeader.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="VerifyCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VerifyCode.Designer.cs">
+      <DependentUpon>VerifyCode.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Admin_MainMenu.resx">
       <DependentUpon>Admin_MainMenu.cs</DependentUpon>
     </EmbeddedResource>
@@ -138,6 +144,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="VerifyCode.resx">
+      <DependentUpon>VerifyCode.cs</DependentUpon>
+    </EmbeddedResource>
     <EntityDeploy Include="Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>

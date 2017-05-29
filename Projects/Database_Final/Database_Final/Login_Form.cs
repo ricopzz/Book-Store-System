@@ -18,10 +18,21 @@ namespace Database_Final
         {
             InitializeComponent();
         }
+        BookStoreEntities ent = new BookStoreEntities();
+
+        public string getAccountStatus()
+        {
+            var query = from c in ent.Customers
+                        where c.Username.Equals(txtUsername.Text)
+                        && c.Password.Equals(txtPassword.Text)
+                        select c.Status;
+
+            return query.ToList().First();
+        }
 
         public string returnPosition()
         {
-            BookStoreEntities ent = new BookStoreEntities();
+            
             var query = from c in ent.Staffs
                         where c.Username.Equals(txtUsername.Text)
                         && c.Password.Equals(txtPassword.Text)
@@ -54,10 +65,17 @@ namespace Database_Final
             }
             else
             {
-                MessageBox.Show("Login Successful");
-                this.Hide();
-                Customer_MainMenu custMain = new Customer_MainMenu();
-                custMain.Show();
+                if (getAccountStatus() == "Verified")
+                {
+                    MessageBox.Show("Login Successful");
+                    this.Hide();
+                    Customer_MainMenu custMain = new Customer_MainMenu();
+                    custMain.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Account has not been verified");
+                }
             }
         }
 
@@ -105,6 +123,12 @@ namespace Database_Final
             this.Hide();
             Customer_Register register = new Customer_Register();
             register.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            VerifyCode verify = new VerifyCode();
+            verify.Show();
         }
     }
 }
