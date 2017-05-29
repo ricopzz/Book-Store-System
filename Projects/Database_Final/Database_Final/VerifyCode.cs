@@ -77,7 +77,6 @@ namespace Database_Final
 
         private void button2_Click(object sender, EventArgs e)
         {
-
             BookStoreEntities ent = new BookStoreEntities();
             var query = from c in ent.Customers
                         where c.Email.Equals(txtEmail.Text)

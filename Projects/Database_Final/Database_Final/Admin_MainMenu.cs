@@ -13,23 +13,38 @@ namespace Database_Final
     public partial class Admin_MainMenu : Form
     {
         string position;
+        BookStoreEntities ent = new BookStoreEntities();
+
 
         public Admin_MainMenu(string position)
         {
             this.position = position;
             InitializeComponent();
         }
+
+        public void refreshPublisherData()
+        {
+            var query = from c in ent.Publishers
+                        select c;
+            dataPublisher.DataSource = query.ToList();
+        }
+
+        public void refreshStaffData()
+        {
+            var query = from c in ent.Staffs
+                        select c;
+        }
         private void Admin_MainMenu_Load(object sender, EventArgs e)
         {
-            
             if (position.Equals("Stock"))
             {
-                tabPage2.Dispose();
+                tabAccount.Dispose();
             }
             else if (position.Equals("Request"))
             {
-                tabPage1.Dispose();
+                tabPublisher.Dispose();
             }
+            refreshPublisherData();
         }
     }
 }

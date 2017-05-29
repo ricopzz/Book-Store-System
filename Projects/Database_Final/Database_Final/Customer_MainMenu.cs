@@ -30,8 +30,13 @@ namespace Database_Final
         {
             var query = from c in ent.Products
                         // where c.Date_Publish < now()
-                        select new { c.Product_Title };
+                        select new { BookTitle= c.Product_Title };
             dataNewReleases.DataSource = query.ToList();
+        }
+
+        private void dataNewReleases_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
