@@ -59,24 +59,32 @@ namespace Database_Final
                         where c.Username.Equals(txtUsername.Text)
                         && c.Password.Equals(txtPassword.Text)
                         select c;
-            if (query.ToList().Count == 0)
+            try
             {
-                MessageBox.Show("Username or password is incorrect!");
-            }
-            else
-            {
-                if (getAccountStatus() == "Verified")
+                if (query.ToList().Count == 0)
                 {
-                    MessageBox.Show("Login Successful");
-                    this.Hide();
-                    Customer_MainMenu custMain = new Customer_MainMenu();
-                    custMain.Show();
+                    MessageBox.Show("Username or password is incorrect!");
                 }
                 else
                 {
-                    MessageBox.Show("Account has not been verified");
+                    if (getAccountStatus() == "Verified")
+                    {
+                        MessageBox.Show("Login Successful");
+                        this.Hide();
+                        Customer_MainMenu custMain = new Customer_MainMenu();
+                        custMain.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Account has not been verified");
+                    }
                 }
             }
+            catch
+            {
+
+            }
+                
         }
 
         private void button3_Click(object sender, EventArgs e)

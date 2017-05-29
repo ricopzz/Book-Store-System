@@ -28,9 +28,12 @@ namespace Database_Final
             return code;
         }
 
-        private void addNewID()
+        private void txtPhone_KeyPress(object sender, KeyPressEventArgs e)
         {
-            getLastID();
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
