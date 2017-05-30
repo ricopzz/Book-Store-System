@@ -38,5 +38,25 @@ namespace Database_Final
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox7_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPassword_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabAccountInfo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
