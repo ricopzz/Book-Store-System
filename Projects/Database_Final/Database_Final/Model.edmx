@@ -11,7 +11,6 @@
           </Key>
           <Property Name="Customer_ID" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="Customer_Name" Type="varchar" MaxLength="60" Nullable="false" />
-          <Property Name="Age" Type="int" Nullable="false" />
           <Property Name="Customer_Address" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="Customer_Type" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Phone_Number" Type="varchar" MaxLength="15" Nullable="false" />
@@ -20,7 +19,8 @@
           <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Balance" Type="int" />
-          <Property Name="Status" Type="varchar" MaxLength="15" />
+          <Property Name="Status" Type="varchar" MaxLength="20" />
+          <Property Name="Birth_Date" Type="date" />
         </EntityType>
         <EntityType Name="CustomerRequest">
           <Key>
@@ -44,6 +44,7 @@
           <Property Name="Stock_Qty" Type="int" />
           <Property Name="Price" Type="int" />
           <Property Name="Date_Publish" Type="date" />
+          <Property Name="Image_URL" Type="varchar" MaxLength="750" />
         </EntityType>
         <EntityType Name="Publisher">
           <Key>
@@ -62,11 +63,11 @@
           <Property Name="Staff_Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Staff_Address" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Gender" Type="char" MaxLength="6" Nullable="false" />
-          <Property Name="Age" Type="int" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="Position" Type="varchar" MaxLength="50" />
+          <Property Name="Birth_Date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="TransactionDetails">
           <Key>
@@ -88,7 +89,7 @@
           <Property Name="Payment_Type" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="CardNumber" Type="varchar" MaxLength="16" />
         </EntityType>
-        <Association Name="FK__CustomerR__Custo__4BAC3F29">
+        <Association Name="FK__CustomerR__Custo__5DCAEF64">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
           <ReferentialConstraint>
@@ -100,7 +101,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CustomerR__Produ__4CA06362">
+        <Association Name="FK__CustomerR__Produ__5FB337D6">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
           <ReferentialConstraint>
@@ -112,7 +113,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CustomerR__Staff__4D94879B">
+        <Association Name="FK__CustomerR__Staff__619B8048">
           <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
           <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
           <ReferentialConstraint>
@@ -124,7 +125,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__Publish__4E88ABD4">
+        <Association Name="FK__Product__Publish__398D8EEE">
           <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -136,7 +137,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Produ__4F7CD00D">
+        <Association Name="FK__Transacti__Produ__02084FDA">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="TransactionDetails" Type="Self.TransactionDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -148,7 +149,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Reque__5165187F">
+        <Association Name="FK__Transacti__Reque__693CA210">
           <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="1" />
           <End Role="TransactionHeader" Type="Self.TransactionHeader" Multiplicity="*" />
           <ReferentialConstraint>
@@ -160,7 +161,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Trans__5070F446">
+        <Association Name="FK__Transacti__Trans__00200768">
           <End Role="TransactionHeader" Type="Self.TransactionHeader" Multiplicity="1" />
           <End Role="TransactionDetails" Type="Self.TransactionDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -180,31 +181,31 @@
           <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransactionDetails" EntityType="Self.TransactionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransactionHeader" EntityType="Self.TransactionHeader" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__CustomerR__Custo__4BAC3F29" Association="Self.FK__CustomerR__Custo__4BAC3F29">
+          <AssociationSet Name="FK__CustomerR__Custo__5DCAEF64" Association="Self.FK__CustomerR__Custo__5DCAEF64">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="CustomerRequest" EntitySet="CustomerRequest" />
           </AssociationSet>
-          <AssociationSet Name="FK__CustomerR__Produ__4CA06362" Association="Self.FK__CustomerR__Produ__4CA06362">
+          <AssociationSet Name="FK__CustomerR__Produ__5FB337D6" Association="Self.FK__CustomerR__Produ__5FB337D6">
             <End Role="Product" EntitySet="Product" />
             <End Role="CustomerRequest" EntitySet="CustomerRequest" />
           </AssociationSet>
-          <AssociationSet Name="FK__CustomerR__Staff__4D94879B" Association="Self.FK__CustomerR__Staff__4D94879B">
+          <AssociationSet Name="FK__CustomerR__Staff__619B8048" Association="Self.FK__CustomerR__Staff__619B8048">
             <End Role="Staff" EntitySet="Staff" />
             <End Role="CustomerRequest" EntitySet="CustomerRequest" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__Publish__4E88ABD4" Association="Self.FK__Product__Publish__4E88ABD4">
+          <AssociationSet Name="FK__Product__Publish__398D8EEE" Association="Self.FK__Product__Publish__398D8EEE">
             <End Role="Publisher" EntitySet="Publisher" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Produ__4F7CD00D" Association="Self.FK__Transacti__Produ__4F7CD00D">
+          <AssociationSet Name="FK__Transacti__Produ__02084FDA" Association="Self.FK__Transacti__Produ__02084FDA">
             <End Role="Product" EntitySet="Product" />
             <End Role="TransactionDetails" EntitySet="TransactionDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Reque__5165187F" Association="Self.FK__Transacti__Reque__5165187F">
+          <AssociationSet Name="FK__Transacti__Reque__693CA210" Association="Self.FK__Transacti__Reque__693CA210">
             <End Role="CustomerRequest" EntitySet="CustomerRequest" />
             <End Role="TransactionHeader" EntitySet="TransactionHeader" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Trans__5070F446" Association="Self.FK__Transacti__Trans__5070F446">
+          <AssociationSet Name="FK__Transacti__Trans__00200768" Association="Self.FK__Transacti__Trans__00200768">
             <End Role="TransactionHeader" EntitySet="TransactionHeader" />
             <End Role="TransactionDetails" EntitySet="TransactionDetails" />
           </AssociationSet>
@@ -219,7 +220,6 @@
           </Key>
           <Property Name="Customer_ID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Customer_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Age" Type="Int32" Nullable="false" />
           <Property Name="Customer_Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Customer_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Phone_Number" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
@@ -229,7 +229,8 @@
           <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="CustomerRequests" Relationship="Self.FK__CustomerR__Custo__5DCAEF64" FromRole="Customer" ToRole="CustomerRequest" />
           <Property Name="Balance" Type="Int32" />
-          <Property Name="Status" Type="String" Unicode="false" FixedLength="false" MaxLength="15" />
+          <Property Name="Status" Type="String" Unicode="false" FixedLength="false" MaxLength="20" />
+          <Property Name="Birth_Date" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="CustomerRequest">
           <Key>
@@ -260,6 +261,7 @@
           <NavigationProperty Name="CustomerRequests" Relationship="Self.FK__CustomerR__Produ__5FB337D6" FromRole="Product" ToRole="CustomerRequest" />
           <NavigationProperty Name="Publisher" Relationship="Self.FK__Product__Publish__398D8EEE" FromRole="Product" ToRole="Publisher" />
           <NavigationProperty Name="TransactionDetails" Relationship="Self.FK__Transacti__Produ__02084FDA" FromRole="Product" ToRole="TransactionDetails" />
+          <Property Name="Image_URL" Type="String" MaxLength="750" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Publisher">
           <Key>
@@ -279,12 +281,12 @@
           <Property Name="Staff_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Staff_Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Gender" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="Age" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CustomerRequests" Relationship="Self.FK__CustomerR__Staff__619B8048" FromRole="Staff" ToRole="CustomerRequest" />
           <Property Name="Username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Birth_Date" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="TransactionDetail">
           <Key>
@@ -440,11 +442,11 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="BookStoreDBModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Birth_Date" ColumnName="Birth_Date" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Balance" ColumnName="Balance" />
                 <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
                 <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
                 <ScalarProperty Name="Customer_Address" ColumnName="Customer_Address" />
                 <ScalarProperty Name="Customer_Type" ColumnName="Customer_Type" />
                 <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
@@ -470,6 +472,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="BookStoreDBModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Image_URL" ColumnName="Image_URL" />
                 <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
                 <ScalarProperty Name="Product_Title" ColumnName="Product_Title" />
                 <ScalarProperty Name="Publisher_ID" ColumnName="Publisher_ID" />
@@ -493,6 +496,7 @@
           <EntitySetMapping Name="Staffs">
             <EntityTypeMapping TypeName="BookStoreDBModel.Staff">
               <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="Birth_Date" ColumnName="Birth_Date" />
                 <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -501,7 +505,6 @@
                 <ScalarProperty Name="Staff_Name" ColumnName="Staff_Name" />
                 <ScalarProperty Name="Staff_Address" ColumnName="Staff_Address" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

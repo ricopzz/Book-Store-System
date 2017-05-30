@@ -4,11 +4,11 @@
     <EntitySetMapping Name="Customers">
       <EntityTypeMapping TypeName="BookStoreDBModel.Customer">
         <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="Birth_Date" ColumnName="Birth_Date" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="Balance" ColumnName="Balance" />
           <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
           <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
-          <ScalarProperty Name="Age" ColumnName="Age" />
           <ScalarProperty Name="Customer_Address" ColumnName="Customer_Address" />
           <ScalarProperty Name="Customer_Type" ColumnName="Customer_Type" />
           <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
@@ -34,6 +34,7 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="BookStoreDBModel.Product">
         <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="Image_URL" ColumnName="Image_URL" />
           <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
           <ScalarProperty Name="Product_Title" ColumnName="Product_Title" />
           <ScalarProperty Name="Publisher_ID" ColumnName="Publisher_ID" />
@@ -57,6 +58,7 @@
     <EntitySetMapping Name="Staffs">
       <EntityTypeMapping TypeName="BookStoreDBModel.Staff">
         <MappingFragment StoreEntitySet="Staff">
+          <ScalarProperty Name="Birth_Date" ColumnName="Birth_Date" />
           <ScalarProperty Name="Position" ColumnName="Position" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Password" ColumnName="Password" />
@@ -65,7 +67,6 @@
           <ScalarProperty Name="Staff_Name" ColumnName="Staff_Name" />
           <ScalarProperty Name="Staff_Address" ColumnName="Staff_Address" />
           <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="Age" ColumnName="Age" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

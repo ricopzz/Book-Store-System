@@ -24,11 +24,11 @@ namespace Database_Final
         public string Staff_Name { get; set; }
         public string Staff_Address { get; set; }
         public string Gender { get; set; }
-        public int Age { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
         public string Position { get; set; }
+        public System.DateTime Birth_Date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerRequest> CustomerRequests { get; set; }

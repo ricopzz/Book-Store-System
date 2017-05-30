@@ -65,7 +65,7 @@ namespace Database_Final
                     Customer_Name = txtName.Text,
                     Customer_Address = txtAddress.Text,
                     Customer_Type = boxJob.Text,
-                    Age = DateTime.Now.Year - birthDatePicker.Value.Year,
+                    Birth_Date = birthDatePicker.Value,
                     Phone_Number = txtPhone.Text,
                     Username = txtUsername.Text,
                     Password = txtPassword.Text,

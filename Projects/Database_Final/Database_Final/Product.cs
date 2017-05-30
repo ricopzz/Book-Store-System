@@ -28,6 +28,7 @@ namespace Database_Final
         public Nullable<int> Stock_Qty { get; set; }
         public Nullable<int> Price { get; set; }
         public Nullable<System.DateTime> Date_Publish { get; set; }
+        public string Image_URL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerRequest> CustomerRequests { get; set; }
