@@ -40,10 +40,14 @@ namespace Database_Final
 
             return query.ToList().First();
         }
-
-        public String getUsername()
+        
+        private string getuserID()
         {
-            return txtUsername.Text;
+            var query = from c in ent.Customers
+                        where c.Username.Equals(txtUsername.Text)
+                        select c.Customer_ID;
+
+            return query.ToList().First();
         }
         
         private void Login_Form_Load(object sender, EventArgs e)
@@ -71,7 +75,7 @@ namespace Database_Final
                     {
                         MessageBox.Show("Login Successful");
                         this.Hide();
-                        Customer_MainMenu custMain = new Customer_MainMenu();
+                        Customer_MainMenu custMain = new Customer_MainMenu(getuserID());
                         custMain.Show();
                     }
                     else

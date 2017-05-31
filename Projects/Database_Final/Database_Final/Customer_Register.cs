@@ -52,33 +52,40 @@ namespace Database_Final
             }
             else
             {
-                String gender;
-                if (rbFemale.Checked) gender = "Female";
-                else gender = "Male";
-
-                int id =Int32.Parse( getLastID().Substring(3))+1;
-                String custid = "CST" + id.ToString().PadLeft(5,'0');
-
-                var data = new Customer
+                try
                 {
-                    Customer_ID = custid,
-                    Customer_Name = txtName.Text,
-                    Customer_Address = txtAddress.Text,
-                    Customer_Type = boxJob.Text,
-                    Birth_Date = birthDatePicker.Value,
-                    Phone_Number = txtPhone.Text,
-                    Username = txtUsername.Text,
-                    Password = txtPassword.Text,
-                    Email = txtEmail.Text,
-                    Gender = gender,
-                    Status = "NOT VERIFIED"
-                };
-                ent.Customers.Add(data);
-                VerifyCode verify = new VerifyCode();
-                ent.SaveChanges();
-                MessageBox.Show("Please verify your account to log-in");
-                this.Hide();
-                loginForm.Show();
+                    String gender;
+                    if (rbFemale.Checked) gender = "Female";
+                    else gender = "Male";
+
+                    int id = Int32.Parse(getLastID().Substring(3)) + 1;
+                    String custid = "CST" + id.ToString().PadLeft(5, '0');
+
+                    var data = new Customer
+                    {
+                        Customer_ID = custid,
+                        Customer_Name = txtName.Text,
+                        Customer_Address = txtAddress.Text,
+                        Customer_Type = boxJob.Text,
+                        Birth_Date = birthDatePicker.Value,
+                        Phone_Number = txtPhone.Text,
+                        Username = txtUsername.Text,
+                        Password = txtPassword.Text,
+                        Email = txtEmail.Text,
+                        Gender = gender,
+                        Status = "NOT VERIFIED"
+                    };
+                    ent.Customers.Add(data);
+                    VerifyCode verify = new VerifyCode();
+                    ent.SaveChanges();
+                    MessageBox.Show("Please verify your account to log-in");
+                    this.Hide();
+                    loginForm.Show();
+                }
+                catch
+                {
+                    MessageBox.Show("Username or email has been used!");
+                }
             }
         }
 

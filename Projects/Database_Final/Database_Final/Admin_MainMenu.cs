@@ -223,6 +223,7 @@ namespace Database_Final
                     groupBoxPublisher.Enabled = false;
                     enableButtons();
                     refreshPublisherData();
+                    fillPublisherBox();
                 }
             }
             else
@@ -247,6 +248,7 @@ namespace Database_Final
                     groupBoxPublisher.Enabled = false;
                     enableButtons();
                     refreshPublisherData();
+                    fillPublisherBox();
                 }
             }
         }
@@ -361,21 +363,21 @@ namespace Database_Final
         {
             if (counter == 0)
             {
-                try
+                if (txtAccountName.Text == "" || txtAccountAddress.Text == "" || txtEmail.Text == "" || txtUsername.Text == "" || txtPassword.Text == "")
                 {
-                    if (txtAccountName.Text == "" || txtAccountAddress.Text == "" || txtEmail.Text == "" || txtUsername.Text == "" || txtPassword.Text == "")
-                    {
-                        MessageBox.Show("Please fill all fields!");
-                    }
-                    else if (rbFemale.Checked == false && rbMale.Checked == false)
-                    {
-                        MessageBox.Show("Please choose gender!");
-                    }
-                    else if (boxPosition.SelectedIndex == -1)
-                    {
-                        MessageBox.Show("Please choose position!");
-                    }
-                    else
+                    MessageBox.Show("Please fill all fields!");
+                }
+                else if (rbFemale.Checked == false && rbMale.Checked == false)
+                {
+                    MessageBox.Show("Please choose gender!");
+                }
+                else if (boxPosition.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Please choose position!");
+                }
+                else
+                {
+                    try
                     {
                         String gender;
                         if (rbFemale.Checked) gender = "Female";
@@ -405,10 +407,10 @@ namespace Database_Final
                         refreshStaffData();
                         resetTextBox();
                     }
-                }
-                catch
-                {
-                    MessageBox.Show("Please fill all fields!");
+                    catch
+                    {
+                        MessageBox.Show("Staff uesrname or email has been uesd!");
+                    }
                 }
             }
             else
@@ -426,24 +428,31 @@ namespace Database_Final
                 }
                 else
                 {
-                    String code = dataAccount.CurrentRow.Cells[0].Value.ToString();
-                    var query = (from c in ent.Staffs
-                                 where c.Staff_ID.Equals(code)
-                                 select c).First();
+                    try
+                    {
+                        String code = dataAccount.CurrentRow.Cells[0].Value.ToString();
+                        var query = (from c in ent.Staffs
+                                     where c.Staff_ID.Equals(code)
+                                     select c).First();
 
-                    query.Staff_Address = txtAccountAddress.Text;
-                    query.Username = txtUsername.Text;
-                    query.Password = txtPassword.Text;
-                    query.Email = txtEmail.Text;
-                    query.Position = boxPosition.SelectedItem.ToString();
+                        query.Staff_Address = txtAccountAddress.Text;
+                        query.Username = txtUsername.Text;
+                        query.Password = txtPassword.Text;
+                        query.Email = txtEmail.Text;
+                        query.Position = boxPosition.SelectedItem.ToString();
 
-                    MessageBox.Show("Changes saved!");
-                    resetTextBox();
-                    ent.SaveChanges();
-                    groupBoxAccount.Enabled = false;
-                    enableButtons();
-                    refreshStaffData();
-                    resetTextBox();
+                        MessageBox.Show("Changes saved!");
+                        resetTextBox();
+                        ent.SaveChanges();
+                        groupBoxAccount.Enabled = false;
+                        enableButtons();
+                        refreshStaffData();
+                        resetTextBox();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Staff uesrname or email has been uesd!");
+                    }
                 }
             }
         }
@@ -473,7 +482,7 @@ namespace Database_Final
             qtyNum.Value = Convert.ToInt32(dataBook.CurrentRow.Cells[4].Value.ToString());
             priceNum.Value = Convert.ToInt32(dataBook.CurrentRow.Cells[5].Value.ToString());
             boxCategory.Text = dataBook.CurrentRow.Cells[3].Value.ToString();
-            boxPublisher.Text = getPublisherName(dataBook.CurrentRow.Cells[2].Value.ToString());
+            boxPublisher.SelectedValue = dataBook.CurrentRow.Cells[2].Value;
         }
 
         private void btnCancelBook_Click(object sender, EventArgs e)
@@ -521,27 +530,34 @@ namespace Database_Final
                 }
                 else
                 {
-                    int id = Int32.Parse(getLastBook().Substring(3)) + 1;
-                    String prodid = "PRD" + id.ToString().PadLeft(5, '0');
-
-                    var data = new Product
+                    try
                     {
-                        Product_ID = prodid,
-                        Product_Title = txtTitle.Text,
-                        Publisher_ID = boxPublisher.SelectedValue.ToString(),
-                        Category = boxCategory.SelectedItem.ToString(),
-                        Date_Publish = publishDatepicker.Value,
-                        Stock_Qty = Convert.ToInt32(qtyNum.Value),
-                        Price = Convert.ToInt32(priceNum.Value),
-                        Image_URL = txtURL.Text
-                    };
-                    ent.Products.Add(data);
-                    ent.SaveChanges();
-                    MessageBox.Show("Added new book!");
-                    resetTextBox();
-                    groupBoxBooks.Enabled = false;
-                    enableButtons();
-                    refreshBookData();
+                        int id = Int32.Parse(getLastBook().Substring(3)) + 1;
+                        String prodid = "PRD" + id.ToString().PadLeft(5, '0');
+
+                        var data = new Product
+                        {
+                            Product_ID = prodid,
+                            Product_Title = txtTitle.Text,
+                            Publisher_ID = boxPublisher.SelectedValue.ToString(),
+                            Category = boxCategory.SelectedItem.ToString(),
+                            Date_Publish = publishDatepicker.Value,
+                            Stock_Qty = Convert.ToInt32(qtyNum.Value),
+                            Price = Convert.ToInt32(priceNum.Value),
+                            Image_URL = txtURL.Text
+                        };
+                        ent.Products.Add(data);
+                        ent.SaveChanges();
+                        MessageBox.Show("Added new book!");
+                        resetTextBox();
+                        groupBoxBooks.Enabled = false;
+                        enableButtons();
+                        refreshBookData();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Duplicate Book's Title!");
+                    }
                 }
             }
             else if(counter == 1)
@@ -560,25 +576,32 @@ namespace Database_Final
                 }
                 else
                 {
-                    String code = dataBook.CurrentRow.Cells[0].Value.ToString();
-                    var query = (from c in ent.Products
-                                 where c.Product_ID.Equals(code)
-                                 select c).First();
+                    try
+                    {
+                        String code = dataBook.CurrentRow.Cells[0].Value.ToString();
+                        var query = (from c in ent.Products
+                                     where c.Product_ID.Equals(code)
+                                     select c).First();
 
-                    query.Product_Title = txtTitle.Text;
-                    query.Publisher_ID = boxPublisher.SelectedValue.ToString();
-                    query.Category = boxCategory.SelectedItem.ToString();
-                    query.Stock_Qty = Convert.ToInt32(qtyNum.Value);
-                    query.Price = Convert.ToInt32(priceNum.Value);
-                    query.Image_URL = txtURL.Text;
-                    query.Date_Publish = publishDatepicker.Value;
+                        query.Product_Title = txtTitle.Text;
+                        query.Publisher_ID = boxPublisher.SelectedValue.ToString();
+                        query.Category = boxCategory.SelectedItem.ToString();
+                        query.Stock_Qty = Convert.ToInt32(qtyNum.Value);
+                        query.Price = Convert.ToInt32(priceNum.Value);
+                        query.Image_URL = txtURL.Text;
+                        query.Date_Publish = publishDatepicker.Value;
 
-                    MessageBox.Show("Changes saved!");
-                    ent.SaveChanges();
-                    resetTextBox();
-                    groupBoxBooks.Enabled = false;
-                    enableButtons();
-                    refreshBookData();
+                        MessageBox.Show("Changes saved!");
+                        ent.SaveChanges();
+                        resetTextBox();
+                        groupBoxBooks.Enabled = false;
+                        enableButtons();
+                        refreshBookData();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Duplicate Book's Title");
+                    }
                 }
             }
         }
