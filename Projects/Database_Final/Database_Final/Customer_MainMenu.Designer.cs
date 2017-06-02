@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControl = new System.Windows.Forms.TabControl();
             this.tabNewReleases = new System.Windows.Forms.TabPage();
             this.btnAddCartNew = new System.Windows.Forms.Button();
             this.pictureNew = new System.Windows.Forms.PictureBox();
@@ -47,7 +47,7 @@
             this.dataNewReleases = new System.Windows.Forms.DataGridView();
             this.tabRecommended = new System.Windows.Forms.TabPage();
             this.pictureRec = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAddCartRec = new System.Windows.Forms.Button();
             this.groupRecommended = new System.Windows.Forms.GroupBox();
             this.txtPublishDateRec = new System.Windows.Forms.TextBox();
             this.txtPriceRec = new System.Windows.Forms.TextBox();
@@ -62,7 +62,7 @@
             this.dataRecommended = new System.Windows.Forms.DataGridView();
             this.tabBooks = new System.Windows.Forms.TabPage();
             this.pictureBook = new System.Windows.Forms.PictureBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnAddCart = new System.Windows.Forms.Button();
             this.groupBook = new System.Windows.Forms.GroupBox();
             this.txtPublishDate = new System.Windows.Forms.TextBox();
             this.txtPrice = new System.Windows.Forms.TextBox();
@@ -108,7 +108,8 @@
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.btnSignOut = new System.Windows.Forms.Button();
             this.lblWelcome = new System.Windows.Forms.Label();
-            this.tabControl1.SuspendLayout();
+            this.btnCart = new System.Windows.Forms.Button();
+            this.tabControl.SuspendLayout();
             this.tabNewReleases.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureNew)).BeginInit();
             this.groupNewReleases.SuspendLayout();
@@ -129,20 +130,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // tabControl
             // 
-            this.tabControl1.Controls.Add(this.tabNewReleases);
-            this.tabControl1.Controls.Add(this.tabRecommended);
-            this.tabControl1.Controls.Add(this.tabBooks);
-            this.tabControl1.Controls.Add(this.tabAccountInformation);
-            this.tabControl1.Controls.Add(this.tabPurchaseHistory);
-            this.tabControl1.Location = new System.Drawing.Point(0, 43);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.RightToLeftLayout = true;
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1452, 655);
-            this.tabControl1.TabIndex = 0;
+            this.tabControl.Controls.Add(this.tabNewReleases);
+            this.tabControl.Controls.Add(this.tabRecommended);
+            this.tabControl.Controls.Add(this.tabBooks);
+            this.tabControl.Controls.Add(this.tabAccountInformation);
+            this.tabControl.Controls.Add(this.tabPurchaseHistory);
+            this.tabControl.Location = new System.Drawing.Point(0, 43);
+            this.tabControl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.RightToLeftLayout = true;
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(1452, 655);
+            this.tabControl.TabIndex = 0;
             // 
             // tabNewReleases
             // 
@@ -168,6 +169,7 @@
             this.btnAddCartNew.TabIndex = 2;
             this.btnAddCartNew.Text = "Add to cart";
             this.btnAddCartNew.UseVisualStyleBackColor = true;
+            this.btnAddCartNew.Click += new System.EventHandler(this.btnAddCartNew_Click);
             // 
             // pictureNew
             // 
@@ -303,6 +305,7 @@
             // 
             this.dataNewReleases.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataNewReleases.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataNewReleases.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataNewReleases.Location = new System.Drawing.Point(12, 9);
             this.dataNewReleases.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataNewReleases.Name = "dataNewReleases";
@@ -313,7 +316,7 @@
             // tabRecommended
             // 
             this.tabRecommended.Controls.Add(this.pictureRec);
-            this.tabRecommended.Controls.Add(this.button1);
+            this.tabRecommended.Controls.Add(this.btnAddCartRec);
             this.tabRecommended.Controls.Add(this.groupRecommended);
             this.tabRecommended.Controls.Add(this.dataRecommended);
             this.tabRecommended.Location = new System.Drawing.Point(4, 29);
@@ -333,15 +336,16 @@
             this.pictureRec.TabIndex = 6;
             this.pictureRec.TabStop = false;
             // 
-            // button1
+            // btnAddCartRec
             // 
-            this.button1.Location = new System.Drawing.Point(766, 318);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(141, 48);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Add to cart";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnAddCartRec.Location = new System.Drawing.Point(766, 318);
+            this.btnAddCartRec.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnAddCartRec.Name = "btnAddCartRec";
+            this.btnAddCartRec.Size = new System.Drawing.Size(141, 48);
+            this.btnAddCartRec.TabIndex = 5;
+            this.btnAddCartRec.Text = "Add to cart";
+            this.btnAddCartRec.UseVisualStyleBackColor = true;
+            this.btnAddCartRec.Click += new System.EventHandler(this.btnAddCartRec_Click);
             // 
             // groupRecommended
             // 
@@ -469,6 +473,7 @@
             // 
             this.dataRecommended.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataRecommended.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataRecommended.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataRecommended.Location = new System.Drawing.Point(12, 9);
             this.dataRecommended.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataRecommended.Name = "dataRecommended";
@@ -479,7 +484,7 @@
             // tabBooks
             // 
             this.tabBooks.Controls.Add(this.pictureBook);
-            this.tabBooks.Controls.Add(this.button2);
+            this.tabBooks.Controls.Add(this.btnAddCart);
             this.tabBooks.Controls.Add(this.groupBook);
             this.tabBooks.Controls.Add(this.dataBook);
             this.tabBooks.Controls.Add(this.txtSearchBooks);
@@ -501,15 +506,16 @@
             this.pictureBook.TabIndex = 8;
             this.pictureBook.TabStop = false;
             // 
-            // button2
+            // btnAddCart
             // 
-            this.button2.Location = new System.Drawing.Point(766, 318);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(141, 48);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Add to cart";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnAddCart.Location = new System.Drawing.Point(766, 318);
+            this.btnAddCart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnAddCart.Name = "btnAddCart";
+            this.btnAddCart.Size = new System.Drawing.Size(141, 48);
+            this.btnAddCart.TabIndex = 5;
+            this.btnAddCart.Text = "Add to cart";
+            this.btnAddCart.UseVisualStyleBackColor = true;
+            this.btnAddCart.Click += new System.EventHandler(this.btnAddCart_Click);
             // 
             // groupBook
             // 
@@ -637,6 +643,7 @@
             // 
             this.dataBook.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataBook.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataBook.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataBook.Location = new System.Drawing.Point(12, 9);
             this.dataBook.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataBook.Name = "dataBook";
@@ -872,6 +879,7 @@
             this.btnUpdate.TabIndex = 0;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // txtPhone
             // 
@@ -970,6 +978,7 @@
             // dataGridView3
             // 
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView3.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView3.Location = new System.Drawing.Point(9, 8);
             this.dataGridView3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataGridView3.Name = "dataGridView3";
@@ -998,19 +1007,32 @@
             this.lblWelcome.TabIndex = 18;
             this.lblWelcome.Text = "Welcome, ";
             // 
+            // btnCart
+            // 
+            this.btnCart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCart.Location = new System.Drawing.Point(1201, 14);
+            this.btnCart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnCart.Name = "btnCart";
+            this.btnCart.Size = new System.Drawing.Size(112, 35);
+            this.btnCart.TabIndex = 19;
+            this.btnCart.Text = "Cart";
+            this.btnCart.UseVisualStyleBackColor = true;
+            this.btnCart.Click += new System.EventHandler(this.btnCart_Click);
+            // 
             // Customer_MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1446, 694);
+            this.Controls.Add(this.btnCart);
             this.Controls.Add(this.lblWelcome);
             this.Controls.Add(this.btnSignOut);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControl);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Customer_MainMenu";
             this.Text = "Customer_MainMenu";
             this.Load += new System.EventHandler(this.Customer_MainMenu_Load);
-            this.tabControl1.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
             this.tabNewReleases.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureNew)).EndInit();
             this.groupNewReleases.ResumeLayout(false);
@@ -1043,7 +1065,7 @@
         #endregion
 
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabNewReleases;
         private System.Windows.Forms.TabPage tabRecommended;
         private System.Windows.Forms.GroupBox groupNewReleases;
@@ -1062,7 +1084,7 @@
         private System.Windows.Forms.TabPage tabBooks;
         private System.Windows.Forms.TabPage tabAccountInformation;
         private System.Windows.Forms.GroupBox groupRecommended;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAddCartRec;
         private System.Windows.Forms.TextBox txtPublishDateRec;
         private System.Windows.Forms.TextBox txtPriceRec;
         private System.Windows.Forms.TextBox txtPublisherRec;
@@ -1104,7 +1126,7 @@
         private System.Windows.Forms.TextBox txtSearchBooks;
         private System.Windows.Forms.Label lblSearch;
         private System.Windows.Forms.GroupBox groupBook;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnAddCart;
         private System.Windows.Forms.TextBox txtPublishDate;
         private System.Windows.Forms.TextBox txtPrice;
         private System.Windows.Forms.TextBox txtPublisher;
@@ -1122,5 +1144,6 @@
         private System.Windows.Forms.PictureBox pictureNew;
         private System.Windows.Forms.PictureBox pictureRec;
         private System.Windows.Forms.PictureBox pictureBook;
+        private System.Windows.Forms.Button btnCart;
     }
 }

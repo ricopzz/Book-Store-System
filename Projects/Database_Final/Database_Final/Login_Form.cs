@@ -18,7 +18,7 @@ namespace Database_Final
         {
             InitializeComponent();
         }
-        BookStoreEntities ent = new BookStoreEntities();
+        BookStoreDBEntities ent = new BookStoreDBEntities();
 
         public string getAccountStatus()
         {
@@ -58,7 +58,7 @@ namespace Database_Final
 
         private void button1_Click(object sender, EventArgs e)
         {
-            BookStoreEntities ent = new BookStoreEntities();
+            BookStoreDBEntities ent = new BookStoreDBEntities();
             var query = from c in ent.Customers
                         where c.Username.Equals(txtUsername.Text)
                         && c.Password.Equals(txtPassword.Text)
@@ -112,7 +112,7 @@ namespace Database_Final
 
         private void btnSignInStaff_Click(object sender, EventArgs e)
         {
-            BookStoreEntities ent = new BookStoreEntities();
+            BookStoreDBEntities ent = new BookStoreDBEntities();
             var query = from c in ent.Staffs
                         where c.Username.Equals(txtUsername.Text)
                         && c.Password.Equals(txtPassword.Text)

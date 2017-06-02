@@ -14,23 +14,17 @@ namespace Database_Final
     
     public partial class CustomerRequest
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CustomerRequest()
-        {
-            this.TransactionHeaders = new HashSet<TransactionHeader>();
-        }
-    
         public string Request_ID { get; set; }
         public string Customer_ID { get; set; }
         public string Product_ID { get; set; }
         public string Staff_ID { get; set; }
         public int Quantity { get; set; }
-        public Nullable<int> Req_Status { get; set; }
+        public System.DateTime Request_Date { get; set; }
+        public string Req_Status { get; set; }
+        public Nullable<int> price { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Product Product { get; set; }
         public virtual Staff Staff { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TransactionHeader> TransactionHeaders { get; set; }
     }
 }

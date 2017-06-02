@@ -13,7 +13,7 @@ namespace Database_Final
     public partial class Admin_MainMenu : Form
     {
         string position;
-        BookStoreEntities ent = new BookStoreEntities();
+        BookStoreDBEntities ent = new BookStoreDBEntities();
 
         int counter = 0;
 
@@ -25,9 +25,16 @@ namespace Database_Final
             }
         }
 
+        private void refreshRequestData()
+        {
+            var query = from c in ent.CustomerRequests
+                        select new { RequestID = c.Request_ID, CustomerID = c.Customer_ID, ProductID = c.Product_ID, StaffID = c.Staff_ID, Quantity = c.Quantity, RequestDate = c.Request_Date, Status = c.Req_Status };
+            dataRequest.DataSource = query.ToList();
+        }
+
         private void fillPublisherBox()
         {
-            using (BookStoreEntities c = new BookStoreEntities())
+            using (BookStoreDBEntities c = new BookStoreDBEntities())
             {
                 boxPublisher.DataSource = c.Publishers.ToList();
                 boxPublisher.ValueMember = "Publisher_ID";
@@ -181,7 +188,7 @@ namespace Database_Final
             groupBoxPublisher.Enabled = false;
             groupBoxAccount.Enabled = false;
             groupBoxBooks.Enabled = false;
-
+            refreshRequestData();
             refreshStaffData();
             refreshBookData();
             refreshPublisherData();

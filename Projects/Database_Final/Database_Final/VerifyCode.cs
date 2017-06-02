@@ -38,10 +38,11 @@ namespace Database_Final
             client.EnableSsl = true;
             client.Timeout = 10000;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.EnableSsl = true;
             client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("database.bookstore@gmail.com", "bookstore12");
+            client.Credentials = new System.Net.NetworkCredential("cinemayosuaenrico@gmail.com", "thomasisbae");
 
-            MailMessage mm = new MailMessage("database.bookstore@gmail.com", txtEmail.Text, "test", mssage);
+            MailMessage mm = new MailMessage("cinemayosuaenrico@gmail.com", txtEmail.Text, "Welcome to EAD Book Store!", "Welcome, here is your veification code : "+mssage);
             mm.BodyEncoding = UTF8Encoding.UTF8;
             mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
 
@@ -58,7 +59,7 @@ namespace Database_Final
             else
             {
                 MessageBox.Show("Account has been verified");
-                BookStoreEntities ent = new BookStoreEntities();
+                BookStoreDBEntities ent = new BookStoreDBEntities();
                 var query = (from c in ent.Customers
                              where c.Email.Equals(txtEmail.Text)
                              select c
@@ -76,7 +77,7 @@ namespace Database_Final
 
         private void button2_Click(object sender, EventArgs e)
         {
-            BookStoreEntities ent = new BookStoreEntities();
+            BookStoreDBEntities ent = new BookStoreDBEntities();
             var query = from c in ent.Customers
                         where c.Email.Equals(txtEmail.Text)
                         select c;

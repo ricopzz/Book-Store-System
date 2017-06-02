@@ -74,3 +74,4 @@ C:\Users\PE70 6QE\Documents\bookstore\Projects\Database_Final\Database_Final\obj
 C:\Users\PE70 6QE\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.csproj.GenerateResource.Cache
 C:\Users\PE70 6QE\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.exe
 C:\Users\PE70 6QE\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.pdb
+C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Customer_Cart.resources

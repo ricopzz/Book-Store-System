@@ -19,18 +19,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CustomerRequests">
-      <EntityTypeMapping TypeName="BookStoreDBModel.CustomerRequest">
-        <MappingFragment StoreEntitySet="CustomerRequest">
-          <ScalarProperty Name="Request_ID" ColumnName="Request_ID" />
-          <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
-          <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
-          <ScalarProperty Name="Staff_ID" ColumnName="Staff_ID" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="Req_Status" ColumnName="Req_Status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="BookStoreDBModel.Product">
         <MappingFragment StoreEntitySet="Product">
@@ -88,6 +76,19 @@
           <ScalarProperty Name="Request_ID" ColumnName="Request_ID" />
           <ScalarProperty Name="Payment_Type" ColumnName="Payment_Type" />
           <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerRequests">
+      <EntityTypeMapping TypeName="BookStoreDBModel.CustomerRequests">
+        <MappingFragment StoreEntitySet="CustomerRequest">
+          <ScalarProperty Name="Req_Status" ColumnName="Req_Status" />
+          <ScalarProperty Name="Request_Date" ColumnName="Request_Date" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Staff_ID" ColumnName="Staff_ID" />
+          <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+          <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+          <ScalarProperty Name="Request_ID" ColumnName="Request_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

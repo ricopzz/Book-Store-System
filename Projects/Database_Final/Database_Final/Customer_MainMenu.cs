@@ -12,12 +12,30 @@ namespace Database_Final
 {
     public partial class Customer_MainMenu : Form
     {
-        BookStoreEntities ent = new BookStoreEntities();
+        BookStoreDBEntities ent = new BookStoreDBEntities();
         string userid;
+        List<string> listOfPurchase = new List<string>();
+
         public Customer_MainMenu(string userid)
         {
             InitializeComponent();
             this.userid = userid;
+        }
+
+        public Customer_MainMenu(string userid, List<string> listOfPurchase)
+        {
+            InitializeComponent();
+            this.userid = userid;
+            this.listOfPurchase = listOfPurchase;
+        }
+
+        private string getCustName(string code)
+        {
+            var query = from c in ent.Customers
+                        where c.Customer_ID.Equals(code)
+                        select c.Customer_Name;
+
+            return query.ToList().First();
         }
 
         private void Customer_MainMenu_Load(object sender, EventArgs e)
@@ -27,11 +45,28 @@ namespace Database_Final
             groupBook.Enabled = false;
             txtName.Enabled = false;
             txtAge.Enabled = false;
-            
+
+            btnAddCart.Enabled = false;
+            btnAddCartNew.Enabled = false;
+            btnAddCartRec.Enabled = false;
+
             fillUserinfo(userid);
-            refreshData();
-            dataNewReleases.AutoResizeRows();
+            refreshNewReleasesData();
+            refreshBookData();
+            refreshRecommendedData();
             groupAccountDetails.Enabled = false;
+            lblWelcome.Text = "Welcome, " + getCustName(userid);
+            rbFemale.Enabled = false;
+            rbMale.Enabled = false;
+        }
+
+        private string getFavouriteCategory(string code)
+        {
+            var query = from c in ent.Customers
+                        where c.Customer_ID.Equals(code)
+                        select c.Customer_Type;
+
+            return query.ToList().First();
         }
 
         private void fillUserinfo(string code)
@@ -122,7 +157,7 @@ namespace Database_Final
             pictureBook.SizeMode = PictureBoxSizeMode.AutoSize;
         }
 
-        private void refreshData()
+        private void refreshNewReleasesData()
         {
             DateTime monthAgo = DateTime.Now.AddDays(-30);
             var query = from c in ent.Products
@@ -130,20 +165,108 @@ namespace Database_Final
                         select new { BookTitle= c.Product_Title };
             dataNewReleases.DataSource = query.ToList();
         }
+        
+        private void refreshRecommendedData()
+        {
+            try
+            {
+                var query = from c in ent.Products
+                            where c.Category.Equals(getFavouriteCategory(userid))
+                            select new { BookTitle = c.Product_Title };
+                dataRecommended.DataSource = query.ToList();
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void refreshBookData()
+        {
+            var query = from c in ent.Products
+                        select new { BookTitle = c.Product_Title };
+            dataBook.DataSource = query.ToList();
+        }
 
         private void dataNewReleases_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            btnAddCartNew.Enabled = true;
             fillNewRealesesData();
         }
 
         private void dataRecommended_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            btnAddCartRec.Enabled = true;
             fillRecommendedData();
         }
 
         private void dataBook_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            btnAddCart.Enabled = true;
             fillBookData();
+        }
+
+        private void btnCart_Click(object sender, EventArgs e)
+        {
+            if (listOfPurchase.Count == 0)
+            {
+                MessageBox.Show("Shopping cart is empty!");
+            }
+            else
+            {
+                Customer_Cart cart = new Customer_Cart(userid, listOfPurchase);
+                this.Hide();
+                cart.Show();
+            }
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            var query = (from c in ent.Customers
+                         where c.Customer_ID.Equals(userid)
+                         select c).First();
+
+            query.Phone_Number = txtPhone.Text;
+            query.Customer_Address = txtAddress.Text;
+        }
+
+        private void btnAddCartNew_Click(object sender, EventArgs e)
+        {
+            if (listOfPurchase.Contains(txtTitleNew.Text))
+            {
+                MessageBox.Show("Book is already in cart!");
+            }
+            else
+            {
+                listOfPurchase.Add(txtTitleNew.Text);
+                MessageBox.Show("Added to cart!");
+            }
+        }
+
+        private void btnAddCartRec_Click(object sender, EventArgs e)
+        {
+            if (listOfPurchase.Contains(txtTitleRec.Text))
+            {
+                MessageBox.Show("Book is already in cart!");
+            }
+            else
+            {
+                listOfPurchase.Add(txtTitleRec.Text);
+                MessageBox.Show("Added to cart!");
+            }
+        }
+
+        private void btnAddCart_Click(object sender, EventArgs e)
+        {
+            if (listOfPurchase.Contains(txtTitle.Text))
+            {
+                MessageBox.Show("Book is already in cart!");
+            }
+            else
+            {
+                listOfPurchase.Add(txtTitle.Text);
+                MessageBox.Show("Added to cart!");
+            }
         }
     }
 }

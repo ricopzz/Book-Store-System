@@ -12,7 +12,7 @@ namespace Database_Final
 {
     public partial class Customer_Register : Form
     {
-        BookStoreEntities ent = new BookStoreEntities();
+        BookStoreDBEntities ent = new BookStoreDBEntities();
         Login_Form loginForm = new Login_Form();
         public Customer_Register()
         {
@@ -21,11 +21,18 @@ namespace Database_Final
 
         private string getLastID()
         {
-            var query = from c in ent.Customers
-                        orderby c.Customer_ID
-                        select c.Customer_ID;
-            string code = query.ToList().Last();
-            return code;
+            try
+            {
+                var query = from c in ent.Customers
+                            orderby c.Customer_ID
+                            select c.Customer_ID;
+                string code = query.ToList().Last();
+                return code;
+            }
+            catch
+            {
+                return "CST00000";
+            }
         }
 
         private void txtPhone_KeyPress(object sender, KeyPressEventArgs e)
