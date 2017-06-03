@@ -125,7 +125,7 @@ namespace Database_Final
             {
                 MessageBox.Show("Login Successful");
                 this.Hide();
-                Admin_MainMenu admMenu = new Admin_MainMenu(returnPosition());
+                Admin_MainMenu admMenu = new Admin_MainMenu(returnPosition(),txtUsername.Text);
                 admMenu.Show();
             }
         }

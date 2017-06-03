@@ -22,6 +22,8 @@ namespace Database_Final
         public System.DateTime Request_Date { get; set; }
         public string Req_Status { get; set; }
         public Nullable<int> price { get; set; }
+        public string Payment_Type { get; set; }
+        public string cardnumber { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Product Product { get; set; }

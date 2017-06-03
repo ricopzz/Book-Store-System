@@ -91,8 +91,14 @@
             this.btnAddBook = new System.Windows.Forms.Button();
             this.dataBook = new System.Windows.Forms.DataGridView();
             this.tabRequest = new System.Windows.Forms.TabPage();
-            this.dataRequest = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.txtStaffID = new System.Windows.Forms.TextBox();
+            this.lblStaff = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.dataRequest = new System.Windows.Forms.DataGridView();
             this.tabControl.SuspendLayout();
             this.tabPublisher.SuspendLayout();
             this.groupBoxPublisher.SuspendLayout();
@@ -106,6 +112,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.qtyNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataBook)).BeginInit();
             this.tabRequest.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataRequest)).BeginInit();
             this.SuspendLayout();
             // 
@@ -855,6 +863,91 @@
             this.tabRequest.Text = "Manage Request";
             this.tabRequest.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.btnUpdate);
+            this.groupBox1.Controls.Add(this.txtStaffID);
+            this.groupBox1.Controls.Add(this.lblStaff);
+            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.lblStatus);
+            this.groupBox1.Location = new System.Drawing.Point(8, 405);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(558, 229);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(125, 165);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 26);
+            this.numericUpDown1.TabIndex = 5;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(411, 64);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(97, 35);
+            this.btnUpdate.TabIndex = 4;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // txtStaffID
+            // 
+            this.txtStaffID.Location = new System.Drawing.Point(125, 108);
+            this.txtStaffID.Name = "txtStaffID";
+            this.txtStaffID.Size = new System.Drawing.Size(230, 26);
+            this.txtStaffID.TabIndex = 3;
+            // 
+            // lblStaff
+            // 
+            this.lblStaff.AutoSize = true;
+            this.lblStaff.Location = new System.Drawing.Point(40, 111);
+            this.lblStaff.Name = "lblStaff";
+            this.lblStaff.Size = new System.Drawing.Size(65, 20);
+            this.lblStaff.TabIndex = 2;
+            this.lblStaff.Text = "Staff ID";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Accepted",
+            "On Process"});
+            this.comboBox1.Location = new System.Drawing.Point(125, 51);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(230, 28);
+            this.comboBox1.TabIndex = 1;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(36, 54);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(56, 20);
+            this.lblStatus.TabIndex = 0;
+            this.lblStatus.Text = "Status";
+            // 
             // dataRequest
             // 
             this.dataRequest.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -863,15 +956,7 @@
             this.dataRequest.RowTemplate.Height = 28;
             this.dataRequest.Size = new System.Drawing.Size(1084, 393);
             this.dataRequest.TabIndex = 0;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Location = new System.Drawing.Point(8, 405);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(558, 229);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.dataRequest.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataRequest_CellClick);
             // 
             // Admin_MainMenu
             // 
@@ -899,6 +984,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.qtyNum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataBook)).EndInit();
             this.tabRequest.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataRequest)).EndInit();
             this.ResumeLayout(false);
 
@@ -971,5 +1059,11 @@
         private System.Windows.Forms.TabPage tabRequest;
         private System.Windows.Forms.DataGridView dataRequest;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.TextBox txtStaffID;
+        private System.Windows.Forms.Label lblStaff;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button btnUpdate;
     }
 }

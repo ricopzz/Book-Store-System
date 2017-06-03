@@ -23,8 +23,6 @@ namespace Database_Final
         public string Transaction_ID { get; set; }
         public System.DateTime Transaction_Date { get; set; }
         public string Request_ID { get; set; }
-        public string Payment_Type { get; set; }
-        public string CardNumber { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TransactionDetail> TransactionDetails { get; set; }

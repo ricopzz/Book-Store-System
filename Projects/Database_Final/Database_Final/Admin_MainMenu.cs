@@ -14,8 +14,16 @@ namespace Database_Final
     {
         string position;
         BookStoreDBEntities ent = new BookStoreDBEntities();
-
+        string userid;
         int counter = 0;
+
+        private string getStaffID(string code)
+        {
+            var query = from c in ent.Staffs
+                        where c.Username.Equals(code)
+                        select c.Staff_ID;
+            return query.ToList().First();
+        }
 
         private void txtPhone_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -28,6 +36,8 @@ namespace Database_Final
         private void refreshRequestData()
         {
             var query = from c in ent.CustomerRequests
+                        where c.Req_Status.Equals("REQUESTED")
+                        || c.Req_Status.Equals("Accepted")
                         select new { RequestID = c.Request_ID, CustomerID = c.Customer_ID, ProductID = c.Product_ID, StaffID = c.Staff_ID, Quantity = c.Quantity, RequestDate = c.Request_Date, Status = c.Req_Status };
             dataRequest.DataSource = query.ToList();
         }
@@ -41,6 +51,40 @@ namespace Database_Final
                 boxPublisher.DisplayMember = "Publisher_Name";
                 boxPublisher.SelectedIndex = -1;
             }
+        }
+
+        private string getLastTr()
+        {
+            try
+            {
+                var query = from c in ent.TransactionHeaders
+                            orderby c.Transaction_ID
+                            select c.Transaction_ID;
+                return query.ToList().Last();
+            }
+            catch
+            {
+                return "TR00000";
+            }
+        }
+
+        private int getQuantityOfProduct(string code)
+        {
+            var query = from c in ent.Products
+                        where c.Product_ID.Equals(code)
+                        select c.Stock_Qty;
+
+            return Convert.ToInt32(query.ToList().First());
+        }
+
+        private int getQuantityOfRequest(string code, string rqcode)
+        {
+            var query = from c in ent.CustomerRequests
+                        where c.Product_ID.Equals(code)
+                        && c.Request_ID.Equals(rqcode)
+                        select c.Quantity;
+
+            return Convert.ToInt32(query.ToList().First());
         }
 
         private string getPublisherName(string code)
@@ -133,10 +177,17 @@ namespace Database_Final
 
         private string getLastBook()
         {
-            var query = from c in ent.Products
-                        orderby c.Product_ID
-                        select c.Product_ID;
-            return query.ToList().Last();
+            try
+            {
+                var query = from c in ent.Products
+                            orderby c.Product_ID
+                            select c.Product_ID;
+                return query.ToList().Last();
+            }
+            catch
+            {
+                return "PRD00000";
+            }
         }
 
         private void refreshStaffData()
@@ -146,9 +197,10 @@ namespace Database_Final
             dataAccount.DataSource = query.ToList();
         }
 
-        public Admin_MainMenu(string position)
+        public Admin_MainMenu(string position,string userid)
         {
             this.position = position;
+            this.userid = userid;
             InitializeComponent();
         }
 
@@ -193,6 +245,9 @@ namespace Database_Final
             refreshBookData();
             refreshPublisherData();
             fillPublisherBox();
+            txtStaffID.Text = getStaffID(userid);
+            txtStaffID.Enabled = false;
+            numericUpDown1.Enabled = false;
         }
 
         private void btnAddPublisher_Click(object sender, EventArgs e)
@@ -610,6 +665,97 @@ namespace Database_Final
                         MessageBox.Show("Duplicate Book's Title");
                     }
                 }
+            }
+        }
+
+        private void dataRequest_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            numericUpDown1.Maximum = getQuantityOfProduct(dataRequest.CurrentRow.Cells[2].Value.ToString());
+            comboBox1.SelectedIndex = -1;
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (numericUpDown1.Enabled == false && comboBox1.SelectedIndex==0)
+            {
+                string productid = dataRequest.CurrentRow.Cells[2].Value.ToString();
+                string requestid = dataRequest.CurrentRow.Cells[0].Value.ToString();
+                var query = (from c in ent.CustomerRequests
+                             where c.Product_ID.Equals(productid)
+                             && c.Request_ID.Equals(requestid)
+                             select c).First();
+
+                query.Req_Status = comboBox1.SelectedText;
+                ent.SaveChanges();
+                MessageBox.Show("Updated!");
+                refreshRequestData();
+                comboBox1.SelectedIndex = -1;
+            }
+            else if(comboBox1.SelectedIndex==1)
+            {
+                string productid = dataRequest.CurrentRow.Cells[2].Value.ToString();
+                string requestid = dataRequest.CurrentRow.Cells[0].Value.ToString();
+                if (Convert.ToInt32(numericUpDown1.Value) > Convert.ToInt32(dataRequest.CurrentRow.Cells[4].Value.ToString()))
+                {
+                    MessageBox.Show("Quantity sent is too many!");
+                }
+                else if (Convert.ToInt32(numericUpDown1.Value) <= Convert.ToInt32(dataRequest.CurrentRow.Cells[4].Value.ToString()))
+                {
+                    var query = (from c in ent.CustomerRequests
+                                 where c.Product_ID.Equals(productid)
+                                 && c.Request_ID.Equals(requestid)
+                                 select c).First();
+                    //Console.WriteLine(getQuantityOfRequest(dataRequest.CurrentRow.Cells[2].Value.ToString(), dataRequest.CurrentRow.Cells[0].Value.ToString()));
+                    query.Quantity = getQuantityOfRequest(dataRequest.CurrentRow.Cells[2].Value.ToString(), dataRequest.CurrentRow.Cells[0].Value.ToString()) - Convert.ToInt32(numericUpDown1.Value);
+                    if(query.Quantity == 0)
+                    {
+                        query.Req_Status = "Done";
+                    }
+                    else
+                    {
+                        query.Req_Status = "On Process";
+                    }
+                    
+                    query.Staff_ID = txtStaffID.Text;
+                    ent.SaveChanges();
+                    refreshRequestData();
+                    comboBox1.SelectedIndex = -1;
+
+                    var query2 = (from c in ent.Products
+                                 where c.Product_ID.Equals(productid)
+                                 select c).First();
+
+                    query2.Stock_Qty = getQuantityOfProduct(dataRequest.CurrentRow.Cells[2].Value.ToString()) - Convert.ToInt32(numericUpDown1.Value);
+                    ent.SaveChanges();
+                    refreshBookData();
+                    MessageBox.Show("Updated!");
+
+                    int id = Int32.Parse(getLastTr().Substring(2)) + 1;
+                    String trid = "TR" + id.ToString().PadLeft(5, '0');
+
+                    var data = new TransactionHeader
+                    {
+                        Transaction_ID = trid,
+                        Transaction_Date = DateTime.Now,
+                        Request_ID = dataRequest.CurrentRow.Cells[0].Value.ToString()
+                    };
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select request status!");
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex == 1)
+            {
+                numericUpDown1.Enabled = true;
+            }
+            else
+            {
+                numericUpDown1.Enabled = false;
             }
         }
     }
