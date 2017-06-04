@@ -16,6 +16,7 @@ namespace Database_Final
         BookStoreDBEntities ent = new BookStoreDBEntities();
         string userid;
         int counter = 0;
+        List<string> listOfPurchase = new List<string>();
 
         private void refreshTrHeaderData()
         {
@@ -87,6 +88,15 @@ namespace Database_Final
         {
             var query = from c in ent.Products
                         where c.Product_ID.Equals(code)
+                        select c.Stock_Qty;
+
+            return Convert.ToInt32(query.ToList().First());
+        }
+
+        private int getQuantityOfProductByName(string code)
+        {
+            var query = from c in ent.Products
+                        where c.Product_Title.Equals(code)
                         select c.Stock_Qty;
 
             return Convert.ToInt32(query.ToList().First());
@@ -212,6 +222,13 @@ namespace Database_Final
             }
         }
 
+        private void refershCashierData()
+        {
+            var query = from c in ent.Products
+                        select new { BookTitle = c.Product_Title };
+            dataBooks.DataSource = query.ToList();
+        }
+
         private void refreshStaffData()
         {
             var query = from c in ent.Staffs
@@ -240,12 +257,52 @@ namespace Database_Final
                         select c;
             dataBook.DataSource = query.ToList();
         }
-        
+        private int getPrice(string code)
+        {
+            try
+            {
+                var query = from c in ent.Products
+                            where c.Product_Title.Equals(code)
+                            select c.Price;
+                return Convert.ToInt32(query.ToList().First());
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        private string getLastRequestID()
+        {
+            try
+            {
+                var query = from c in ent.CustomerRequests
+                            orderby c.Request_ID
+                            select c.Request_ID;
+                string code = query.ToList().Last();
+                return code;
+            }
+            catch
+            {
+                return "RQ00000";
+            }
+        }
+        private string getProductID(string title)
+        {
+            var query = from c in ent.Products
+                        where c.Product_Title.Equals(title)
+                        select c.Product_ID;
+
+            return query.ToList().First();
+        }
+
         private void Admin_MainMenu_Load(object sender, EventArgs e)
         {
             if (position.Equals("Stock"))
             {
                 tabAccount.Dispose();
+                tabTransaction.Dispose();
+                tabRequest.Dispose();
             }
             else if (position.Equals("Request"))
             {
@@ -257,6 +314,8 @@ namespace Database_Final
             {
                 tabPublisher.Dispose();
                 tabBooks.Dispose();
+                tabTransaction.Dispose();
+                tabRequest.Dispose();
             }
             
             groupBoxPublisher.Enabled = false;
@@ -268,10 +327,13 @@ namespace Database_Final
             refreshPublisherData();
             refreshTrDetailsData();
             refreshTrHeaderData();
+            refershCashierData();
             fillPublisherBox();
             txtStaffID.Text = getStaffID(userid);
             txtStaffID.Enabled = false;
             qtySentNum.Enabled = false;
+            btnCheckout.Enabled = false;
+            txtCardNumber.Enabled = false;
         }
 
         private void btnAddPublisher_Click(object sender, EventArgs e)
@@ -676,7 +738,7 @@ namespace Database_Final
                         query.Price = Convert.ToInt32(priceNum.Value);
                         query.Image_URL = txtURL.Text;
                         query.Date_Publish = publishDatepicker.Value;
-
+                        
                         MessageBox.Show("Changes saved!");
                         ent.SaveChanges();
                         resetTextBox();
@@ -795,6 +857,144 @@ namespace Database_Final
             else
             {
                 qtySentNum.Enabled = false;
+            }
+        }
+
+        private void btnSignOut_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+            Login_Form login = new Login_Form();
+            login.Show();
+        }
+
+        private void btnAddCart_Click(object sender, EventArgs e)
+        {
+            var title = dataBooks.CurrentRow.Cells[0].Value.ToString();
+            if (listOfPurchase.Contains(title))
+            {
+                MessageBox.Show("Book is already in cart!");
+            }
+            else
+            {
+                listOfPurchase.Add(title);
+                MessageBox.Show("Added to cart!");
+                DataTable dt = new DataTable();
+                dt.Columns.Add(new DataColumn("BookTitle", typeof(string)));
+                dt.Columns.Add(new DataColumn("Quantity", typeof(int)));
+                dt.Columns.Add(new DataColumn("Price", typeof(int)));
+                dt.Columns.Add(new DataColumn("Subtotal", typeof(int)));
+                dataCart.DataSource = dt;
+                foreach (string txt in listOfPurchase)
+                {
+                    dt.Rows.Add(txt, 1, getPrice(txt), getPrice(txt));
+                }
+            }
+        }
+
+        private void btnConfirm_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                dataCart.CurrentRow.Cells[1].Value = qtyCashierNum.Value;
+                dataCart.CurrentRow.Cells[3].Value = qtyCashierNum.Value * Convert.ToInt32(dataCart.CurrentRow.Cells[2].Value);
+            }
+            catch
+            {
+                MessageBox.Show("No book selected");
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var value = dataCart.CurrentRow.Cells[0].Value.ToString();
+                listOfPurchase.Remove(value);
+                foreach (DataGridViewCell oneCell in dataCart.SelectedCells)
+                {
+                    if (oneCell.Selected)
+                        dataCart.Rows.RemoveAt(oneCell.RowIndex);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Cart is Empty!");
+            }
+        }
+
+        private void rbStoreCredit_CheckedChanged(object sender, EventArgs e)
+        {
+            txtCardNumber.Enabled = false;
+            btnCheckout.Enabled = true;
+        }
+
+        private void rbCreditCard_CheckedChanged(object sender, EventArgs e)
+        {
+            txtCardNumber.Enabled = true;
+            btnCheckout.Enabled = true;
+        }
+
+        private void btnCheckout_Click(object sender, EventArgs e)
+        {
+            if (listOfPurchase.Count == 0)
+            {
+                MessageBox.Show("Cart is empty!");
+            }
+            else
+            {
+                string productname = dataCart.CurrentRow.Cells[0].Value.ToString();
+                int id = Int32.Parse(getLastRequestID().Substring(2)) + 1;
+                String rqid = "RQ" + id.ToString().PadLeft(5, '0');
+                string paymentmethod = "";
+                string creditcard = "";
+
+                if (rbCash.Checked == true)
+                {
+                    paymentmethod = "Cash";
+                    creditcard = "";
+                }
+                else
+                {
+                    paymentmethod = "Credit Card";
+                    creditcard = txtCardNumber.Text;
+                }
+
+                for (int i = 0; i < listOfPurchase.Count; i++)
+                {
+                    Console.WriteLine(listOfPurchase[i]);
+                    var datareq = new CustomerRequest
+                    {
+                        Request_ID = rqid,
+                        Customer_ID = "CST00000", // cst00000 = guest
+                        Req_Status = "Done",
+                        Request_Date = DateTime.Now,
+                        Product_ID = getProductID(listOfPurchase[i]),
+                        Quantity = Convert.ToInt32(dataCart.CurrentRow.Cells[1].Value.ToString()),
+                        price = getPrice(listOfPurchase[i]),
+                        Payment_Type = paymentmethod,
+                        cardnumber = creditcard
+                    };
+                    ent.CustomerRequests.Add(datareq);
+                    ent.SaveChanges();
+                }
+
+                refreshTrDetailsData();
+                refreshTrHeaderData();
+
+                var query2 = (from c in ent.Products
+                              where c.Product_Title.Equals(productname)
+                              select c).First();
+
+                query2.Stock_Qty = getQuantityOfProductByName(dataCart.CurrentRow.Cells[0].Value.ToString()) - Convert.ToInt32(dataCart.CurrentRow.Cells[1].Value.ToString());
+                ent.SaveChanges();
+                refreshBookData();
+                MessageBox.Show("Purchase done!");
+                dataCart.DataSource = null;
+                refreshRequestData();
+                refreshBookData();
+                rbCash.Checked = false;
+                rbCreditCard.Checked = false;
+                btnCheckout.Enabled = false;
             }
         }
     }

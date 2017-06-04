@@ -55,6 +55,9 @@ namespace Database_Final
             {
                 MessageBox.Show("Invalid Verification Code");
                 txtCode.Text = "";
+                this.Dispose();
+                Login_Form login = new Login_Form();
+                login.Show();
             }
             else
             {
@@ -67,6 +70,9 @@ namespace Database_Final
 
                 query.Status = "Verified";
                 ent.SaveChanges();
+                this.Dispose();
+                Login_Form login = new Login_Form();
+                login.Show();
             }
         }
 
@@ -90,6 +96,8 @@ namespace Database_Final
                 emailSender(code);
                 panel2.Hide();
                 panel1.Show();
+                txtCode.Text = "";
+                txtEmail.Text = "";
             }
         }
     }

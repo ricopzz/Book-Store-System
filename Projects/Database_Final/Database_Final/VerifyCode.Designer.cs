@@ -44,25 +44,28 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(34, 26);
+            this.label1.Location = new System.Drawing.Point(23, 17);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(477, 29);
+            this.label1.Size = new System.Drawing.Size(318, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Enter Verification Code Sent to Your Email :";
             // 
             // txtCode
             // 
             this.txtCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCode.Location = new System.Drawing.Point(129, 83);
+            this.txtCode.Location = new System.Drawing.Point(86, 54);
+            this.txtCode.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtCode.Name = "txtCode";
-            this.txtCode.Size = new System.Drawing.Size(301, 44);
+            this.txtCode.Size = new System.Drawing.Size(202, 32);
             this.txtCode.TabIndex = 1;
             // 
             // btnVerify
             // 
-            this.btnVerify.Location = new System.Drawing.Point(232, 151);
+            this.btnVerify.Location = new System.Drawing.Point(155, 98);
+            this.btnVerify.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnVerify.Name = "btnVerify";
-            this.btnVerify.Size = new System.Drawing.Size(94, 39);
+            this.btnVerify.Size = new System.Drawing.Size(63, 25);
             this.btnVerify.TabIndex = 2;
             this.btnVerify.Text = "Verify";
             this.btnVerify.UseVisualStyleBackColor = true;
@@ -74,9 +77,10 @@
             this.panel1.Controls.Add(this.txtCode);
             this.panel1.Controls.Add(this.btnVerify);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(13, 12);
+            this.panel1.Location = new System.Drawing.Point(9, 8);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(555, 203);
+            this.panel1.Size = new System.Drawing.Size(370, 132);
             this.panel1.TabIndex = 3;
             // 
             // panel2
@@ -85,23 +89,26 @@
             this.panel2.Controls.Add(this.btnSendEmail);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(555, 203);
+            this.panel2.Size = new System.Drawing.Size(370, 132);
             this.panel2.TabIndex = 4;
             // 
             // txtEmail
             // 
             this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmail.Location = new System.Drawing.Point(21, 76);
+            this.txtEmail.Location = new System.Drawing.Point(14, 49);
+            this.txtEmail.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(514, 44);
+            this.txtEmail.Size = new System.Drawing.Size(344, 32);
             this.txtEmail.TabIndex = 4;
             // 
             // btnSendEmail
             // 
-            this.btnSendEmail.Location = new System.Drawing.Point(232, 144);
+            this.btnSendEmail.Location = new System.Drawing.Point(155, 94);
+            this.btnSendEmail.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSendEmail.Name = "btnSendEmail";
-            this.btnSendEmail.Size = new System.Drawing.Size(117, 39);
+            this.btnSendEmail.Size = new System.Drawing.Size(78, 25);
             this.btnSendEmail.TabIndex = 5;
             this.btnSendEmail.Text = "Send Email";
             this.btnSendEmail.UseVisualStyleBackColor = true;
@@ -111,18 +118,20 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(179, 26);
+            this.label2.Location = new System.Drawing.Point(119, 17);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(206, 29);
+            this.label2.Size = new System.Drawing.Size(137, 20);
             this.label2.TabIndex = 3;
             this.label2.Text = "Enter Your Email :";
             // 
             // VerifyCode
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 223);
+            this.ClientSize = new System.Drawing.Size(387, 145);
             this.Controls.Add(this.panel1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "VerifyCode";
             this.Text = "VerifyCode";
             this.Load += new System.EventHandler(this.VerifyCode_Load);

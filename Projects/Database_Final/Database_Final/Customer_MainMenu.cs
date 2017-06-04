@@ -22,6 +22,15 @@ namespace Database_Final
             this.userid = userid;
         }
 
+        private string getBook(string code)
+        {
+            var query = from c in ent.Products
+                        where c.Product_ID.Equals(code)
+                        select c.Product_Title;
+
+            return query.ToList().First();
+        }
+
         public Customer_MainMenu(string userid, List<string> listOfPurchase)
         {
             InitializeComponent();
@@ -36,6 +45,14 @@ namespace Database_Final
                         select c.Customer_Name;
 
             return query.ToList().First();
+        }
+
+        private void refreshHistoryData(string code)
+        {
+            var query = from c in ent.CustomerRequests
+                        where c.Customer_ID.Equals(code)
+                        select new { InvoiceID = c.Request_ID, Date = c.Request_Date, Title = c.Product_ID, Quantity = c.Quantity, Price = c.price, Status = c.Req_Status };
+            dataHistory.DataSource = query.ToList();
         }
 
         private void Customer_MainMenu_Load(object sender, EventArgs e)
@@ -54,6 +71,7 @@ namespace Database_Final
             refreshNewReleasesData();
             refreshBookData();
             refreshRecommendedData();
+            refreshHistoryData(userid);
             groupAccountDetails.Enabled = false;
             lblWelcome.Text = "Welcome, " + getCustName(userid);
             rbFemale.Enabled = false;
@@ -170,9 +188,12 @@ namespace Database_Final
         {
             try
             {
+                var fav = getFavouriteCategory(userid);
+                Console.WriteLine(fav);
                 var query = from c in ent.Products
-                            where c.Category.Equals(getFavouriteCategory(userid))
+                            where c.Category.Equals(fav)
                             select new { BookTitle = c.Product_Title };
+                Console.WriteLine(query.Count());
                 dataRecommended.DataSource = query.ToList();
             }
             catch
@@ -266,6 +287,28 @@ namespace Database_Final
             {
                 listOfPurchase.Add(txtTitle.Text);
                 MessageBox.Show("Added to cart!");
+            }
+        }
+
+        private void btnSignOut_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+            Login_Form login = new Login_Form();
+            login.Show();
+        }
+
+        private void txtSearchBooks_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var query = from c in ent.Products
+                            where c.Product_Title.Contains(txtSearchBooks.Text)
+                            select new { BookTitle = c.Product_Title };
+                dataBook.DataSource = query.ToList();
+            }
+            catch
+            {
+
             }
         }
     }

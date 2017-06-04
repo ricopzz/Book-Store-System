@@ -91,7 +91,7 @@ namespace Database_Final
             dt.Columns.Add(new DataColumn("Quantity", typeof(int)));
             dt.Columns.Add(new DataColumn("Price", typeof(int)));
             dt.Columns.Add(new DataColumn("Subtotal", typeof(int)));
-            dataGridView1.DataSource = dt;
+            dataCart.DataSource = dt;
             foreach(string txt in purchasecart)
             {
                 dt.Rows.Add(txt,1,getPrice(txt),getPrice(txt));
@@ -121,8 +121,8 @@ namespace Database_Final
         {
             try
             {
-                dataGridView1.CurrentRow.Cells[1].Value = qtyNum.Value;
-                dataGridView1.CurrentRow.Cells[3].Value = qtyNum.Value * Convert.ToInt32(dataGridView1.CurrentRow.Cells[2].Value);
+                dataCart.CurrentRow.Cells[1].Value = qtyNum.Value;
+                dataCart.CurrentRow.Cells[3].Value = qtyNum.Value * Convert.ToInt32(dataCart.CurrentRow.Cells[2].Value);
             }
             catch
             {
@@ -134,12 +134,12 @@ namespace Database_Final
         {
             try
             {
-                var value = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+                var value = dataCart.CurrentRow.Cells[0].Value.ToString();
                 purchasecart.Remove(value);
-                foreach (DataGridViewCell oneCell in dataGridView1.SelectedCells)
+                foreach (DataGridViewCell oneCell in dataCart.SelectedCells)
                 {
                     if (oneCell.Selected)
-                        dataGridView1.Rows.RemoveAt(oneCell.RowIndex);
+                        dataCart.Rows.RemoveAt(oneCell.RowIndex);
                 }
             }
             catch
@@ -151,9 +151,9 @@ namespace Database_Final
         private void btnCheckout_Click(object sender, EventArgs e)
         {
             int sum = 0;
-            for (int i = 0; i < dataGridView1.Rows.Count; ++i)
+            for (int i = 0; i < dataCart.Rows.Count; ++i)
             {
-                sum += Convert.ToInt32(dataGridView1.Rows[i].Cells[3].Value);
+                sum += Convert.ToInt32(dataCart.Rows[i].Cells[3].Value);
             }
             if (purchasecart.Count == 0)
             {
@@ -179,7 +179,7 @@ namespace Database_Final
                                     Req_Status = "REQUESTED",
                                     Request_Date = DateTime.Now,
                                     Product_ID = getProductID(purchasecart[i]),
-                                    Quantity = Convert.ToInt32(dataGridView1.CurrentRow.Cells[1].Value.ToString()),
+                                    Quantity = Convert.ToInt32(dataCart.CurrentRow.Cells[1].Value.ToString()),
                                     price = getPrice(purchasecart[i]),
                                     Payment_Type = "Store Credit",
                                     cardnumber = null
@@ -216,7 +216,7 @@ namespace Database_Final
                                 Req_Status = "REQUESTED",
                                 Request_Date = DateTime.Now,
                                 Product_ID = getProductID(purchasecart[i]),
-                                Quantity = Convert.ToInt32(dataGridView1.CurrentRow.Cells[1].Value.ToString()),
+                                Quantity = Convert.ToInt32(dataCart.CurrentRow.Cells[1].Value.ToString()),
                                 price = getPrice(purchasecart[i]),
                                 Payment_Type = "Credit Card",
                                 cardnumber = txtCardNumber.Text

@@ -75,3 +75,21 @@ C:\Users\PE70 6QE\Documents\bookstore\Projects\Database_Final\Database_Final\obj
 C:\Users\PE70 6QE\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.exe
 C:\Users\PE70 6QE\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.pdb
 C:\Users\Enrico\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Customer_Cart.resources
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\Database_Final.exe.config
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\Database_Final.exe
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\Database_Final.pdb
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\EntityFramework.dll
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\EntityFramework.xml
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.csprojResolveAssemblyReference.cache
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Admin_MainMenu.resources
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Customer_Cart.resources
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Customer_MainMenu.resources
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Customer_Register.resources
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Login_Form.resources
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Properties.Resources.resources
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.VerifyCode.resources
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.csproj.GenerateResource.Cache
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.exe
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.pdb
