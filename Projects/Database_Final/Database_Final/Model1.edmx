@@ -12,7 +12,7 @@
           <Property Name="Customer_ID" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="Customer_Name" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="Customer_Address" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="Customer_Type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Preffered_Genre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Phone_Number" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Gender" Type="char" MaxLength="6" Nullable="false" />
@@ -209,7 +209,6 @@
           <Property Name="Customer_ID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Customer_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Customer_Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Customer_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Phone_Number" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Gender" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
@@ -219,6 +218,7 @@
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Birth_Date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="CustomerRequests" Relationship="Self.FK__CustomerR__Custo__34C8D9D1" FromRole="Customer" ToRole="CustomerRequest" />
+          <Property Name="Preffered_Genre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CustomerRequest">
           <Key>
@@ -416,10 +416,10 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="BookStoreDBModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Preffered_Genre" ColumnName="Preffered_Genre" />
                 <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
                 <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
                 <ScalarProperty Name="Customer_Address" ColumnName="Customer_Address" />
-                <ScalarProperty Name="Customer_Type" ColumnName="Customer_Type" />
                 <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />

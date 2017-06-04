@@ -32,7 +32,7 @@
             this.rbFemale = new System.Windows.Forms.RadioButton();
             this.rbMale = new System.Windows.Forms.RadioButton();
             this.txtPhone = new System.Windows.Forms.TextBox();
-            this.boxJob = new System.Windows.Forms.ComboBox();
+            this.boxFav = new System.Windows.Forms.ComboBox();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.birthDatePicker = new System.Windows.Forms.DateTimePicker();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -60,7 +60,7 @@
             this.groupBox1.Controls.Add(this.rbFemale);
             this.groupBox1.Controls.Add(this.rbMale);
             this.groupBox1.Controls.Add(this.txtPhone);
-            this.groupBox1.Controls.Add(this.boxJob);
+            this.groupBox1.Controls.Add(this.boxFav);
             this.groupBox1.Controls.Add(this.txtAddress);
             this.groupBox1.Controls.Add(this.birthDatePicker);
             this.groupBox1.Controls.Add(this.txtName);
@@ -113,19 +113,24 @@
             this.txtPhone.TabIndex = 10;
             this.txtPhone.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPhone_KeyPress);
             // 
-            // boxJob
+            // boxFav
             // 
-            this.boxJob.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.boxJob.FormattingEnabled = true;
-            this.boxJob.Items.AddRange(new object[] {
-            "Libraries",
-            "Institutions",
-            "Individuals"});
-            this.boxJob.Location = new System.Drawing.Point(138, 220);
-            this.boxJob.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.boxJob.Name = "boxJob";
-            this.boxJob.Size = new System.Drawing.Size(312, 28);
-            this.boxJob.TabIndex = 9;
+            this.boxFav.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.boxFav.FormattingEnabled = true;
+            this.boxFav.Items.AddRange(new object[] {
+            "Comic",
+            "Novel",
+            "Drama",
+            "Horror",
+            "Biography",
+            "Labolatory Report",
+            "Textbook",
+            "Fiction Book"});
+            this.boxFav.Location = new System.Drawing.Point(138, 220);
+            this.boxFav.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.boxFav.Name = "boxFav";
+            this.boxFav.Size = new System.Drawing.Size(312, 28);
+            this.boxFav.TabIndex = 9;
             // 
             // txtAddress
             // 
@@ -180,12 +185,12 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 225);
+            this.label4.Location = new System.Drawing.Point(9, 223);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(43, 20);
+            this.label4.Size = new System.Drawing.Size(124, 20);
             this.label4.TabIndex = 3;
-            this.label4.Text = "Type";
+            this.label4.Text = "Preffered Genre";
             // 
             // label3
             // 
@@ -339,7 +344,7 @@
         private System.Windows.Forms.RadioButton rbFemale;
         private System.Windows.Forms.RadioButton rbMale;
         private System.Windows.Forms.TextBox txtPhone;
-        private System.Windows.Forms.ComboBox boxJob;
+        private System.Windows.Forms.ComboBox boxFav;
         private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.DateTimePicker birthDatePicker;
         private System.Windows.Forms.TextBox txtName;

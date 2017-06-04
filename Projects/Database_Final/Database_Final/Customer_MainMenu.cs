@@ -64,7 +64,7 @@ namespace Database_Final
         {
             var query = from c in ent.Customers
                         where c.Customer_ID.Equals(code)
-                        select c.Customer_Type;
+                        select c.Preffered_Genre;
 
             return query.ToList().First();
         }

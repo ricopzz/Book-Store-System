@@ -23,7 +23,6 @@ namespace Database_Final
         public string Customer_ID { get; set; }
         public string Customer_Name { get; set; }
         public string Customer_Address { get; set; }
-        public string Customer_Type { get; set; }
         public string Phone_Number { get; set; }
         public string Email { get; set; }
         public string Gender { get; set; }
@@ -32,6 +31,7 @@ namespace Database_Final
         public Nullable<int> Balance { get; set; }
         public string Status { get; set; }
         public Nullable<System.DateTime> Birth_Date { get; set; }
+        public string Preffered_Genre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerRequest> CustomerRequests { get; set; }

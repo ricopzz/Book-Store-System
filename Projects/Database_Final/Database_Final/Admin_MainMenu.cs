@@ -17,6 +17,20 @@ namespace Database_Final
         string userid;
         int counter = 0;
 
+        private void refreshTrHeaderData()
+        {
+            var query = from c in ent.TransactionHeaders
+                        select new { TransactionID = c.Transaction_ID, TransactionDate = c.Transaction_Date, RequestID = c.Request_ID };
+            dataTrHeader.DataSource = query.ToList();
+        }
+
+        private void refreshTrDetailsData()
+        {
+            var query = from c in ent.TransactionDetails
+                        select new { TransactionID = c.Transaction_ID, ProductID = c.Product_ID, Quantity = c.Quantity, Price = c.Price };
+            dataTrDetails.DataSource = query.ToList();
+        }
+
         private string getStaffID(string code)
         {
             var query = from c in ent.Staffs
@@ -38,7 +52,8 @@ namespace Database_Final
             var query = from c in ent.CustomerRequests
                         where c.Req_Status.Equals("REQUESTED")
                         || c.Req_Status.Equals("Accepted")
-                        select new { RequestID = c.Request_ID, CustomerID = c.Customer_ID, ProductID = c.Product_ID, StaffID = c.Staff_ID, Quantity = c.Quantity, RequestDate = c.Request_Date, Status = c.Req_Status };
+                        || c.Req_Status.Equals("On Process")
+                        select new { RequestID = c.Request_ID, CustomerID = c.Customer_ID, ProductID = c.Product_ID, StaffID = c.Staff_ID, Quantity = c.Quantity, RequestDate = c.Request_Date, Status = c.Req_Status, PaymentType = c.Payment_Type, Price = c.price };
             dataRequest.DataSource = query.ToList();
         }
 
@@ -64,7 +79,7 @@ namespace Database_Final
             }
             catch
             {
-                return "TR00000";
+                return "TR000000";
             }
         }
 
@@ -169,10 +184,17 @@ namespace Database_Final
 
         private string getLastAccount()
         {
-            var query = from c in ent.Staffs
-                        orderby c.Staff_ID
-                        select c.Staff_ID;
-            return query.ToList().Last();
+            try
+            {
+                var query = from c in ent.Staffs
+                            orderby c.Staff_ID
+                            select c.Staff_ID;
+                return query.ToList().Last();
+            }
+            catch
+            {
+                return "STF000";
+            }
         }
 
         private string getLastBook()
@@ -244,10 +266,12 @@ namespace Database_Final
             refreshStaffData();
             refreshBookData();
             refreshPublisherData();
+            refreshTrDetailsData();
+            refreshTrHeaderData();
             fillPublisherBox();
             txtStaffID.Text = getStaffID(userid);
             txtStaffID.Enabled = false;
-            numericUpDown1.Enabled = false;
+            qtySentNum.Enabled = false;
         }
 
         private void btnAddPublisher_Click(object sender, EventArgs e)
@@ -670,13 +694,13 @@ namespace Database_Final
 
         private void dataRequest_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            numericUpDown1.Maximum = getQuantityOfProduct(dataRequest.CurrentRow.Cells[2].Value.ToString());
-            comboBox1.SelectedIndex = -1;
+            qtySentNum.Maximum = getQuantityOfProduct(dataRequest.CurrentRow.Cells[2].Value.ToString());
+            boxStatus.SelectedIndex = -1;
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (numericUpDown1.Enabled == false && comboBox1.SelectedIndex==0)
+            if (qtySentNum.Enabled == false && boxStatus.SelectedIndex==0)
             {
                 string productid = dataRequest.CurrentRow.Cells[2].Value.ToString();
                 string requestid = dataRequest.CurrentRow.Cells[0].Value.ToString();
@@ -685,28 +709,53 @@ namespace Database_Final
                              && c.Request_ID.Equals(requestid)
                              select c).First();
 
-                query.Req_Status = comboBox1.SelectedText;
+                query.Req_Status = "Accepted";
                 ent.SaveChanges();
                 MessageBox.Show("Updated!");
                 refreshRequestData();
-                comboBox1.SelectedIndex = -1;
+                boxStatus.SelectedIndex = -1;
             }
-            else if(comboBox1.SelectedIndex==1)
+            else if(boxStatus.SelectedIndex==1)
             {
                 string productid = dataRequest.CurrentRow.Cells[2].Value.ToString();
                 string requestid = dataRequest.CurrentRow.Cells[0].Value.ToString();
-                if (Convert.ToInt32(numericUpDown1.Value) > Convert.ToInt32(dataRequest.CurrentRow.Cells[4].Value.ToString()))
+                if (Convert.ToInt32(qtySentNum.Value) > Convert.ToInt32(dataRequest.CurrentRow.Cells[4].Value.ToString()))
                 {
                     MessageBox.Show("Quantity sent is too many!");
                 }
-                else if (Convert.ToInt32(numericUpDown1.Value) <= Convert.ToInt32(dataRequest.CurrentRow.Cells[4].Value.ToString()))
+                else if (Convert.ToInt32(qtySentNum.Value) <= Convert.ToInt32(dataRequest.CurrentRow.Cells[4].Value.ToString()))
                 {
+                    int id = Int32.Parse(getLastTr().Substring(2)) + 1;
+                    String trid = "TR" + id.ToString().PadLeft(6, '0');
+
+                    var data = new TransactionHeader
+                    {
+                        Transaction_ID = trid,
+                        Transaction_Date = DateTime.Now,
+                        Request_ID = dataRequest.CurrentRow.Cells[0].Value.ToString()
+                    };
+                    ent.TransactionHeaders.Add(data);
+                    ent.SaveChanges();
+
+                    var data2 = new TransactionDetail
+                    {
+                        Transaction_ID = trid,
+                        Product_ID = dataRequest.CurrentRow.Cells[2].Value.ToString(),
+                        Quantity = Convert.ToInt32(qtySentNum.Value.ToString()),
+                        Price = Convert.ToInt32(dataRequest.CurrentRow.Cells[8].Value.ToString())
+                    };
+                    ent.TransactionDetails.Add(data2);
+                    ent.SaveChanges();
+
+                    refreshTrDetailsData();
+                    refreshTrHeaderData();
+
                     var query = (from c in ent.CustomerRequests
                                  where c.Product_ID.Equals(productid)
                                  && c.Request_ID.Equals(requestid)
                                  select c).First();
                     //Console.WriteLine(getQuantityOfRequest(dataRequest.CurrentRow.Cells[2].Value.ToString(), dataRequest.CurrentRow.Cells[0].Value.ToString()));
-                    query.Quantity = getQuantityOfRequest(dataRequest.CurrentRow.Cells[2].Value.ToString(), dataRequest.CurrentRow.Cells[0].Value.ToString()) - Convert.ToInt32(numericUpDown1.Value);
+                    query.Quantity = getQuantityOfRequest(dataRequest.CurrentRow.Cells[2].Value.ToString(), dataRequest.CurrentRow.Cells[0].Value.ToString()) - Convert.ToInt32(qtySentNum.Value);
                     if(query.Quantity == 0)
                     {
                         query.Req_Status = "Done";
@@ -719,26 +768,16 @@ namespace Database_Final
                     query.Staff_ID = txtStaffID.Text;
                     ent.SaveChanges();
                     refreshRequestData();
-                    comboBox1.SelectedIndex = -1;
+                    boxStatus.SelectedIndex = -1;
 
                     var query2 = (from c in ent.Products
                                  where c.Product_ID.Equals(productid)
                                  select c).First();
 
-                    query2.Stock_Qty = getQuantityOfProduct(dataRequest.CurrentRow.Cells[2].Value.ToString()) - Convert.ToInt32(numericUpDown1.Value);
+                    query2.Stock_Qty = getQuantityOfProduct(dataRequest.CurrentRow.Cells[2].Value.ToString()) - Convert.ToInt32(qtySentNum.Value);
                     ent.SaveChanges();
                     refreshBookData();
                     MessageBox.Show("Updated!");
-
-                    int id = Int32.Parse(getLastTr().Substring(2)) + 1;
-                    String trid = "TR" + id.ToString().PadLeft(5, '0');
-
-                    var data = new TransactionHeader
-                    {
-                        Transaction_ID = trid,
-                        Transaction_Date = DateTime.Now,
-                        Request_ID = dataRequest.CurrentRow.Cells[0].Value.ToString()
-                    };
                 }
             }
             else
@@ -749,13 +788,13 @@ namespace Database_Final
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedIndex == 1)
+            if (boxStatus.SelectedIndex == 1)
             {
-                numericUpDown1.Enabled = true;
+                qtySentNum.Enabled = true;
             }
             else
             {
-                numericUpDown1.Enabled = false;
+                qtySentNum.Enabled = false;
             }
         }
     }

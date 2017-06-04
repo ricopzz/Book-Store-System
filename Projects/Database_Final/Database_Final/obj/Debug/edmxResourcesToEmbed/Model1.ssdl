@@ -7,7 +7,7 @@
     <Property Name="Customer_ID" Type="char" MaxLength="8" Nullable="false" />
     <Property Name="Customer_Name" Type="varchar" MaxLength="60" Nullable="false" />
     <Property Name="Customer_Address" Type="varchar" MaxLength="150" Nullable="false" />
-    <Property Name="Customer_Type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Preffered_Genre" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Phone_Number" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Gender" Type="char" MaxLength="6" Nullable="false" />
@@ -31,6 +31,8 @@
     <Property Name="Request_Date" Type="date" Nullable="false" />
     <Property Name="Req_Status" Type="varchar" MaxLength="20" />
     <Property Name="price" Type="int" />
+    <Property Name="Payment_Type" Type="varchar" MaxLength="20" />
+    <Property Name="cardnumber" Type="varchar" MaxLength="16" />
   </EntityType>
   <EntityType Name="Product">
     <Key>
@@ -85,8 +87,6 @@
     <Property Name="Transaction_ID" Type="char" MaxLength="8" Nullable="false" />
     <Property Name="Transaction_Date" Type="date" Nullable="false" />
     <Property Name="Request_ID" Type="char" MaxLength="7" Nullable="false" />
-    <Property Name="Payment_Type" Type="varchar" MaxLength="15" Nullable="false" />
-    <Property Name="CardNumber" Type="varchar" MaxLength="16" />
   </EntityType>
   <Association Name="FK__CustomerR__Custo__34C8D9D1">
     <End Role="Customer" Type="Self.Customer" Multiplicity="1" />

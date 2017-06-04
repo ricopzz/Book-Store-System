@@ -7,7 +7,6 @@
     <Property Name="Customer_ID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="Customer_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Customer_Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Customer_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Phone_Number" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Gender" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
@@ -17,6 +16,7 @@
     <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="Birth_Date" Type="DateTime" Precision="0" />
     <NavigationProperty Name="CustomerRequests" Relationship="Self.FK__CustomerR__Custo__34C8D9D1" FromRole="Customer" ToRole="CustomerRequest" />
+    <Property Name="Preffered_Genre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="CustomerRequest">
     <Key>
@@ -35,6 +35,8 @@
     <NavigationProperty Name="Product" Relationship="Self.FK__CustomerR__Produ__35BCFE0A" FromRole="CustomerRequest" ToRole="Product" />
     <NavigationProperty Name="Staff" Relationship="Self.FK__CustomerR__Staff__36B12243" FromRole="CustomerRequest" ToRole="Staff" />
     <Property Name="price" Type="Int32" />
+    <Property Name="Payment_Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="cardnumber" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Product">
     <Key>
@@ -50,7 +52,7 @@
     <Property Name="Image_URL" Type="String" MaxLength="750" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="CustomerRequests" Relationship="Self.FK__CustomerR__Produ__35BCFE0A" FromRole="Product" ToRole="CustomerRequest" />
     <NavigationProperty Name="Publisher" Relationship="Self.FK__Product__Publish__37A5467C" FromRole="Product" ToRole="Publisher" />
-    <NavigationProperty Name="TransactionDetails" Relationship="Self.FK__Transacti__Produ__38996AB5" FromRole="Product" ToRole="TransactionDetails" />
+    <NavigationProperty Name="TransactionDetails" Relationship="BookStoreDBModel.FK__Transacti__Produ__38996AB5" FromRole="Product" ToRole="TransactionDetail" />
   </EntityType>
   <EntityType Name="Publisher">
     <Key>
@@ -76,29 +78,6 @@
     <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Birth_Date" Type="DateTime" Nullable="false" Precision="0" />
     <NavigationProperty Name="CustomerRequests" Relationship="Self.FK__CustomerR__Staff__36B12243" FromRole="Staff" ToRole="CustomerRequest" />
-  </EntityType>
-  <EntityType Name="TransactionDetail">
-    <Key>
-      <PropertyRef Name="Transaction_ID" />
-      <PropertyRef Name="Product_ID" />
-    </Key>
-    <Property Name="Transaction_ID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="Product_ID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="Quantity" Type="Int32" Nullable="false" />
-    <Property Name="Price" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Product" Relationship="Self.FK__Transacti__Produ__38996AB5" FromRole="TransactionDetails" ToRole="Product" />
-    <NavigationProperty Name="TransactionHeader" Relationship="Self.FK__Transacti__Trans__398D8EEE" FromRole="TransactionDetails" ToRole="TransactionHeader" />
-  </EntityType>
-  <EntityType Name="TransactionHeader">
-    <Key>
-      <PropertyRef Name="Transaction_ID" />
-    </Key>
-    <Property Name="Transaction_ID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="Transaction_Date" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Request_ID" Type="String" MaxLength="7" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="Payment_Type" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="CardNumber" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="TransactionDetails" Relationship="Self.FK__Transacti__Trans__398D8EEE" FromRole="TransactionHeader" ToRole="TransactionDetails" />
   </EntityType>
   <Association Name="FK__CustomerR__Custo__34C8D9D1">
     <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
@@ -148,38 +127,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Transacti__Produ__38996AB5">
-    <End Role="Product" Type="Self.Product" Multiplicity="1" />
-    <End Role="TransactionDetails" Type="Self.TransactionDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Product">
-        <PropertyRef Name="Product_ID" />
-      </Principal>
-      <Dependent Role="TransactionDetails">
-        <PropertyRef Name="Product_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Transacti__Trans__398D8EEE">
-    <End Role="TransactionHeader" Type="Self.TransactionHeader" Multiplicity="1" />
-    <End Role="TransactionDetails" Type="Self.TransactionDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TransactionHeader">
-        <PropertyRef Name="Transaction_ID" />
-      </Principal>
-      <Dependent Role="TransactionDetails">
-        <PropertyRef Name="Transaction_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="BookStoreDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Customers" EntityType="Self.Customer" />
     <EntitySet Name="CustomerRequests" EntityType="Self.CustomerRequest" />
     <EntitySet Name="Products" EntityType="Self.Product" />
     <EntitySet Name="Publishers" EntityType="Self.Publisher" />
     <EntitySet Name="Staffs" EntityType="Self.Staff" />
-    <EntitySet Name="TransactionDetails" EntityType="Self.TransactionDetail" />
-    <EntitySet Name="TransactionHeaders" EntityType="Self.TransactionHeader" />
     <AssociationSet Name="FK__CustomerR__Custo__34C8D9D1" Association="Self.FK__CustomerR__Custo__34C8D9D1">
       <End Role="Customer" EntitySet="Customers" />
       <End Role="CustomerRequest" EntitySet="CustomerRequests" />
@@ -196,13 +149,60 @@
       <End Role="Publisher" EntitySet="Publishers" />
       <End Role="Product" EntitySet="Products" />
     </AssociationSet>
-    <AssociationSet Name="FK__Transacti__Produ__38996AB5" Association="Self.FK__Transacti__Produ__38996AB5">
+    <EntitySet Name="TransactionDetails" EntityType="BookStoreDBModel.TransactionDetail" />
+    <EntitySet Name="TransactionHeaders" EntityType="BookStoreDBModel.TransactionHeader" />
+    <AssociationSet Name="FK__Transacti__Produ__38996AB5" Association="BookStoreDBModel.FK__Transacti__Produ__38996AB5">
       <End Role="Product" EntitySet="Products" />
-      <End Role="TransactionDetails" EntitySet="TransactionDetails" />
+      <End Role="TransactionDetail" EntitySet="TransactionDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK__Transacti__Trans__398D8EEE" Association="Self.FK__Transacti__Trans__398D8EEE">
+    <AssociationSet Name="FK__Transacti__Trans__398D8EEE" Association="BookStoreDBModel.FK__Transacti__Trans__398D8EEE">
       <End Role="TransactionHeader" EntitySet="TransactionHeaders" />
-      <End Role="TransactionDetails" EntitySet="TransactionDetails" />
+      <End Role="TransactionDetail" EntitySet="TransactionDetails" />
     </AssociationSet>
   </EntityContainer>
+  <EntityType Name="TransactionDetail">
+    <Key>
+      <PropertyRef Name="Transaction_ID" />
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Transaction_ID" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Product_ID" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="BookStoreDBModel.FK__Transacti__Produ__38996AB5" FromRole="TransactionDetail" ToRole="Product" />
+    <NavigationProperty Name="TransactionHeader" Relationship="BookStoreDBModel.FK__Transacti__Trans__398D8EEE" FromRole="TransactionDetail" ToRole="TransactionHeader" />
+  </EntityType>
+  <EntityType Name="TransactionHeader">
+    <Key>
+      <PropertyRef Name="Transaction_ID" />
+    </Key>
+    <Property Name="Transaction_ID" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Transaction_Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Request_ID" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="TransactionDetails" Relationship="BookStoreDBModel.FK__Transacti__Trans__398D8EEE" FromRole="TransactionHeader" ToRole="TransactionDetail" />
+  </EntityType>
+  <Association Name="FK__Transacti__Produ__38996AB5">
+    <End Type="BookStoreDBModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="BookStoreDBModel.TransactionDetail" Role="TransactionDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Product_ID" />
+      </Principal>
+      <Dependent Role="TransactionDetail">
+        <PropertyRef Name="Product_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Trans__398D8EEE">
+    <End Type="BookStoreDBModel.TransactionHeader" Role="TransactionHeader" Multiplicity="1" />
+    <End Type="BookStoreDBModel.TransactionDetail" Role="TransactionDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TransactionHeader">
+        <PropertyRef Name="Transaction_ID" />
+      </Principal>
+      <Dependent Role="TransactionDetail">
+        <PropertyRef Name="Transaction_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

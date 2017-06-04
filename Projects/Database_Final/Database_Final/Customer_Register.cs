@@ -53,7 +53,7 @@ namespace Database_Final
             {
                 MessageBox.Show("Please choose your gender!");
             }
-            else if (boxJob.SelectedIndex == -1 || boxJob.SelectedItem == "")
+            else if (boxFav.SelectedIndex == -1 || boxFav.SelectedItem == "")
             {
                 MessageBox.Show("Please choose your job!");
             }
@@ -73,14 +73,15 @@ namespace Database_Final
                         Customer_ID = custid,
                         Customer_Name = txtName.Text,
                         Customer_Address = txtAddress.Text,
-                        Customer_Type = boxJob.Text,
+                        Preffered_Genre = boxFav.Text,
                         Birth_Date = birthDatePicker.Value,
                         Phone_Number = txtPhone.Text,
                         Username = txtUsername.Text,
                         Password = txtPassword.Text,
                         Email = txtEmail.Text,
                         Gender = gender,
-                        Status = "NOT VERIFIED"
+                        Status = "NOT VERIFIED",
+                        Balance = 0
                     };
                     ent.Customers.Add(data);
                     VerifyCode verify = new VerifyCode();

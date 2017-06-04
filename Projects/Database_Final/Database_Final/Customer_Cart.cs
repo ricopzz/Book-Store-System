@@ -180,7 +180,9 @@ namespace Database_Final
                                     Request_Date = DateTime.Now,
                                     Product_ID = getProductID(purchasecart[i]),
                                     Quantity = Convert.ToInt32(dataGridView1.CurrentRow.Cells[1].Value.ToString()),
-                                    price = getPrice(purchasecart[i])
+                                    price = getPrice(purchasecart[i]),
+                                    Payment_Type = "Store Credit",
+                                    cardnumber = null
                                 };
                                 ent.CustomerRequests.Add(data);
                                 ent.SaveChanges();
@@ -215,7 +217,9 @@ namespace Database_Final
                                 Request_Date = DateTime.Now,
                                 Product_ID = getProductID(purchasecart[i]),
                                 Quantity = Convert.ToInt32(dataGridView1.CurrentRow.Cells[1].Value.ToString()),
-                                price = getPrice(purchasecart[i])
+                                price = getPrice(purchasecart[i]),
+                                Payment_Type = "Credit Card",
+                                cardnumber = txtCardNumber.Text
                             };
                             ent.CustomerRequests.Add(data);
                             ent.SaveChanges();
