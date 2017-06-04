@@ -92,6 +92,7 @@
             this.dataBook = new System.Windows.Forms.DataGridView();
             this.tabRequest = new System.Windows.Forms.TabPage();
             this.groupManageReq = new System.Windows.Forms.GroupBox();
+            this.lblQtySent = new System.Windows.Forms.Label();
             this.qtySentNum = new System.Windows.Forms.NumericUpDown();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.txtStaffID = new System.Windows.Forms.TextBox();
@@ -102,24 +103,31 @@
             this.tabTransaction = new System.Windows.Forms.TabPage();
             this.dataTrDetails = new System.Windows.Forms.DataGridView();
             this.dataTrHeader = new System.Windows.Forms.DataGridView();
-            this.lblQtySent = new System.Windows.Forms.Label();
-            this.btnSignOut = new System.Windows.Forms.Button();
             this.tabCashier = new System.Windows.Forms.TabPage();
-            this.txtSearchBooks = new System.Windows.Forms.TextBox();
-            this.lblSearch = new System.Windows.Forms.Label();
-            this.dataBooks = new System.Windows.Forms.DataGridView();
-            this.btnAddCart = new System.Windows.Forms.Button();
-            this.dataCart = new System.Windows.Forms.DataGridView();
-            this.btnCheckout = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnConfirm = new System.Windows.Forms.Button();
+            this.lblQty = new System.Windows.Forms.Label();
+            this.qtyCashierNum = new System.Windows.Forms.NumericUpDown();
             this.txtCardNumber = new System.Windows.Forms.TextBox();
             this.rbCreditCard = new System.Windows.Forms.RadioButton();
             this.rbCash = new System.Windows.Forms.RadioButton();
             this.lblCardNumber = new System.Windows.Forms.Label();
             this.lblPaymentType = new System.Windows.Forms.Label();
-            this.btnConfirm = new System.Windows.Forms.Button();
-            this.lblQty = new System.Windows.Forms.Label();
-            this.qtyCashierNum = new System.Windows.Forms.NumericUpDown();
-            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnCheckout = new System.Windows.Forms.Button();
+            this.dataCart = new System.Windows.Forms.DataGridView();
+            this.btnAddCart = new System.Windows.Forms.Button();
+            this.dataBooks = new System.Windows.Forms.DataGridView();
+            this.txtSearchBooks = new System.Windows.Forms.TextBox();
+            this.lblSearch = new System.Windows.Forms.Label();
+            this.btnSignOut = new System.Windows.Forms.Button();
+            this.tabVoucher = new System.Windows.Forms.TabPage();
+            this.dataVoucher = new System.Windows.Forms.DataGridView();
+            this.groupVoucher = new System.Windows.Forms.GroupBox();
+            this.lblAmount = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.btnAddVoucher = new System.Windows.Forms.Button();
+            this.lblVoucherQty = new System.Windows.Forms.Label();
+            this.voucherQtyNum = new System.Windows.Forms.NumericUpDown();
             this.tabControl.SuspendLayout();
             this.tabPublisher.SuspendLayout();
             this.groupBoxPublisher.SuspendLayout();
@@ -140,9 +148,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataTrDetails)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTrHeader)).BeginInit();
             this.tabCashier.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataBooks)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataCart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.qtyCashierNum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataCart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataBooks)).BeginInit();
+            this.tabVoucher.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataVoucher)).BeginInit();
+            this.groupVoucher.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.voucherQtyNum)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -153,6 +166,7 @@
             this.tabControl.Controls.Add(this.tabRequest);
             this.tabControl.Controls.Add(this.tabTransaction);
             this.tabControl.Controls.Add(this.tabCashier);
+            this.tabControl.Controls.Add(this.tabVoucher);
             this.tabControl.Location = new System.Drawing.Point(0, 25);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -168,7 +182,7 @@
             this.tabPublisher.Controls.Add(this.dataPublisher);
             this.tabPublisher.Location = new System.Drawing.Point(4, 22);
             this.tabPublisher.Name = "tabPublisher";
-            this.tabPublisher.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPublisher.Padding = new System.Windows.Forms.Padding(3);
             this.tabPublisher.Size = new System.Drawing.Size(732, 418);
             this.tabPublisher.TabIndex = 0;
             this.tabPublisher.Text = "Manage Publisher";
@@ -313,7 +327,7 @@
             this.tabAccount.Controls.Add(this.dataAccount);
             this.tabAccount.Location = new System.Drawing.Point(4, 22);
             this.tabAccount.Name = "tabAccount";
-            this.tabAccount.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabAccount.Padding = new System.Windows.Forms.Padding(3);
             this.tabAccount.Size = new System.Drawing.Size(732, 418);
             this.tabAccount.TabIndex = 1;
             this.tabAccount.Text = "Manage Staff";
@@ -361,7 +375,7 @@
             // 
             this.rbFemale.AutoSize = true;
             this.rbFemale.Location = new System.Drawing.Point(143, 103);
-            this.rbFemale.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rbFemale.Margin = new System.Windows.Forms.Padding(2);
             this.rbFemale.Name = "rbFemale";
             this.rbFemale.Size = new System.Drawing.Size(59, 17);
             this.rbFemale.TabIndex = 9;
@@ -378,7 +392,7 @@
             "Stock",
             "Manager"});
             this.boxPosition.Location = new System.Drawing.Point(91, 161);
-            this.boxPosition.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.boxPosition.Margin = new System.Windows.Forms.Padding(2);
             this.boxPosition.Name = "boxPosition";
             this.boxPosition.Size = new System.Drawing.Size(193, 21);
             this.boxPosition.TabIndex = 12;
@@ -452,7 +466,7 @@
             // 
             this.rbMale.AutoSize = true;
             this.rbMale.Location = new System.Drawing.Point(94, 103);
-            this.rbMale.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rbMale.Margin = new System.Windows.Forms.Padding(2);
             this.rbMale.Name = "rbMale";
             this.rbMale.Size = new System.Drawing.Size(48, 17);
             this.rbMale.TabIndex = 8;
@@ -583,7 +597,7 @@
             this.tabBooks.Controls.Add(this.dataBook);
             this.tabBooks.Location = new System.Drawing.Point(4, 22);
             this.tabBooks.Name = "tabBooks";
-            this.tabBooks.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabBooks.Padding = new System.Windows.Forms.Padding(3);
             this.tabBooks.Size = new System.Drawing.Size(732, 418);
             this.tabBooks.TabIndex = 2;
             this.tabBooks.Text = "Manage Books";
@@ -837,9 +851,9 @@
             this.tabRequest.Controls.Add(this.groupManageReq);
             this.tabRequest.Controls.Add(this.dataRequest);
             this.tabRequest.Location = new System.Drawing.Point(4, 22);
-            this.tabRequest.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabRequest.Margin = new System.Windows.Forms.Padding(2);
             this.tabRequest.Name = "tabRequest";
-            this.tabRequest.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabRequest.Padding = new System.Windows.Forms.Padding(2);
             this.tabRequest.Size = new System.Drawing.Size(732, 418);
             this.tabRequest.TabIndex = 3;
             this.tabRequest.Text = "Manage Request";
@@ -855,18 +869,27 @@
             this.groupManageReq.Controls.Add(this.boxStatus);
             this.groupManageReq.Controls.Add(this.lblStatus);
             this.groupManageReq.Location = new System.Drawing.Point(5, 263);
-            this.groupManageReq.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupManageReq.Margin = new System.Windows.Forms.Padding(2);
             this.groupManageReq.Name = "groupManageReq";
-            this.groupManageReq.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupManageReq.Padding = new System.Windows.Forms.Padding(2);
             this.groupManageReq.Size = new System.Drawing.Size(372, 149);
             this.groupManageReq.TabIndex = 1;
             this.groupManageReq.TabStop = false;
             this.groupManageReq.Text = "Request Details";
             // 
+            // lblQtySent
+            // 
+            this.lblQtySent.AutoSize = true;
+            this.lblQtySent.Location = new System.Drawing.Point(27, 109);
+            this.lblQtySent.Name = "lblQtySent";
+            this.lblQtySent.Size = new System.Drawing.Size(71, 13);
+            this.lblQtySent.TabIndex = 6;
+            this.lblQtySent.Text = "Quantity Sent";
+            // 
             // qtySentNum
             // 
             this.qtySentNum.Location = new System.Drawing.Point(103, 107);
-            this.qtySentNum.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.qtySentNum.Margin = new System.Windows.Forms.Padding(2);
             this.qtySentNum.Maximum = new decimal(new int[] {
             1,
             0,
@@ -889,7 +912,7 @@
             // btnUpdate
             // 
             this.btnUpdate.Location = new System.Drawing.Point(294, 42);
-            this.btnUpdate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(65, 23);
             this.btnUpdate.TabIndex = 4;
@@ -900,7 +923,7 @@
             // txtStaffID
             // 
             this.txtStaffID.Location = new System.Drawing.Point(103, 70);
-            this.txtStaffID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtStaffID.Margin = new System.Windows.Forms.Padding(2);
             this.txtStaffID.Name = "txtStaffID";
             this.txtStaffID.Size = new System.Drawing.Size(155, 20);
             this.txtStaffID.TabIndex = 3;
@@ -923,7 +946,7 @@
             "Accepted",
             "On Process"});
             this.boxStatus.Location = new System.Drawing.Point(103, 33);
-            this.boxStatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.boxStatus.Margin = new System.Windows.Forms.Padding(2);
             this.boxStatus.Name = "boxStatus";
             this.boxStatus.Size = new System.Drawing.Size(155, 21);
             this.boxStatus.TabIndex = 1;
@@ -943,7 +966,7 @@
             // 
             this.dataRequest.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataRequest.Location = new System.Drawing.Point(5, 4);
-            this.dataRequest.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataRequest.Margin = new System.Windows.Forms.Padding(2);
             this.dataRequest.Name = "dataRequest";
             this.dataRequest.RowTemplate.Height = 28;
             this.dataRequest.Size = new System.Drawing.Size(723, 255);
@@ -955,9 +978,9 @@
             this.tabTransaction.Controls.Add(this.dataTrDetails);
             this.tabTransaction.Controls.Add(this.dataTrHeader);
             this.tabTransaction.Location = new System.Drawing.Point(4, 22);
-            this.tabTransaction.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabTransaction.Margin = new System.Windows.Forms.Padding(2);
             this.tabTransaction.Name = "tabTransaction";
-            this.tabTransaction.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabTransaction.Padding = new System.Windows.Forms.Padding(2);
             this.tabTransaction.Size = new System.Drawing.Size(732, 418);
             this.tabTransaction.TabIndex = 4;
             this.tabTransaction.Text = "Transaction List";
@@ -967,7 +990,7 @@
             // 
             this.dataTrDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataTrDetails.Location = new System.Drawing.Point(5, 204);
-            this.dataTrDetails.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataTrDetails.Margin = new System.Windows.Forms.Padding(2);
             this.dataTrDetails.Name = "dataTrDetails";
             this.dataTrDetails.RowTemplate.Height = 28;
             this.dataTrDetails.Size = new System.Drawing.Size(725, 208);
@@ -977,30 +1000,11 @@
             // 
             this.dataTrHeader.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataTrHeader.Location = new System.Drawing.Point(4, 4);
-            this.dataTrHeader.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataTrHeader.Margin = new System.Windows.Forms.Padding(2);
             this.dataTrHeader.Name = "dataTrHeader";
             this.dataTrHeader.RowTemplate.Height = 28;
             this.dataTrHeader.Size = new System.Drawing.Size(726, 196);
             this.dataTrHeader.TabIndex = 0;
-            // 
-            // lblQtySent
-            // 
-            this.lblQtySent.AutoSize = true;
-            this.lblQtySent.Location = new System.Drawing.Point(27, 109);
-            this.lblQtySent.Name = "lblQtySent";
-            this.lblQtySent.Size = new System.Drawing.Size(71, 13);
-            this.lblQtySent.TabIndex = 6;
-            this.lblQtySent.Text = "Quantity Sent";
-            // 
-            // btnSignOut
-            // 
-            this.btnSignOut.Location = new System.Drawing.Point(645, 12);
-            this.btnSignOut.Name = "btnSignOut";
-            this.btnSignOut.Size = new System.Drawing.Size(75, 23);
-            this.btnSignOut.TabIndex = 1;
-            this.btnSignOut.Text = "Sign Out";
-            this.btnSignOut.UseVisualStyleBackColor = true;
-            this.btnSignOut.Click += new System.EventHandler(this.btnSignOut_Click);
             // 
             // tabCashier
             // 
@@ -1027,61 +1031,60 @@
             this.tabCashier.Text = "Cashier";
             this.tabCashier.UseVisualStyleBackColor = true;
             // 
-            // txtSearchBooks
+            // btnDelete
             // 
-            this.txtSearchBooks.AllowDrop = true;
-            this.txtSearchBooks.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearchBooks.Location = new System.Drawing.Point(160, 6);
-            this.txtSearchBooks.Name = "txtSearchBooks";
-            this.txtSearchBooks.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSearchBooks.Size = new System.Drawing.Size(483, 26);
-            this.txtSearchBooks.TabIndex = 7;
+            this.btnDelete.Location = new System.Drawing.Point(663, 269);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(63, 43);
+            this.btnDelete.TabIndex = 21;
+            this.btnDelete.Text = "Remove Item";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // lblSearch
+            // btnConfirm
             // 
-            this.lblSearch.AutoSize = true;
-            this.lblSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSearch.Location = new System.Drawing.Point(74, 7);
-            this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(80, 25);
-            this.lblSearch.TabIndex = 6;
-            this.lblSearch.Text = "Search";
+            this.btnConfirm.Location = new System.Drawing.Point(663, 240);
+            this.btnConfirm.Margin = new System.Windows.Forms.Padding(2);
+            this.btnConfirm.Name = "btnConfirm";
+            this.btnConfirm.Size = new System.Drawing.Size(62, 25);
+            this.btnConfirm.TabIndex = 20;
+            this.btnConfirm.Text = "Confirm";
+            this.btnConfirm.UseVisualStyleBackColor = true;
+            this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
             // 
-            // dataBooks
+            // lblQty
             // 
-            this.dataBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataBooks.Location = new System.Drawing.Point(6, 41);
-            this.dataBooks.Name = "dataBooks";
-            this.dataBooks.Size = new System.Drawing.Size(653, 150);
-            this.dataBooks.TabIndex = 8;
+            this.lblQty.AutoSize = true;
+            this.lblQty.Location = new System.Drawing.Point(667, 205);
+            this.lblQty.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblQty.Name = "lblQty";
+            this.lblQty.Size = new System.Drawing.Size(46, 13);
+            this.lblQty.TabIndex = 19;
+            this.lblQty.Text = "Quantity";
             // 
-            // btnAddCart
+            // qtyCashierNum
             // 
-            this.btnAddCart.Location = new System.Drawing.Point(663, 50);
-            this.btnAddCart.Name = "btnAddCart";
-            this.btnAddCart.Size = new System.Drawing.Size(63, 41);
-            this.btnAddCart.TabIndex = 9;
-            this.btnAddCart.Text = "Add to Cart";
-            this.btnAddCart.UseVisualStyleBackColor = true;
-            this.btnAddCart.Click += new System.EventHandler(this.btnAddCart_Click);
-            // 
-            // dataCart
-            // 
-            this.dataCart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataCart.Location = new System.Drawing.Point(6, 197);
-            this.dataCart.Name = "dataCart";
-            this.dataCart.Size = new System.Drawing.Size(653, 150);
-            this.dataCart.TabIndex = 10;
-            // 
-            // btnCheckout
-            // 
-            this.btnCheckout.Location = new System.Drawing.Point(594, 351);
-            this.btnCheckout.Name = "btnCheckout";
-            this.btnCheckout.Size = new System.Drawing.Size(135, 63);
-            this.btnCheckout.TabIndex = 11;
-            this.btnCheckout.Text = "Checkout";
-            this.btnCheckout.UseVisualStyleBackColor = true;
-            this.btnCheckout.Click += new System.EventHandler(this.btnCheckout_Click);
+            this.qtyCashierNum.Location = new System.Drawing.Point(663, 219);
+            this.qtyCashierNum.Margin = new System.Windows.Forms.Padding(2);
+            this.qtyCashierNum.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.qtyCashierNum.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.qtyCashierNum.Name = "qtyCashierNum";
+            this.qtyCashierNum.Size = new System.Drawing.Size(62, 20);
+            this.qtyCashierNum.TabIndex = 18;
+            this.qtyCashierNum.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // txtCardNumber
             // 
@@ -1143,60 +1146,182 @@
             this.lblPaymentType.TabIndex = 13;
             this.lblPaymentType.Text = "Payment Type";
             // 
-            // btnConfirm
+            // btnCheckout
             // 
-            this.btnConfirm.Location = new System.Drawing.Point(663, 240);
-            this.btnConfirm.Margin = new System.Windows.Forms.Padding(2);
-            this.btnConfirm.Name = "btnConfirm";
-            this.btnConfirm.Size = new System.Drawing.Size(62, 25);
-            this.btnConfirm.TabIndex = 20;
-            this.btnConfirm.Text = "Confirm";
-            this.btnConfirm.UseVisualStyleBackColor = true;
-            this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
+            this.btnCheckout.Location = new System.Drawing.Point(594, 351);
+            this.btnCheckout.Name = "btnCheckout";
+            this.btnCheckout.Size = new System.Drawing.Size(135, 63);
+            this.btnCheckout.TabIndex = 11;
+            this.btnCheckout.Text = "Checkout";
+            this.btnCheckout.UseVisualStyleBackColor = true;
+            this.btnCheckout.Click += new System.EventHandler(this.btnCheckout_Click);
             // 
-            // lblQty
+            // dataCart
             // 
-            this.lblQty.AutoSize = true;
-            this.lblQty.Location = new System.Drawing.Point(667, 205);
-            this.lblQty.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblQty.Name = "lblQty";
-            this.lblQty.Size = new System.Drawing.Size(46, 13);
-            this.lblQty.TabIndex = 19;
-            this.lblQty.Text = "Quantity";
+            this.dataCart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataCart.Location = new System.Drawing.Point(6, 197);
+            this.dataCart.Name = "dataCart";
+            this.dataCart.Size = new System.Drawing.Size(653, 150);
+            this.dataCart.TabIndex = 10;
             // 
-            // qtyCashierNum
+            // btnAddCart
             // 
-            this.qtyCashierNum.Location = new System.Drawing.Point(663, 219);
-            this.qtyCashierNum.Margin = new System.Windows.Forms.Padding(2);
-            this.qtyCashierNum.Maximum = new decimal(new int[] {
-            250,
+            this.btnAddCart.Location = new System.Drawing.Point(663, 50);
+            this.btnAddCart.Name = "btnAddCart";
+            this.btnAddCart.Size = new System.Drawing.Size(63, 41);
+            this.btnAddCart.TabIndex = 9;
+            this.btnAddCart.Text = "Add to Cart";
+            this.btnAddCart.UseVisualStyleBackColor = true;
+            this.btnAddCart.Click += new System.EventHandler(this.btnAddCart_Click);
+            // 
+            // dataBooks
+            // 
+            this.dataBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataBooks.Location = new System.Drawing.Point(6, 41);
+            this.dataBooks.Name = "dataBooks";
+            this.dataBooks.Size = new System.Drawing.Size(653, 150);
+            this.dataBooks.TabIndex = 8;
+            // 
+            // txtSearchBooks
+            // 
+            this.txtSearchBooks.AllowDrop = true;
+            this.txtSearchBooks.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearchBooks.Location = new System.Drawing.Point(160, 6);
+            this.txtSearchBooks.Name = "txtSearchBooks";
+            this.txtSearchBooks.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtSearchBooks.Size = new System.Drawing.Size(483, 26);
+            this.txtSearchBooks.TabIndex = 7;
+            // 
+            // lblSearch
+            // 
+            this.lblSearch.AutoSize = true;
+            this.lblSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSearch.Location = new System.Drawing.Point(74, 7);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(80, 25);
+            this.lblSearch.TabIndex = 6;
+            this.lblSearch.Text = "Search";
+            // 
+            // btnSignOut
+            // 
+            this.btnSignOut.Location = new System.Drawing.Point(645, 12);
+            this.btnSignOut.Name = "btnSignOut";
+            this.btnSignOut.Size = new System.Drawing.Size(75, 23);
+            this.btnSignOut.TabIndex = 1;
+            this.btnSignOut.Text = "Sign Out";
+            this.btnSignOut.UseVisualStyleBackColor = true;
+            this.btnSignOut.Click += new System.EventHandler(this.btnSignOut_Click);
+            // 
+            // tabVoucher
+            // 
+            this.tabVoucher.Controls.Add(this.groupVoucher);
+            this.tabVoucher.Controls.Add(this.dataVoucher);
+            this.tabVoucher.Location = new System.Drawing.Point(4, 22);
+            this.tabVoucher.Name = "tabVoucher";
+            this.tabVoucher.Padding = new System.Windows.Forms.Padding(3);
+            this.tabVoucher.Size = new System.Drawing.Size(732, 418);
+            this.tabVoucher.TabIndex = 6;
+            this.tabVoucher.Text = "Voucher";
+            this.tabVoucher.UseVisualStyleBackColor = true;
+            // 
+            // dataVoucher
+            // 
+            this.dataVoucher.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataVoucher.Location = new System.Drawing.Point(6, 6);
+            this.dataVoucher.Name = "dataVoucher";
+            this.dataVoucher.Size = new System.Drawing.Size(723, 242);
+            this.dataVoucher.TabIndex = 0;
+            // 
+            // groupVoucher
+            // 
+            this.groupVoucher.Controls.Add(this.voucherQtyNum);
+            this.groupVoucher.Controls.Add(this.lblVoucherQty);
+            this.groupVoucher.Controls.Add(this.btnAddVoucher);
+            this.groupVoucher.Controls.Add(this.numericUpDown1);
+            this.groupVoucher.Controls.Add(this.lblAmount);
+            this.groupVoucher.Location = new System.Drawing.Point(8, 254);
+            this.groupVoucher.Name = "groupVoucher";
+            this.groupVoucher.Size = new System.Drawing.Size(364, 155);
+            this.groupVoucher.TabIndex = 1;
+            this.groupVoucher.TabStop = false;
+            this.groupVoucher.Text = "Voucher Details";
+            // 
+            // lblAmount
+            // 
+            this.lblAmount.AutoSize = true;
+            this.lblAmount.Location = new System.Drawing.Point(34, 43);
+            this.lblAmount.Name = "lblAmount";
+            this.lblAmount.Size = new System.Drawing.Size(43, 13);
+            this.lblAmount.TabIndex = 0;
+            this.lblAmount.Text = "Amount";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Increment = new decimal(new int[] {
+            10000,
             0,
             0,
             0});
-            this.qtyCashierNum.Minimum = new decimal(new int[] {
+            this.numericUpDown1.Location = new System.Drawing.Point(95, 41);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.TabIndex = 1;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            // 
+            // btnAddVoucher
+            // 
+            this.btnAddVoucher.Location = new System.Drawing.Point(231, 98);
+            this.btnAddVoucher.Name = "btnAddVoucher";
+            this.btnAddVoucher.Size = new System.Drawing.Size(116, 36);
+            this.btnAddVoucher.TabIndex = 2;
+            this.btnAddVoucher.Text = "Create Voucher";
+            this.btnAddVoucher.UseVisualStyleBackColor = true;
+            this.btnAddVoucher.Click += new System.EventHandler(this.btnAddVoucher_Click);
+            // 
+            // lblVoucherQty
+            // 
+            this.lblVoucherQty.AutoSize = true;
+            this.lblVoucherQty.Location = new System.Drawing.Point(34, 71);
+            this.lblVoucherQty.Name = "lblVoucherQty";
+            this.lblVoucherQty.Size = new System.Drawing.Size(46, 13);
+            this.lblVoucherQty.TabIndex = 3;
+            this.lblVoucherQty.Text = "Quantity";
+            // 
+            // voucherQtyNum
+            // 
+            this.voucherQtyNum.Increment = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.voucherQtyNum.Location = new System.Drawing.Point(95, 69);
+            this.voucherQtyNum.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.qtyCashierNum.Name = "qtyCashierNum";
-            this.qtyCashierNum.Size = new System.Drawing.Size(62, 20);
-            this.qtyCashierNum.TabIndex = 18;
-            this.qtyCashierNum.Value = new decimal(new int[] {
-            1,
+            this.voucherQtyNum.Name = "voucherQtyNum";
+            this.voucherQtyNum.Size = new System.Drawing.Size(120, 20);
+            this.voucherQtyNum.TabIndex = 4;
+            this.voucherQtyNum.Value = new decimal(new int[] {
+            100,
             0,
             0,
             0});
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(663, 269);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(63, 43);
-            this.btnDelete.TabIndex = 21;
-            this.btnDelete.Text = "Remove Item";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // Admin_MainMenu
             // 
@@ -1233,9 +1358,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataTrHeader)).EndInit();
             this.tabCashier.ResumeLayout(false);
             this.tabCashier.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataBooks)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataCart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.qtyCashierNum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataCart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataBooks)).EndInit();
+            this.tabVoucher.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataVoucher)).EndInit();
+            this.groupVoucher.ResumeLayout(false);
+            this.groupVoucher.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.voucherQtyNum)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1334,5 +1465,13 @@
         private System.Windows.Forms.Label lblQty;
         private System.Windows.Forms.NumericUpDown qtyCashierNum;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.TabPage tabVoucher;
+        private System.Windows.Forms.GroupBox groupVoucher;
+        private System.Windows.Forms.NumericUpDown voucherQtyNum;
+        private System.Windows.Forms.Label lblVoucherQty;
+        private System.Windows.Forms.Button btnAddVoucher;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label lblAmount;
+        private System.Windows.Forms.DataGridView dataVoucher;
     }
 }

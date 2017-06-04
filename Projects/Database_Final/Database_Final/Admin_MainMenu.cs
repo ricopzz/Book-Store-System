@@ -317,6 +317,14 @@ namespace Database_Final
                 tabTransaction.Dispose();
                 tabRequest.Dispose();
             }
+            else if (position.Equals("Cashier"))
+            {
+                tabPublisher.Dispose();
+                tabBooks.Dispose();
+                tabTransaction.Dispose();
+                tabRequest.Dispose();
+                tabAccount.Dispose();
+            }
             
             groupBoxPublisher.Enabled = false;
             groupBoxAccount.Enabled = false;
@@ -495,15 +503,22 @@ namespace Database_Final
             }
             else
             {
-                String id = dataAccount.CurrentRow.Cells[0].Value.ToString();
-                var query = from c in ent.Staffs
-                            where c.Staff_ID.Equals(id)
-                            select c;
-                ent.Staffs.Remove(query.First());
-                ent.SaveChanges();
-                MessageBox.Show("Staff deleted!");
-                groupBoxAccount.Enabled = false;
-                refreshStaffData();
+                try
+                {
+                    String id = dataAccount.CurrentRow.Cells[0].Value.ToString();
+                    var query = from c in ent.Staffs
+                                where c.Staff_ID.Equals(id)
+                                select c;
+                    ent.Staffs.Remove(query.First());
+                    ent.SaveChanges();
+                    MessageBox.Show("Staff deleted!");
+                    groupBoxAccount.Enabled = false;
+                    refreshStaffData();
+                }
+                catch
+                {
+                    MessageBox.Show("You can not remove yourself!");
+                }
             }
         }
 
@@ -557,7 +572,7 @@ namespace Database_Final
                     }
                     catch
                     {
-                        MessageBox.Show("Staff uesrname or email has been uesd!");
+                        MessageBox.Show("Staff username or email has been used!");
                     }
                 }
             }
@@ -599,7 +614,7 @@ namespace Database_Final
                     }
                     catch
                     {
-                        MessageBox.Show("Staff uesrname or email has been uesd!");
+                        MessageBox.Show("Staff username or email has been used!");
                     }
                 }
             }
@@ -996,6 +1011,19 @@ namespace Database_Final
                 rbCreditCard.Checked = false;
                 btnCheckout.Enabled = false;
             }
+        }
+
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        private void btnAddVoucher_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

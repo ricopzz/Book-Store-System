@@ -93,6 +93,13 @@
           <Property Name="Transaction_Date" Type="date" Nullable="false" />
           <Property Name="Request_ID" Type="char" MaxLength="7" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'BookStoreDB.dbo.Voucher' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Voucher">
+          <Property Name="Voucher_Code" Type="varchar" MaxLength="15" />
+          <Property Name="Amount" Type="int" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+        </EntityType>-->
         <Association Name="FK__CustomerR__Custo__34C8D9D1">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
