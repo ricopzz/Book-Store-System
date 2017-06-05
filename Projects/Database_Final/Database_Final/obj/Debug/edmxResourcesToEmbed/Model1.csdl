@@ -28,8 +28,8 @@
     <Property Name="Publisher_ID" Type="String" MaxLength="7" FixedLength="true" Unicode="false" Nullable="false" />
     <Property Name="Category" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Stock_Qty" Type="Int32" />
-    <Property Name="Price" Type="Int32" />
-    <Property Name="Date_Publish" Type="DateTime" Precision="0" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Date_Publish" Type="DateTime" Precision="0" Nullable="false" />
     <Property Name="Image_URL" Type="String" MaxLength="750" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Publisher" Relationship="Self.FK__Product__Publish__37A5467C" FromRole="Product" ToRole="Publisher" />
     <NavigationProperty Name="CustomerRequestDetails" Relationship="BookStoreDBModel.FK__CustomerR__Produ__6477ECF3" FromRole="Product" ToRole="CustomerRequestDetail" />
@@ -56,7 +56,7 @@
     <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Birth_Date" Type="DateTime" Nullable="false" Precision="0" />
     <NavigationProperty Name="CustomerRequestHeaders" Relationship="BookStoreDBModel.FK__CustomerR__Staff__60A75C0F" FromRole="Staff" ToRole="CustomerRequestHeader" />
   </EntityType>
@@ -222,7 +222,7 @@
     </Key>
     <Property Name="Voucher_Code" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
     <Property Name="Amount" Type="Int32" Nullable="false" />
-    <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Claimed_By" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="Customer" Relationship="BookStoreDBModel.FK_Voucher_Customer" FromRole="Voucher" ToRole="Customer" />
   </EntityType>

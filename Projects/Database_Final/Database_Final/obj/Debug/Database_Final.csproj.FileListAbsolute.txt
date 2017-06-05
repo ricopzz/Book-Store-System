@@ -93,3 +93,4 @@ C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\De
 C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.csproj.GenerateResource.Cache
 C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.exe
 C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.pdb
+C:\Users\enric\Documents\bookstore\Projects\Database_Final\Database_Final\obj\Debug\Database_Final.Change_Password.resources

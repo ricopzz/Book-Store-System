@@ -60,11 +60,12 @@
             this.dataCart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataCart.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataCart.Location = new System.Drawing.Point(8, 31);
-            this.dataCart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataCart.Margin = new System.Windows.Forms.Padding(2);
             this.dataCart.Name = "dataCart";
             this.dataCart.RowTemplate.Height = 28;
             this.dataCart.Size = new System.Drawing.Size(664, 241);
             this.dataCart.TabIndex = 0;
+            this.dataCart.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataCart_CellContentClick);
             // 
             // groupInvoice
             // 
@@ -74,9 +75,9 @@
             this.groupInvoice.Controls.Add(this.lblRequestID);
             this.groupInvoice.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupInvoice.Location = new System.Drawing.Point(8, 276);
-            this.groupInvoice.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupInvoice.Margin = new System.Windows.Forms.Padding(2);
             this.groupInvoice.Name = "groupInvoice";
-            this.groupInvoice.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupInvoice.Padding = new System.Windows.Forms.Padding(2);
             this.groupInvoice.Size = new System.Drawing.Size(299, 105);
             this.groupInvoice.TabIndex = 1;
             this.groupInvoice.TabStop = false;
@@ -86,7 +87,7 @@
             // 
             this.txtRequestDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtRequestDate.Location = new System.Drawing.Point(121, 60);
-            this.txtRequestDate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRequestDate.Margin = new System.Windows.Forms.Padding(2);
             this.txtRequestDate.Name = "txtRequestDate";
             this.txtRequestDate.Size = new System.Drawing.Size(153, 20);
             this.txtRequestDate.TabIndex = 6;
@@ -106,7 +107,7 @@
             // 
             this.txtRequestID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtRequestID.Location = new System.Drawing.Point(121, 31);
-            this.txtRequestID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtRequestID.Margin = new System.Windows.Forms.Padding(2);
             this.txtRequestID.Name = "txtRequestID";
             this.txtRequestID.Size = new System.Drawing.Size(153, 20);
             this.txtRequestID.TabIndex = 5;
@@ -131,9 +132,9 @@
             this.groupPayment.Controls.Add(this.lblPaymentType);
             this.groupPayment.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupPayment.Location = new System.Drawing.Point(311, 276);
-            this.groupPayment.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupPayment.Margin = new System.Windows.Forms.Padding(2);
             this.groupPayment.Name = "groupPayment";
-            this.groupPayment.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupPayment.Padding = new System.Windows.Forms.Padding(2);
             this.groupPayment.Size = new System.Drawing.Size(293, 167);
             this.groupPayment.TabIndex = 2;
             this.groupPayment.TabStop = false;
@@ -143,7 +144,7 @@
             // 
             this.txtCardNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCardNumber.Location = new System.Drawing.Point(122, 88);
-            this.txtCardNumber.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtCardNumber.Margin = new System.Windows.Forms.Padding(2);
             this.txtCardNumber.MaxLength = 16;
             this.txtCardNumber.Name = "txtCardNumber";
             this.txtCardNumber.Size = new System.Drawing.Size(153, 20);
@@ -155,7 +156,7 @@
             this.rbCreditCard.AutoSize = true;
             this.rbCreditCard.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbCreditCard.Location = new System.Drawing.Point(122, 51);
-            this.rbCreditCard.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rbCreditCard.Margin = new System.Windows.Forms.Padding(2);
             this.rbCreditCard.Name = "rbCreditCard";
             this.rbCreditCard.Size = new System.Drawing.Size(77, 17);
             this.rbCreditCard.TabIndex = 3;
@@ -169,7 +170,7 @@
             this.rbStoreCredit.AutoSize = true;
             this.rbStoreCredit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rbStoreCredit.Location = new System.Drawing.Point(122, 31);
-            this.rbStoreCredit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rbStoreCredit.Margin = new System.Windows.Forms.Padding(2);
             this.rbStoreCredit.Name = "rbStoreCredit";
             this.rbStoreCredit.Size = new System.Drawing.Size(80, 17);
             this.rbStoreCredit.TabIndex = 2;
@@ -214,7 +215,7 @@
             // txtBalance
             // 
             this.txtBalance.Location = new System.Drawing.Point(624, 8);
-            this.txtBalance.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtBalance.Margin = new System.Windows.Forms.Padding(2);
             this.txtBalance.Name = "txtBalance";
             this.txtBalance.Size = new System.Drawing.Size(116, 20);
             this.txtBalance.TabIndex = 4;
@@ -232,7 +233,7 @@
             // btnCheckout
             // 
             this.btnCheckout.Location = new System.Drawing.Point(607, 309);
-            this.btnCheckout.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCheckout.Margin = new System.Windows.Forms.Padding(2);
             this.btnCheckout.Name = "btnCheckout";
             this.btnCheckout.Size = new System.Drawing.Size(131, 47);
             this.btnCheckout.TabIndex = 6;
@@ -243,7 +244,7 @@
             // btnCancel
             // 
             this.btnCancel.Location = new System.Drawing.Point(608, 360);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(131, 49);
             this.btnCancel.TabIndex = 7;
@@ -254,7 +255,7 @@
             // qtyNum
             // 
             this.qtyNum.Location = new System.Drawing.Point(676, 58);
-            this.qtyNum.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.qtyNum.Margin = new System.Windows.Forms.Padding(2);
             this.qtyNum.Maximum = new decimal(new int[] {
             250,
             0,
@@ -287,7 +288,7 @@
             // btnDelete
             // 
             this.btnDelete.Location = new System.Drawing.Point(676, 121);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(63, 55);
             this.btnDelete.TabIndex = 10;
@@ -298,7 +299,7 @@
             // btnConfirm
             // 
             this.btnConfirm.Location = new System.Drawing.Point(676, 79);
-            this.btnConfirm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnConfirm.Margin = new System.Windows.Forms.Padding(2);
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(62, 25);
             this.btnConfirm.TabIndex = 11;
@@ -323,7 +324,7 @@
             this.Controls.Add(this.groupPayment);
             this.Controls.Add(this.groupInvoice);
             this.Controls.Add(this.dataCart);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Customer_Cart";
             this.Text = "Customer_Cart";
             this.Load += new System.EventHandler(this.Customer_Cart_Load);

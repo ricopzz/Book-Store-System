@@ -21,7 +21,8 @@ namespace Database_Final
         private void refreshTrHeaderData()
         {
             var query = from c in ent.Transactions
-                        select new { TransactionID = c.Transaction_ID, TransactionDate = c.Transaction_Date, RequestID = c.Request_ID, ProductID = c.Product_ID, Quantity = c.Quantity };
+                        join d in ent.Products on c.Product_ID equals d.Product_ID
+                        select new { TransactionID = c.Transaction_ID, TransactionDate = c.Transaction_Date, RequestID = c.Request_ID, BookTitle = d.Product_Title, Quantity = c.Quantity };
             dataTrHeader.DataSource = query.ToList();
         }
 
@@ -231,7 +232,7 @@ namespace Database_Final
             }
         }
 
-        private void refershCashierData()
+        private void refreshCashierData()
         {
             var query = from c in ent.Products
                         select new { BookTitle = c.Product_Title };
@@ -312,12 +313,15 @@ namespace Database_Final
                 tabAccount.Dispose();
                 tabTransaction.Dispose();
                 tabRequest.Dispose();
+                tabCashier.Dispose();
             }
             else if (position.Equals("Request"))
             {
                 tabPublisher.Dispose();
                 tabBooks.Dispose();
                 tabAccount.Dispose();
+                tabRequest.Dispose();
+                tabVoucher.Dispose();
             }
             else if (position.Equals("Manager"))
             {
@@ -343,7 +347,7 @@ namespace Database_Final
             refreshBookData();
             refreshPublisherData();
             refreshTrHeaderData();
-            refershCashierData();
+            refreshCashierData();
             refreshVoucherData();
             fillPublisherBox();
             txtStaffID.Text = getStaffID(userid);
@@ -739,6 +743,7 @@ namespace Database_Final
                         groupBoxBooks.Enabled = false;
                         enableButtons();
                         refreshBookData();
+                        refreshCashierData();
                     }
                     catch
                     {
@@ -783,6 +788,7 @@ namespace Database_Final
                         groupBoxBooks.Enabled = false;
                         enableButtons();
                         refreshBookData();
+                        refreshCashierData();
                     }
                     catch
                     {
@@ -990,13 +996,20 @@ namespace Database_Final
         {
             for(int i = 0; i < Convert.ToInt32(voucherQtyNum.Value.ToString()); i++)
             {
-                var data = new Voucher
+                try
                 {
-                    Voucher_Code = RandomString(15),
-                    Amount = Convert.ToInt32(numAmount.Value.ToString())
-                };
-                ent.Vouchers.Add(data);
-                ent.SaveChanges();
+                    var data = new Voucher
+                    {
+                        Voucher_Code = RandomString(15),
+                        Amount = Convert.ToInt32(numAmount.Value.ToString()),
+                        Status = "Not claimed"
+                    };
+                    ent.Vouchers.Add(data);
+                    ent.SaveChanges();
+                }
+                catch
+                {
+                }
             }
             refreshVoucherData();
         }

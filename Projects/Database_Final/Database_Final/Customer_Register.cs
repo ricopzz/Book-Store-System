@@ -57,6 +57,10 @@ namespace Database_Final
             {
                 MessageBox.Show("Please choose your job!");
             }
+            else if (txtPassword.TextLength < 6)
+            {
+                MessageBox.Show("Password must be more than 6 characters!");
+            }
             else
             {
                 try

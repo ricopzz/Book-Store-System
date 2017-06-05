@@ -26,8 +26,8 @@ namespace Database_Final
         public string Publisher_ID { get; set; }
         public string Category { get; set; }
         public Nullable<int> Stock_Qty { get; set; }
-        public Nullable<int> Price { get; set; }
-        public Nullable<System.DateTime> Date_Publish { get; set; }
+        public int Price { get; set; }
+        public System.DateTime Date_Publish { get; set; }
         public string Image_URL { get; set; }
     
         public virtual Publisher Publisher { get; set; }

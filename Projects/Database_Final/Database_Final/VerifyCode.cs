@@ -40,9 +40,9 @@ namespace Database_Final
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.EnableSsl = true;
             client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("cinemayosuaenrico@gmail.com", "thomasisbae");
+            client.Credentials = new System.Net.NetworkCredential("database.bookstore@gmail.com", "bookstore12");
 
-            MailMessage mm = new MailMessage("cinemayosuaenrico@gmail.com", txtEmail.Text, "Welcome to EAD Book Store!", "Welcome, here is your veification code : "+mssage);
+            MailMessage mm = new MailMessage("database.bookstore@gmail.com", txtEmail.Text, "Welcome to EAD Book Store!", "Welcome, here is your veification code : "+mssage);
             mm.BodyEncoding = UTF8Encoding.UTF8;
             mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
 
@@ -96,8 +96,8 @@ namespace Database_Final
                 emailSender(code);
                 panel2.Hide();
                 panel1.Show();
+
                 txtCode.Text = "";
-                txtEmail.Text = "";
             }
         }
     }

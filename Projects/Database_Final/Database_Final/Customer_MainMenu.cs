@@ -138,7 +138,7 @@ namespace Database_Final
             txtPublisherNew.Text = getPublisherName(data.Publisher_ID);
             txtPriceNew.Text = Convert.ToString(data.Price);
             txtCategoryNew.Text = data.Category;
-            txtPublishDateNew.Text = data.Date_Publish.Value.ToShortDateString();
+            txtPublishDateNew.Text = data.Date_Publish.ToShortDateString();
             pictureNew.ImageLocation = data.Image_URL;
             pictureNew.SizeMode = PictureBoxSizeMode.AutoSize;
         }
@@ -156,7 +156,7 @@ namespace Database_Final
             txtPublisherRec.Text = getPublisherName(data.Publisher_ID);
             txtPriceRec.Text = Convert.ToString(data.Price);
             txtCategoryRec.Text = data.Category;
-            txtPublishDateRec.Text = data.Date_Publish.Value.ToShortDateString();
+            txtPublishDateRec.Text = data.Date_Publish.ToShortDateString();
             pictureRec.ImageLocation = data.Image_URL;
             pictureRec.SizeMode = PictureBoxSizeMode.AutoSize;
         }
@@ -174,7 +174,7 @@ namespace Database_Final
             txtPublisher.Text = getPublisherName(data.Publisher_ID);
             txtPrice.Text = Convert.ToString(data.Price);
             txtCategory.Text = data.Category;
-            txtPublishDate.Text = data.Date_Publish.Value.ToShortDateString();
+            txtPublishDate.Text = data.Date_Publish.ToShortDateString();
             pictureBook.ImageLocation = data.Image_URL;
             pictureBook.SizeMode = PictureBoxSizeMode.AutoSize;
         }
@@ -184,7 +184,7 @@ namespace Database_Final
             DateTime monthAgo = DateTime.Now.AddDays(-30);
             var query = from c in ent.Products
                         where c.Date_Publish > monthAgo
-                        select new { BookTitle= c.Product_Title };
+                        select new { BookTitle= c.Product_Title, Price = c.Price };
             dataNewReleases.DataSource = query.ToList();
         }
         
@@ -196,7 +196,7 @@ namespace Database_Final
                 Console.WriteLine(fav);
                 var query = from c in ent.Products
                             where c.Category.Equals(fav)
-                            select new { BookTitle = c.Product_Title };
+                            select new { BookTitle = c.Product_Title, Price = c.Price };
                 Console.WriteLine(query.Count());
                 dataRecommended.DataSource = query.ToList();
             }
@@ -209,7 +209,7 @@ namespace Database_Final
         private void refreshBookData()
         {
             var query = from c in ent.Products
-                        select new { BookTitle = c.Product_Title };
+                        select new { BookTitle = c.Product_Title, Price = c.Price };
             dataBook.DataSource = query.ToList();
         }
 
@@ -253,6 +253,7 @@ namespace Database_Final
 
             query.Phone_Number = txtPhone.Text;
             query.Customer_Address = txtAddress.Text;
+            MessageBox.Show("Updated!");
         }
 
         private void btnAddCartNew_Click(object sender, EventArgs e)
@@ -324,6 +325,15 @@ namespace Database_Final
             return query.ToList().First();
         }
 
+        private string getBalance(string code)
+        {
+            var query = from c in ent.Customers
+                        where c.Customer_ID.Equals(code)
+                        select c.Balance;
+
+            return Convert.ToString(query.ToList().First());
+        }
+
         private void btnTopUp_Click(object sender, EventArgs e)
         {
             try
@@ -359,7 +369,9 @@ namespace Database_Final
                         qry.Balance += getVoucherAmount(txtVCode.Text);
                         
                         ent.SaveChanges();
-
+                        MessageBox.Show("Voucher successfully claimed");
+                        txtBalance.Refresh();
+                        txtVCode.Text = getBalance(userid);
                     }
                     catch
                     {
@@ -374,6 +386,29 @@ namespace Database_Final
             
             
             
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            var query = from c in ent.Products
+                        orderby c.Date_Publish descending
+                        select new { BookTitle = c.Product_Title, Price = c.Price };
+            dataBook.DataSource = query.ToList();
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            var query = from c in ent.Products
+                        orderby c.Product_Title
+                        select new { BookTitle = c.Product_Title, Price = c.Price };
+            dataBook.DataSource = query.ToList();
+        }
+
+        private void btnChangePassword_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+            Change_Password cpass = new Change_Password(userid, listOfPurchase);
+            cpass.Show();
         }
     }
 }

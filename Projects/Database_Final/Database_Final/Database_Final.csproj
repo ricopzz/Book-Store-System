@@ -140,6 +140,9 @@
     <EmbeddedResource Include="Admin_MainMenu.resx">
       <DependentUpon>Admin_MainMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Change_Password.resx">
+      <DependentUpon>Change_Password.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Customer_Cart.resx">
       <DependentUpon>Customer_Cart.cs</DependentUpon>
     </EmbeddedResource>

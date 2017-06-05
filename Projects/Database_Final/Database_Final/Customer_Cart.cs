@@ -203,8 +203,8 @@ namespace Database_Final
                             ent.SaveChanges();
                             MessageBox.Show("Your order will be processed soon. Thanks for your order!");
                             this.Hide();
-                            Login_Form login = new Login_Form();
-                            login.Show();
+                            Customer_MainMenu menu = new Customer_MainMenu(userid);
+                            menu.Show();
                         }
                         else
                         {
@@ -242,8 +242,8 @@ namespace Database_Final
                         }
                         MessageBox.Show("Your order will be processed soon. Thanks for your order!");
                         this.Hide();
-                        Login_Form login = new Login_Form();
-                        login.Show();
+                        Customer_MainMenu menu = new Customer_MainMenu(userid);
+                        menu.Show();
                     }
                 }
                 else if (dialogResult == DialogResult.No)
@@ -252,6 +252,11 @@ namespace Database_Final
                 }
             }
             
+        }
+
+        private void dataCart_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            qtyNum.ResetText();
         }
     }
 }

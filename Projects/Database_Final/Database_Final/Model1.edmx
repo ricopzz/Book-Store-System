@@ -53,8 +53,8 @@
           <Property Name="Publisher_ID" Type="char" MaxLength="7" Nullable="false" />
           <Property Name="Category" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Stock_Qty" Type="int" />
-          <Property Name="Price" Type="int" />
-          <Property Name="Date_Publish" Type="date" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="Date_Publish" Type="date" Nullable="false" />
           <Property Name="Image_URL" Type="varchar" MaxLength="750" />
         </EntityType>
         <EntityType Name="Publisher">
@@ -77,7 +77,7 @@
           <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="60" Nullable="false" />
-          <Property Name="Position" Type="varchar" MaxLength="50" />
+          <Property Name="Position" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Birth_Date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="Transactions">
@@ -98,10 +98,10 @@
           </Key>
           <Property Name="Voucher_Code" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="Amount" Type="int" Nullable="false" />
-          <Property Name="Status" Type="varchar" MaxLength="20" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Claimed_By" Type="char" MaxLength="8" />
         </EntityType>
-        <Association Name="FK__CustomerR__Custo__5FB337D6">
+        <Association Name="FK__CustomerR__Custo__38996AB5">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="CustomerRequestHeader" Type="Self.CustomerRequestHeader" Multiplicity="*" />
           <ReferentialConstraint>
@@ -113,7 +113,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CustomerR__Produ__6477ECF3">
+        <Association Name="FK__CustomerR__Produ__36B12243">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="CustomerRequestDetails" Type="Self.CustomerRequestDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -125,7 +125,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CustomerR__Reque__6383C8BA">
+        <Association Name="FK__CustomerR__Reque__37A5467C">
           <End Role="CustomerRequestHeader" Type="Self.CustomerRequestHeader" Multiplicity="1" />
           <End Role="CustomerRequestDetails" Type="Self.CustomerRequestDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -137,7 +137,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CustomerR__Staff__60A75C0F">
+        <Association Name="FK__CustomerR__Staff__398D8EEE">
           <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
           <End Role="CustomerRequestHeader" Type="Self.CustomerRequestHeader" Multiplicity="*" />
           <ReferentialConstraint>
@@ -149,7 +149,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__Publish__37A5467C">
+        <Association Name="FK__Product__Publish__3A81B327">
           <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -161,7 +161,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Produ__68487DD7">
+        <Association Name="FK__Transacti__Produ__3B75D760">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -173,7 +173,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Reque__6754599E">
+        <Association Name="FK__Transacti__Reque__3C69FB99">
           <End Role="CustomerRequestHeader" Type="Self.CustomerRequestHeader" Multiplicity="1" />
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -206,31 +206,31 @@
           <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Voucher" EntityType="Self.Voucher" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__CustomerR__Custo__5FB337D6" Association="Self.FK__CustomerR__Custo__5FB337D6">
+          <AssociationSet Name="FK__CustomerR__Custo__38996AB5" Association="Self.FK__CustomerR__Custo__38996AB5">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="CustomerRequestHeader" EntitySet="CustomerRequestHeader" />
           </AssociationSet>
-          <AssociationSet Name="FK__CustomerR__Produ__6477ECF3" Association="Self.FK__CustomerR__Produ__6477ECF3">
+          <AssociationSet Name="FK__CustomerR__Produ__36B12243" Association="Self.FK__CustomerR__Produ__36B12243">
             <End Role="Product" EntitySet="Product" />
             <End Role="CustomerRequestDetails" EntitySet="CustomerRequestDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__CustomerR__Reque__6383C8BA" Association="Self.FK__CustomerR__Reque__6383C8BA">
+          <AssociationSet Name="FK__CustomerR__Reque__37A5467C" Association="Self.FK__CustomerR__Reque__37A5467C">
             <End Role="CustomerRequestHeader" EntitySet="CustomerRequestHeader" />
             <End Role="CustomerRequestDetails" EntitySet="CustomerRequestDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK__CustomerR__Staff__60A75C0F" Association="Self.FK__CustomerR__Staff__60A75C0F">
+          <AssociationSet Name="FK__CustomerR__Staff__398D8EEE" Association="Self.FK__CustomerR__Staff__398D8EEE">
             <End Role="Staff" EntitySet="Staff" />
             <End Role="CustomerRequestHeader" EntitySet="CustomerRequestHeader" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__Publish__37A5467C" Association="Self.FK__Product__Publish__37A5467C">
+          <AssociationSet Name="FK__Product__Publish__3A81B327" Association="Self.FK__Product__Publish__3A81B327">
             <End Role="Publisher" EntitySet="Publisher" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Produ__68487DD7" Association="Self.FK__Transacti__Produ__68487DD7">
+          <AssociationSet Name="FK__Transacti__Produ__3B75D760" Association="Self.FK__Transacti__Produ__3B75D760">
             <End Role="Product" EntitySet="Product" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Reque__6754599E" Association="Self.FK__Transacti__Reque__6754599E">
+          <AssociationSet Name="FK__Transacti__Reque__3C69FB99" Association="Self.FK__Transacti__Reque__3C69FB99">
             <End Role="CustomerRequestHeader" EntitySet="CustomerRequestHeader" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
@@ -271,8 +271,8 @@
           <Property Name="Publisher_ID" Type="String" MaxLength="7" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Category" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Stock_Qty" Type="Int32" />
-          <Property Name="Price" Type="Int32" />
-          <Property Name="Date_Publish" Type="DateTime" Precision="0" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Date_Publish" Type="DateTime" Precision="0" Nullable="false" />
           <Property Name="Image_URL" Type="String" MaxLength="750" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Publisher" Relationship="Self.FK__Product__Publish__37A5467C" FromRole="Product" ToRole="Publisher" />
           <NavigationProperty Name="CustomerRequestDetails" Relationship="BookStoreDBModel.FK__CustomerR__Produ__6477ECF3" FromRole="Product" ToRole="CustomerRequestDetail" />
@@ -299,7 +299,7 @@
           <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Birth_Date" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="CustomerRequestHeaders" Relationship="BookStoreDBModel.FK__CustomerR__Staff__60A75C0F" FromRole="Staff" ToRole="CustomerRequestHeader" />
         </EntityType>
@@ -465,7 +465,7 @@
           </Key>
           <Property Name="Voucher_Code" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="Amount" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Claimed_By" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Customer" Relationship="BookStoreDBModel.FK_Voucher_Customer" FromRole="Voucher" ToRole="Customer" />
         </EntityType>
