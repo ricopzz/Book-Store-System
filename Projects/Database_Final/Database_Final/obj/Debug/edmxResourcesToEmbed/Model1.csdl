@@ -15,28 +15,9 @@
     <Property Name="Balance" Type="Int32" />
     <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="Birth_Date" Type="DateTime" Precision="0" />
-    <NavigationProperty Name="CustomerRequests" Relationship="Self.FK__CustomerR__Custo__34C8D9D1" FromRole="Customer" ToRole="CustomerRequest" />
     <Property Name="Preffered_Genre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <EntityType Name="CustomerRequest">
-    <Key>
-      <PropertyRef Name="Request_ID" />
-      <PropertyRef Name="Customer_ID" />
-      <PropertyRef Name="Product_ID" />
-    </Key>
-    <Property Name="Request_ID" Type="String" MaxLength="7" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="Customer_ID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="Product_ID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
-    <Property Name="Staff_ID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
-    <Property Name="Quantity" Type="Int32" Nullable="false" />
-    <Property Name="Request_Date" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Req_Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Customer" Relationship="Self.FK__CustomerR__Custo__34C8D9D1" FromRole="CustomerRequest" ToRole="Customer" />
-    <NavigationProperty Name="Product" Relationship="Self.FK__CustomerR__Produ__35BCFE0A" FromRole="CustomerRequest" ToRole="Product" />
-    <NavigationProperty Name="Staff" Relationship="Self.FK__CustomerR__Staff__36B12243" FromRole="CustomerRequest" ToRole="Staff" />
-    <Property Name="price" Type="Int32" />
-    <Property Name="Payment_Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="cardnumber" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CustomerRequestHeaders" Relationship="BookStoreDBModel.FK__CustomerR__Custo__5FB337D6" FromRole="Customer" ToRole="CustomerRequestHeader" />
+    <NavigationProperty Name="Vouchers" Relationship="BookStoreDBModel.FK_Voucher_Customer" FromRole="Customer" ToRole="Voucher" />
   </EntityType>
   <EntityType Name="Product">
     <Key>
@@ -50,9 +31,9 @@
     <Property Name="Price" Type="Int32" />
     <Property Name="Date_Publish" Type="DateTime" Precision="0" />
     <Property Name="Image_URL" Type="String" MaxLength="750" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="CustomerRequests" Relationship="Self.FK__CustomerR__Produ__35BCFE0A" FromRole="Product" ToRole="CustomerRequest" />
     <NavigationProperty Name="Publisher" Relationship="Self.FK__Product__Publish__37A5467C" FromRole="Product" ToRole="Publisher" />
-    <NavigationProperty Name="TransactionDetails" Relationship="BookStoreDBModel.FK__Transacti__Produ__38996AB5" FromRole="Product" ToRole="TransactionDetail" />
+    <NavigationProperty Name="CustomerRequestDetails" Relationship="BookStoreDBModel.FK__CustomerR__Produ__6477ECF3" FromRole="Product" ToRole="CustomerRequestDetail" />
+    <NavigationProperty Name="Transactions" Relationship="BookStoreDBModel.FK__Transacti__Produ__68487DD7" FromRole="Product" ToRole="Transaction" />
   </EntityType>
   <EntityType Name="Publisher">
     <Key>
@@ -77,44 +58,8 @@
     <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Birth_Date" Type="DateTime" Nullable="false" Precision="0" />
-    <NavigationProperty Name="CustomerRequests" Relationship="Self.FK__CustomerR__Staff__36B12243" FromRole="Staff" ToRole="CustomerRequest" />
+    <NavigationProperty Name="CustomerRequestHeaders" Relationship="BookStoreDBModel.FK__CustomerR__Staff__60A75C0F" FromRole="Staff" ToRole="CustomerRequestHeader" />
   </EntityType>
-  <Association Name="FK__CustomerR__Custo__34C8D9D1">
-    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-    <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customer">
-        <PropertyRef Name="Customer_ID" />
-      </Principal>
-      <Dependent Role="CustomerRequest">
-        <PropertyRef Name="Customer_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__CustomerR__Produ__35BCFE0A">
-    <End Role="Product" Type="Self.Product" Multiplicity="1" />
-    <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Product">
-        <PropertyRef Name="Product_ID" />
-      </Principal>
-      <Dependent Role="CustomerRequest">
-        <PropertyRef Name="Product_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__CustomerR__Staff__36B12243">
-    <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
-    <End Role="CustomerRequest" Type="Self.CustomerRequest" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Staff">
-        <PropertyRef Name="Staff_ID" />
-      </Principal>
-      <Dependent Role="CustomerRequest">
-        <PropertyRef Name="Staff_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__Product__Publish__37A5467C">
     <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
     <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -129,79 +74,179 @@
   </Association>
   <EntityContainer Name="BookStoreDBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Customers" EntityType="Self.Customer" />
-    <EntitySet Name="CustomerRequests" EntityType="Self.CustomerRequest" />
     <EntitySet Name="Products" EntityType="Self.Product" />
     <EntitySet Name="Publishers" EntityType="Self.Publisher" />
     <EntitySet Name="Staffs" EntityType="Self.Staff" />
-    <AssociationSet Name="FK__CustomerR__Custo__34C8D9D1" Association="Self.FK__CustomerR__Custo__34C8D9D1">
-      <End Role="Customer" EntitySet="Customers" />
-      <End Role="CustomerRequest" EntitySet="CustomerRequests" />
-    </AssociationSet>
-    <AssociationSet Name="FK__CustomerR__Produ__35BCFE0A" Association="Self.FK__CustomerR__Produ__35BCFE0A">
-      <End Role="Product" EntitySet="Products" />
-      <End Role="CustomerRequest" EntitySet="CustomerRequests" />
-    </AssociationSet>
-    <AssociationSet Name="FK__CustomerR__Staff__36B12243" Association="Self.FK__CustomerR__Staff__36B12243">
-      <End Role="Staff" EntitySet="Staffs" />
-      <End Role="CustomerRequest" EntitySet="CustomerRequests" />
-    </AssociationSet>
     <AssociationSet Name="FK__Product__Publish__37A5467C" Association="Self.FK__Product__Publish__37A5467C">
       <End Role="Publisher" EntitySet="Publishers" />
       <End Role="Product" EntitySet="Products" />
     </AssociationSet>
-    <EntitySet Name="TransactionDetails" EntityType="BookStoreDBModel.TransactionDetail" />
-    <EntitySet Name="TransactionHeaders" EntityType="BookStoreDBModel.TransactionHeader" />
-    <AssociationSet Name="FK__Transacti__Produ__38996AB5" Association="BookStoreDBModel.FK__Transacti__Produ__38996AB5">
-      <End Role="Product" EntitySet="Products" />
-      <End Role="TransactionDetail" EntitySet="TransactionDetails" />
+    <EntitySet Name="CustomerRequestDetails" EntityType="BookStoreDBModel.CustomerRequestDetail" />
+    <EntitySet Name="CustomerRequestHeaders" EntityType="BookStoreDBModel.CustomerRequestHeader" />
+    <EntitySet Name="Transactions" EntityType="BookStoreDBModel.Transaction" />
+    <AssociationSet Name="FK__CustomerR__Custo__5FB337D6" Association="BookStoreDBModel.FK__CustomerR__Custo__5FB337D6">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="CustomerRequestHeader" EntitySet="CustomerRequestHeaders" />
     </AssociationSet>
-    <AssociationSet Name="FK__Transacti__Trans__398D8EEE" Association="BookStoreDBModel.FK__Transacti__Trans__398D8EEE">
-      <End Role="TransactionHeader" EntitySet="TransactionHeaders" />
-      <End Role="TransactionDetail" EntitySet="TransactionDetails" />
+    <AssociationSet Name="FK__CustomerR__Produ__6477ECF3" Association="BookStoreDBModel.FK__CustomerR__Produ__6477ECF3">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="CustomerRequestDetail" EntitySet="CustomerRequestDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CustomerR__Reque__6383C8BA" Association="BookStoreDBModel.FK__CustomerR__Reque__6383C8BA">
+      <End Role="CustomerRequestHeader" EntitySet="CustomerRequestHeaders" />
+      <End Role="CustomerRequestDetail" EntitySet="CustomerRequestDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CustomerR__Staff__60A75C0F" Association="BookStoreDBModel.FK__CustomerR__Staff__60A75C0F">
+      <End Role="Staff" EntitySet="Staffs" />
+      <End Role="CustomerRequestHeader" EntitySet="CustomerRequestHeaders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Produ__68487DD7" Association="BookStoreDBModel.FK__Transacti__Produ__68487DD7">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="Transaction" EntitySet="Transactions" />
+    </AssociationSet>
+    <EntitySet Name="Vouchers" EntityType="BookStoreDBModel.Voucher" />
+    <AssociationSet Name="FK_Voucher_Customer" Association="BookStoreDBModel.FK_Voucher_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="Voucher" EntitySet="Vouchers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Reque__6754599E" Association="BookStoreDBModel.FK__Transacti__Reque__6754599E">
+      <End Role="CustomerRequestHeader" EntitySet="CustomerRequestHeaders" />
+      <End Role="Transaction" EntitySet="Transactions" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="TransactionDetail">
+  <EntityType Name="CustomerRequestDetail">
     <Key>
-      <PropertyRef Name="Transaction_ID" />
+      <PropertyRef Name="Request_ID" />
       <PropertyRef Name="Product_ID" />
     </Key>
-    <Property Name="Transaction_ID" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Request_ID" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="false" />
     <Property Name="Product_ID" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
     <Property Name="Quantity" Type="Int32" Nullable="false" />
     <Property Name="Price" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Product" Relationship="BookStoreDBModel.FK__Transacti__Produ__38996AB5" FromRole="TransactionDetail" ToRole="Product" />
-    <NavigationProperty Name="TransactionHeader" Relationship="BookStoreDBModel.FK__Transacti__Trans__398D8EEE" FromRole="TransactionDetail" ToRole="TransactionHeader" />
+    <NavigationProperty Name="Product" Relationship="BookStoreDBModel.FK__CustomerR__Produ__6477ECF3" FromRole="CustomerRequestDetail" ToRole="Product" />
+    <NavigationProperty Name="CustomerRequestHeader" Relationship="BookStoreDBModel.FK__CustomerR__Reque__6383C8BA" FromRole="CustomerRequestDetail" ToRole="CustomerRequestHeader" />
+    <Property Name="Req_Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
   </EntityType>
-  <EntityType Name="TransactionHeader">
+  <EntityType Name="CustomerRequestHeader">
+    <Key>
+      <PropertyRef Name="Request_ID" />
+    </Key>
+    <Property Name="Request_ID" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="false" />
+    <Property Name="Customer_ID" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Staff_ID" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+    <Property Name="Request_Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Payment_Type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="cardnumber" Type="String" MaxLength="160" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customer" Relationship="BookStoreDBModel.FK__CustomerR__Custo__5FB337D6" FromRole="CustomerRequestHeader" ToRole="Customer" />
+    <NavigationProperty Name="CustomerRequestDetails" Relationship="BookStoreDBModel.FK__CustomerR__Reque__6383C8BA" FromRole="CustomerRequestHeader" ToRole="CustomerRequestDetail" />
+    <NavigationProperty Name="Staff" Relationship="BookStoreDBModel.FK__CustomerR__Staff__60A75C0F" FromRole="CustomerRequestHeader" ToRole="Staff" />
+    <NavigationProperty Name="Transactions" Relationship="BookStoreDBModel.FK__Transacti__Reque__6754599E" FromRole="CustomerRequestHeader" ToRole="Transaction" />
+  </EntityType>
+  <EntityType Name="Transaction">
     <Key>
       <PropertyRef Name="Transaction_ID" />
+      <PropertyRef Name="Request_ID" />
+      <PropertyRef Name="Product_ID" />
     </Key>
     <Property Name="Transaction_ID" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
     <Property Name="Transaction_Date" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="Request_ID" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="false" />
-    <NavigationProperty Name="TransactionDetails" Relationship="BookStoreDBModel.FK__Transacti__Trans__398D8EEE" FromRole="TransactionHeader" ToRole="TransactionDetail" />
+    <Property Name="Product_ID" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="BookStoreDBModel.FK__Transacti__Produ__68487DD7" FromRole="Transaction" ToRole="Product" />
+    <NavigationProperty Name="CustomerRequestHeader" Relationship="BookStoreDBModel.FK__Transacti__Reque__6754599E" FromRole="Transaction" ToRole="CustomerRequestHeader" />
   </EntityType>
-  <Association Name="FK__Transacti__Produ__38996AB5">
+  <Association Name="FK__CustomerR__Custo__5FB337D6">
+    <End Type="BookStoreDBModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="BookStoreDBModel.CustomerRequestHeader" Role="CustomerRequestHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Customer_ID" />
+      </Principal>
+      <Dependent Role="CustomerRequestHeader">
+        <PropertyRef Name="Customer_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CustomerR__Produ__6477ECF3">
     <End Type="BookStoreDBModel.Product" Role="Product" Multiplicity="1" />
-    <End Type="BookStoreDBModel.TransactionDetail" Role="TransactionDetail" Multiplicity="*" />
+    <End Type="BookStoreDBModel.CustomerRequestDetail" Role="CustomerRequestDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Product">
         <PropertyRef Name="Product_ID" />
       </Principal>
-      <Dependent Role="TransactionDetail">
+      <Dependent Role="CustomerRequestDetail">
         <PropertyRef Name="Product_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Transacti__Trans__398D8EEE">
-    <End Type="BookStoreDBModel.TransactionHeader" Role="TransactionHeader" Multiplicity="1" />
-    <End Type="BookStoreDBModel.TransactionDetail" Role="TransactionDetail" Multiplicity="*" />
+  <Association Name="FK__CustomerR__Reque__6383C8BA">
+    <End Type="BookStoreDBModel.CustomerRequestHeader" Role="CustomerRequestHeader" Multiplicity="1" />
+    <End Type="BookStoreDBModel.CustomerRequestDetail" Role="CustomerRequestDetail" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="TransactionHeader">
-        <PropertyRef Name="Transaction_ID" />
+      <Principal Role="CustomerRequestHeader">
+        <PropertyRef Name="Request_ID" />
       </Principal>
-      <Dependent Role="TransactionDetail">
-        <PropertyRef Name="Transaction_ID" />
+      <Dependent Role="CustomerRequestDetail">
+        <PropertyRef Name="Request_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CustomerR__Staff__60A75C0F">
+    <End Type="BookStoreDBModel.Staff" Role="Staff" Multiplicity="0..1" />
+    <End Type="BookStoreDBModel.CustomerRequestHeader" Role="CustomerRequestHeader" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="Staff_ID" />
+      </Principal>
+      <Dependent Role="CustomerRequestHeader">
+        <PropertyRef Name="Staff_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Produ__68487DD7">
+    <End Type="BookStoreDBModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="BookStoreDBModel.Transaction" Role="Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Product_ID" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="Product_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Voucher">
+    <Key>
+      <PropertyRef Name="Voucher_Code" />
+    </Key>
+    <Property Name="Voucher_Code" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Claimed_By" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Customer" Relationship="BookStoreDBModel.FK_Voucher_Customer" FromRole="Voucher" ToRole="Customer" />
+  </EntityType>
+  <Association Name="FK_Voucher_Customer">
+    <End Type="BookStoreDBModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="BookStoreDBModel.Voucher" Role="Voucher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Customer_ID" />
+      </Principal>
+      <Dependent Role="Voucher">
+        <PropertyRef Name="Claimed_By" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Reque__6754599E">
+    <End Type="BookStoreDBModel.CustomerRequestHeader" Role="CustomerRequestHeader" Multiplicity="1" />
+    <End Type="BookStoreDBModel.Transaction" Role="Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerRequestHeader">
+        <PropertyRef Name="Request_ID" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="Request_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

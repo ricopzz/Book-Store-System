@@ -26,11 +26,12 @@ namespace Database_Final
         }
     
         public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<CustomerRequest> CustomerRequests { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Publisher> Publishers { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
-        public virtual DbSet<TransactionDetail> TransactionDetails { get; set; }
-        public virtual DbSet<TransactionHeader> TransactionHeaders { get; set; }
+        public virtual DbSet<CustomerRequestDetail> CustomerRequestDetails { get; set; }
+        public virtual DbSet<CustomerRequestHeader> CustomerRequestHeaders { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<Voucher> Vouchers { get; set; }
     }
 }

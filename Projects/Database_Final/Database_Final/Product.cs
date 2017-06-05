@@ -17,8 +17,8 @@ namespace Database_Final
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.CustomerRequests = new HashSet<CustomerRequest>();
-            this.TransactionDetails = new HashSet<TransactionDetail>();
+            this.CustomerRequestDetails = new HashSet<CustomerRequestDetail>();
+            this.Transactions = new HashSet<Transaction>();
         }
     
         public string Product_ID { get; set; }
@@ -30,10 +30,10 @@ namespace Database_Final
         public Nullable<System.DateTime> Date_Publish { get; set; }
         public string Image_URL { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerRequest> CustomerRequests { get; set; }
         public virtual Publisher Publisher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TransactionDetail> TransactionDetails { get; set; }
+        public virtual ICollection<CustomerRequestDetail> CustomerRequestDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

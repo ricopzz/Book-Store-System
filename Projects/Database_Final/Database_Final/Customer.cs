@@ -17,7 +17,8 @@ namespace Database_Final
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
-            this.CustomerRequests = new HashSet<CustomerRequest>();
+            this.CustomerRequestHeaders = new HashSet<CustomerRequestHeader>();
+            this.Vouchers = new HashSet<Voucher>();
         }
     
         public string Customer_ID { get; set; }
@@ -34,6 +35,8 @@ namespace Database_Final
         public string Preffered_Genre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerRequest> CustomerRequests { get; set; }
+        public virtual ICollection<CustomerRequestHeader> CustomerRequestHeaders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Voucher> Vouchers { get; set; }
     }
 }

@@ -102,5 +102,10 @@ namespace Database_Final
             this.Hide();
             loginForm.Show();
         }
+
+        private void Customer_Register_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

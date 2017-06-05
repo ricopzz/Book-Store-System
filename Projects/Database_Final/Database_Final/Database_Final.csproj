@@ -60,10 +60,19 @@
     <Compile Include="Admin_MainMenu.Designer.cs">
       <DependentUpon>Admin_MainMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Change_Password.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Change_Password.Designer.cs">
+      <DependentUpon>Change_Password.cs</DependentUpon>
+    </Compile>
     <Compile Include="Customer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="CustomerRequest.cs">
+    <Compile Include="CustomerRequestDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerRequestHeader.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Customer_Cart.cs">
@@ -116,10 +125,7 @@
     <Compile Include="Staff.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="TransactionDetail.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TransactionHeader.cs">
+    <Compile Include="Transaction.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="VerifyCode.cs">
@@ -127,6 +133,9 @@
     </Compile>
     <Compile Include="VerifyCode.Designer.cs">
       <DependentUpon>VerifyCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Voucher.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Admin_MainMenu.resx">
       <DependentUpon>Admin_MainMenu.cs</DependentUpon>

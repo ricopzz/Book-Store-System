@@ -22,7 +22,7 @@ namespace Database_Final
             this.userid = userid;
         }
 
-        private string getBook(string code)
+        private string getBookTitle(string code)
         {
             var query = from c in ent.Products
                         where c.Product_ID.Equals(code)
@@ -49,9 +49,12 @@ namespace Database_Final
 
         private void refreshHistoryData(string code)
         {
-            var query = from c in ent.CustomerRequests
-                        where c.Customer_ID.Equals(code)
-                        select new { InvoiceID = c.Request_ID, Date = c.Request_Date, Title = c.Product_ID, Quantity = c.Quantity, Price = c.price, Status = c.Req_Status };
+            var query = from c in ent.CustomerRequestDetails
+                        join e in ent.CustomerRequestHeaders on c.Request_ID equals e.Request_ID
+                        join d in ent.Products on c.Product_ID equals d.Product_ID
+                        join f in ent.Transactions on c.Request_ID equals f.Request_ID
+                        where e.Customer_ID.Equals(code)
+                        select new { InvoiceID = c.Request_ID, Title = d.Product_Title, Quantity = f.Quantity, Price = c.Price, Status = c.Req_Status };
             dataHistory.DataSource = query.ToList();
         }
 
@@ -71,11 +74,12 @@ namespace Database_Final
             refreshNewReleasesData();
             refreshBookData();
             refreshRecommendedData();
-            refreshHistoryData(userid);
+            //refreshHistoryData(userid);
             groupAccountDetails.Enabled = false;
             lblWelcome.Text = "Welcome, " + getCustName(userid);
             rbFemale.Enabled = false;
             rbMale.Enabled = false;
+            refreshHistoryData(userid);
         }
 
         private string getFavouriteCategory(string code)
@@ -310,6 +314,66 @@ namespace Database_Final
             {
 
             }
+        }
+
+        private int getVoucherAmount(string code)
+        {
+            var query = from c in ent.Vouchers
+                        where c.Voucher_Code.Equals(code)
+                        select c.Amount;
+            return query.ToList().First();
+        }
+
+        private void btnTopUp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var q = from c in ent.Vouchers
+                        where c.Voucher_Code.Equals(txtVCode.Text)
+                        select c.Status;
+                
+                if (q.ToList().Count == 0)
+                {
+                    MessageBox.Show("Voucer code is not valid!");
+                }
+                else if (q.ToList().First().Equals("Claimed"))
+                {
+                    MessageBox.Show("Voucher code is already claimed!");
+                }
+                else
+                {
+                    try
+                    {
+                        var query = (from c in ent.Vouchers
+                                     where c.Voucher_Code.Equals(txtVCode.Text)
+                                     select c).First();
+                        query.Status = "Claimed";
+                        query.Claimed_By = userid;
+                        ent.SaveChanges();
+
+                        var qry = (from c in ent.Customers
+                                   where c.Customer_ID.Equals(userid)
+                                   select c).First();
+                        Console.WriteLine(getVoucherAmount(txtVCode.Text));
+                        Console.WriteLine(qry.Balance);
+                        qry.Balance += getVoucherAmount(txtVCode.Text);
+                        
+                        ent.SaveChanges();
+
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Voucher code is not valid!");
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Voucher Code is already used!");
+            }
+            
+            
+            
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Database_Final
         {
             try
             {
-                var query = from c in ent.CustomerRequests
+                var query = from c in ent.CustomerRequestHeaders
                             orderby c.Request_ID
                             select c.Request_ID;
                 string code = query.ToList().Last();
@@ -168,23 +168,31 @@ namespace Database_Final
                     {
                         if (Convert.ToInt32(txtBalance.Text) > sum)
                         {
+                            var data = new CustomerRequestHeader
+                            {
+                                Request_ID = txtRequestID.Text,
+                                Customer_ID = userid,
+                                Request_Date = DateTime.Now,
+                                Payment_Type = "Store Credit",
+                                cardnumber = null
+                            };
+                            ent.CustomerRequestHeaders.Add(data);
+                            ent.SaveChanges();
+
                             for (int i = 0; i < purchasecart.Count; i++)
                             {
                                 Console.WriteLine(purchasecart[i]);
                                 Console.WriteLine(getProductID(purchasecart[i]));
-                                var data = new CustomerRequest
+
+                                var detaildata = new CustomerRequestDetail
                                 {
                                     Request_ID = txtRequestID.Text,
-                                    Customer_ID = userid,
-                                    Req_Status = "REQUESTED",
-                                    Request_Date = DateTime.Now,
                                     Product_ID = getProductID(purchasecart[i]),
-                                    Quantity = Convert.ToInt32(dataCart.CurrentRow.Cells[1].Value.ToString()),
-                                    price = getPrice(purchasecart[i]),
-                                    Payment_Type = "Store Credit",
-                                    cardnumber = null
+                                    Req_Status = "REQUESTED",
+                                    Quantity = Convert.ToInt32(dataCart.Rows[i].Cells[1].Value.ToString()),
+                                    Price = getPrice(purchasecart[i])
                                 };
-                                ent.CustomerRequests.Add(data);
+                                ent.CustomerRequestDetails.Add(detaildata);
                                 ent.SaveChanges();
                             }
                             var query = (from c in ent.Customers
@@ -192,7 +200,7 @@ namespace Database_Final
                                         select c).First();
 
                             query.Balance = Convert.ToInt32(getCustomerBalance(userid)) - sum;
-
+                            ent.SaveChanges();
                             MessageBox.Show("Your order will be processed soon. Thanks for your order!");
                             this.Hide();
                             Login_Form login = new Login_Form();
@@ -205,23 +213,31 @@ namespace Database_Final
                     }
                     else
                     {
+                        var data = new CustomerRequestHeader
+                        {
+                            Request_ID = txtRequestID.Text,
+                            Customer_ID = userid,
+                            Request_Date = DateTime.Now,
+                            Payment_Type = "Credit Card",
+                            cardnumber = txtCardNumber.Text
+                        };
+                        ent.CustomerRequestHeaders.Add(data);
+                        ent.SaveChanges();
+
                         for (int i = 0; i < purchasecart.Count; i++)
                         {
                             Console.WriteLine(purchasecart[i]);
                             Console.WriteLine(getProductID(purchasecart[i]));
-                            var data = new CustomerRequest
+
+                            var detaildata = new CustomerRequestDetail
                             {
                                 Request_ID = txtRequestID.Text,
-                                Customer_ID = userid,
-                                Req_Status = "REQUESTED",
-                                Request_Date = DateTime.Now,
                                 Product_ID = getProductID(purchasecart[i]),
-                                Quantity = Convert.ToInt32(dataCart.CurrentRow.Cells[1].Value.ToString()),
-                                price = getPrice(purchasecart[i]),
-                                Payment_Type = "Credit Card",
-                                cardnumber = txtCardNumber.Text
+                                Req_Status = "REQUESTED",
+                                Quantity = Convert.ToInt32(dataCart.Rows[i].Cells[1].Value.ToString()),
+                                Price = getPrice(purchasecart[i])
                             };
-                            ent.CustomerRequests.Add(data);
+                            ent.CustomerRequestDetails.Add(detaildata);
                             ent.SaveChanges();
                         }
                         MessageBox.Show("Your order will be processed soon. Thanks for your order!");

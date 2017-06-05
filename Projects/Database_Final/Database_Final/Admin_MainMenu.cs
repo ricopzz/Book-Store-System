@@ -20,16 +20,9 @@ namespace Database_Final
 
         private void refreshTrHeaderData()
         {
-            var query = from c in ent.TransactionHeaders
-                        select new { TransactionID = c.Transaction_ID, TransactionDate = c.Transaction_Date, RequestID = c.Request_ID };
+            var query = from c in ent.Transactions
+                        select new { TransactionID = c.Transaction_ID, TransactionDate = c.Transaction_Date, RequestID = c.Request_ID, ProductID = c.Product_ID, Quantity = c.Quantity };
             dataTrHeader.DataSource = query.ToList();
-        }
-
-        private void refreshTrDetailsData()
-        {
-            var query = from c in ent.TransactionDetails
-                        select new { TransactionID = c.Transaction_ID, ProductID = c.Product_ID, Quantity = c.Quantity, Price = c.Price };
-            dataTrDetails.DataSource = query.ToList();
         }
 
         private string getStaffID(string code)
@@ -50,12 +43,28 @@ namespace Database_Final
 
         private void refreshRequestData()
         {
-            var query = from c in ent.CustomerRequests
-                        where c.Req_Status.Equals("REQUESTED")
-                        || c.Req_Status.Equals("Accepted")
-                        || c.Req_Status.Equals("On Process")
-                        select new { RequestID = c.Request_ID, CustomerID = c.Customer_ID, ProductID = c.Product_ID, StaffID = c.Staff_ID, Quantity = c.Quantity, RequestDate = c.Request_Date, Status = c.Req_Status, PaymentType = c.Payment_Type, Price = c.price };
-            dataRequest.DataSource = query.ToList();
+            if (checkBox1.Checked == true)
+            {
+                groupManageReq.Enabled = false;
+                var q = from c in ent.CustomerRequestDetails
+                            join d in ent.CustomerRequestHeaders on c.Request_ID equals d.Request_ID
+                            join e in ent.Products on c.Product_ID equals e.Product_ID
+                            select new { RequestID = c.Request_ID, CustomerID = d.Customer_ID, StaffName = d.Staff_ID, RequestDate = d.Request_Date, Status = c.Req_Status, PaymentType = d.Payment_Type, BookTitle = e.Product_Title, Quantity = c.Quantity };
+                dataRequest.DataSource = q.ToList();
+            }
+            else
+            {
+                groupManageReq.Enabled = true;
+                qtySentNum.Enabled = false;
+                var query = from c in ent.CustomerRequestDetails
+                            join d in ent.CustomerRequestHeaders on c.Request_ID equals d.Request_ID
+                            join e in ent.Products on c.Product_ID equals e.Product_ID
+                            where c.Req_Status.Equals("REQUESTED")
+                            || c.Req_Status.Equals("Accepted")
+                            || c.Req_Status.Equals("On Process")
+                            select new { RequestID = c.Request_ID, CustomerID = d.Customer_ID, StaffName = d.Staff_ID, RequestDate = d.Request_Date, Status = c.Req_Status, PaymentType = d.Payment_Type, BookTitle = e.Product_Title, Quantity = c.Quantity };
+                dataRequest.DataSource = query.ToList();
+            }
         }
 
         private void fillPublisherBox()
@@ -73,7 +82,7 @@ namespace Database_Final
         {
             try
             {
-                var query = from c in ent.TransactionHeaders
+                var query = from c in ent.Transactions
                             orderby c.Transaction_ID
                             select c.Transaction_ID;
                 return query.ToList().Last();
@@ -93,10 +102,10 @@ namespace Database_Final
             return Convert.ToInt32(query.ToList().First());
         }
 
-        private int getQuantityOfProductByName(string code)
+        private int getQuantityOfProductByName(string title)
         {
             var query = from c in ent.Products
-                        where c.Product_Title.Equals(code)
+                        where c.Product_Title.Equals(title)
                         select c.Stock_Qty;
 
             return Convert.ToInt32(query.ToList().First());
@@ -104,7 +113,7 @@ namespace Database_Final
 
         private int getQuantityOfRequest(string code, string rqcode)
         {
-            var query = from c in ent.CustomerRequests
+            var query = from c in ent.CustomerRequestDetails
                         where c.Product_ID.Equals(code)
                         && c.Request_ID.Equals(rqcode)
                         select c.Quantity;
@@ -276,7 +285,7 @@ namespace Database_Final
         {
             try
             {
-                var query = from c in ent.CustomerRequests
+                var query = from c in ent.CustomerRequestHeaders
                             orderby c.Request_ID
                             select c.Request_ID;
                 string code = query.ToList().Last();
@@ -333,9 +342,9 @@ namespace Database_Final
             refreshStaffData();
             refreshBookData();
             refreshPublisherData();
-            refreshTrDetailsData();
             refreshTrHeaderData();
             refershCashierData();
+            refreshVoucherData();
             fillPublisherBox();
             txtStaffID.Text = getStaffID(userid);
             txtStaffID.Enabled = false;
@@ -433,15 +442,22 @@ namespace Database_Final
             }
             else
             {
-                String id = dataPublisher.CurrentRow.Cells[0].Value.ToString();
-                var query = from c in ent.Publishers
-                            where c.Publisher_ID.Equals(id)
-                            select c;
-                ent.Publishers.Remove(query.First());
-                ent.SaveChanges();
-                MessageBox.Show("Publisher deleted!");
-                groupBoxPublisher.Enabled = false;
-                refreshPublisherData();
+                try
+                {
+                    String id = dataPublisher.CurrentRow.Cells[0].Value.ToString();
+                    var query = from c in ent.Publishers
+                                where c.Publisher_ID.Equals(id)
+                                select c;
+                    ent.Publishers.Remove(query.First());
+                    ent.SaveChanges();
+                    MessageBox.Show("Publisher deleted!");
+                    groupBoxPublisher.Enabled = false;
+                    refreshPublisherData();
+                }
+                catch
+                {
+                    MessageBox.Show("Failed to dete publisher, publisher is used in Book");
+                }
             }
             
         }
@@ -663,15 +679,22 @@ namespace Database_Final
             }
             else
             {
-                String id = dataBook.CurrentRow.Cells[0].Value.ToString();
-                var query = from c in ent.Products
-                            where c.Product_ID.Equals(id)
-                            select c;
-                ent.Products.Remove(query.First());
-                ent.SaveChanges();
-                MessageBox.Show("Book deleted!");
-                groupBoxBooks.Enabled = false;
-                refreshBookData();
+                try
+                {
+                    String id = dataBook.CurrentRow.Cells[0].Value.ToString();
+                    var query = from c in ent.Products
+                                where c.Product_ID.Equals(id)
+                                select c;
+                    ent.Products.Remove(query.First());
+                    ent.SaveChanges();
+                    MessageBox.Show("Book deleted!");
+                    groupBoxBooks.Enabled = false;
+                    refreshBookData();
+                }
+                catch
+                {
+                    MessageBox.Show("Failed to delete book, book is still used in transactions");
+                }
             }
         }
 
@@ -771,7 +794,7 @@ namespace Database_Final
 
         private void dataRequest_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            qtySentNum.Maximum = getQuantityOfProduct(dataRequest.CurrentRow.Cells[2].Value.ToString());
+            qtySentNum.Maximum = getQuantityOfProductByName(dataRequest.CurrentRow.Cells[6].Value.ToString());
             boxStatus.SelectedIndex = -1;
         }
 
@@ -779,14 +802,17 @@ namespace Database_Final
         {
             if (qtySentNum.Enabled == false && boxStatus.SelectedIndex==0)
             {
-                string productid = dataRequest.CurrentRow.Cells[2].Value.ToString();
+                string productid = getProductID(dataRequest.CurrentRow.Cells[6].Value.ToString());
                 string requestid = dataRequest.CurrentRow.Cells[0].Value.ToString();
-                var query = (from c in ent.CustomerRequests
-                             where c.Product_ID.Equals(productid)
-                             && c.Request_ID.Equals(requestid)
+                var q = (from c in ent.CustomerRequestDetails
+                             where c.Request_ID.Equals(requestid)
+                             select c).First();
+                var query = (from c in ent.CustomerRequestHeaders
+                             where c.Request_ID.Equals(requestid)
                              select c).First();
 
-                query.Req_Status = "Accepted";
+                q.Req_Status = "Accepted";
+                query.Staff_ID = getStaffID(userid);
                 ent.SaveChanges();
                 MessageBox.Show("Updated!");
                 refreshRequestData();
@@ -794,54 +820,50 @@ namespace Database_Final
             }
             else if(boxStatus.SelectedIndex==1)
             {
-                string productid = dataRequest.CurrentRow.Cells[2].Value.ToString();
+                string productid = getProductID(dataRequest.CurrentRow.Cells[6].Value.ToString());
                 string requestid = dataRequest.CurrentRow.Cells[0].Value.ToString();
-                if (Convert.ToInt32(qtySentNum.Value) > Convert.ToInt32(dataRequest.CurrentRow.Cells[4].Value.ToString()))
+                if (Convert.ToInt32(qtySentNum.Value) > Convert.ToInt32(dataRequest.CurrentRow.Cells[7].Value.ToString()))
                 {
                     MessageBox.Show("Quantity sent is too many!");
                 }
-                else if (Convert.ToInt32(qtySentNum.Value) <= Convert.ToInt32(dataRequest.CurrentRow.Cells[4].Value.ToString()))
+                else if (Convert.ToInt32(qtySentNum.Value) <= Convert.ToInt32(dataRequest.CurrentRow.Cells[7].Value.ToString()))
                 {
                     int id = Int32.Parse(getLastTr().Substring(2)) + 1;
                     String trid = "TR" + id.ToString().PadLeft(6, '0');
 
-                    var data = new TransactionHeader
+                    var data = new Transaction
                     {
                         Transaction_ID = trid,
                         Transaction_Date = DateTime.Now,
-                        Request_ID = dataRequest.CurrentRow.Cells[0].Value.ToString()
+                        Request_ID = dataRequest.CurrentRow.Cells[0].Value.ToString(),
+                        Product_ID = getProductID(dataRequest.CurrentRow.Cells[6].Value.ToString()),
+                        Quantity = Convert.ToInt32(qtySentNum.Value.ToString())
                     };
-                    ent.TransactionHeaders.Add(data);
+                    ent.Transactions.Add(data);
                     ent.SaveChanges();
 
-                    var data2 = new TransactionDetail
-                    {
-                        Transaction_ID = trid,
-                        Product_ID = dataRequest.CurrentRow.Cells[2].Value.ToString(),
-                        Quantity = Convert.ToInt32(qtySentNum.Value.ToString()),
-                        Price = Convert.ToInt32(dataRequest.CurrentRow.Cells[8].Value.ToString())
-                    };
-                    ent.TransactionDetails.Add(data2);
-                    ent.SaveChanges();
-
-                    refreshTrDetailsData();
                     refreshTrHeaderData();
 
-                    var query = (from c in ent.CustomerRequests
-                                 where c.Product_ID.Equals(productid)
-                                 && c.Request_ID.Equals(requestid)
+                    var q = (from c in ent.CustomerRequestDetails
+                             where c.Request_ID.Equals(requestid)
+                             && c.Product_ID.Equals(productid)
+                             select c).First();
+
+                    var query = (from c in ent.CustomerRequestHeaders
+                                 where c.Request_ID.Equals(requestid)
                                  select c).First();
+
                     //Console.WriteLine(getQuantityOfRequest(dataRequest.CurrentRow.Cells[2].Value.ToString(), dataRequest.CurrentRow.Cells[0].Value.ToString()));
-                    query.Quantity = getQuantityOfRequest(dataRequest.CurrentRow.Cells[2].Value.ToString(), dataRequest.CurrentRow.Cells[0].Value.ToString()) - Convert.ToInt32(qtySentNum.Value);
-                    if(query.Quantity == 0)
+                    q.Quantity = getQuantityOfRequest(getProductID(dataRequest.CurrentRow.Cells[6].Value.ToString()), dataRequest.CurrentRow.Cells[0].Value.ToString()) - Convert.ToInt32(qtySentNum.Value);
+                    if (q.Quantity == 0)
                     {
-                        query.Req_Status = "Done";
+                        q.Req_Status = "Done";
                     }
                     else
                     {
-                        query.Req_Status = "On Process";
+                        q.Req_Status = "On Process";
                     }
-                    
+
                     query.Staff_ID = txtStaffID.Text;
                     ent.SaveChanges();
                     refreshRequestData();
@@ -851,7 +873,7 @@ namespace Database_Final
                                  where c.Product_ID.Equals(productid)
                                  select c).First();
 
-                    query2.Stock_Qty = getQuantityOfProduct(dataRequest.CurrentRow.Cells[2].Value.ToString()) - Convert.ToInt32(qtySentNum.Value);
+                    query2.Stock_Qty = getQuantityOfProduct(productid) - Convert.ToInt32(qtySentNum.Value);
                     ent.SaveChanges();
                     refreshBookData();
                     MessageBox.Show("Updated!");
@@ -949,9 +971,54 @@ namespace Database_Final
             btnCheckout.Enabled = true;
         }
 
+        private void refreshVoucherData()
+        {
+            var query = from c in ent.Vouchers
+                        select c;
+            dataVoucher.DataSource = query.ToList();
+        }
+
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        private void btnAddVoucher_Click(object sender, EventArgs e)
+        {
+            for(int i = 0; i < Convert.ToInt32(voucherQtyNum.Value.ToString()); i++)
+            {
+                var data = new Voucher
+                {
+                    Voucher_Code = RandomString(15),
+                    Amount = Convert.ToInt32(numAmount.Value.ToString())
+                };
+                ent.Vouchers.Add(data);
+                ent.SaveChanges();
+            }
+            refreshVoucherData();
+        }
+
+        private string getCustID(string username)
+        {
+            try
+            {
+                var query = from c in ent.Customers
+                            where c.Username.Equals(username)
+                            select c.Customer_ID;
+                return query.ToList().First();
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
         private void btnCheckout_Click(object sender, EventArgs e)
         {
-            if (listOfPurchase.Count == 0)
+            if(listOfPurchase.Count == 0)
             {
                 MessageBox.Show("Cart is empty!");
             }
@@ -973,57 +1040,106 @@ namespace Database_Final
                     paymentmethod = "Credit Card";
                     creditcard = txtCardNumber.Text;
                 }
-
-                for (int i = 0; i < listOfPurchase.Count; i++)
+                if (txtCustUsername.Text == "")
                 {
-                    Console.WriteLine(listOfPurchase[i]);
-                    var datareq = new CustomerRequest
-                    {
-                        Request_ID = rqid,
-                        Customer_ID = "CST00000", // cst00000 = guest
-                        Req_Status = "Done",
-                        Request_Date = DateTime.Now,
-                        Product_ID = getProductID(listOfPurchase[i]),
-                        Quantity = Convert.ToInt32(dataCart.CurrentRow.Cells[1].Value.ToString()),
-                        price = getPrice(listOfPurchase[i]),
-                        Payment_Type = paymentmethod,
-                        cardnumber = creditcard
-                    };
-                    ent.CustomerRequests.Add(datareq);
-                    ent.SaveChanges();
+                    MessageBox.Show("Please enter customer username");
                 }
+                else
+                {
+                    var usrnm = getCustID(txtCustUsername.Text);
 
-                refreshTrDetailsData();
-                refreshTrHeaderData();
+                    var qry = from c in ent.Customers
+                              where c.Customer_ID.Equals(usrnm)
+                              select c;
+                    if (qry.ToList().Count == 0)
+                    {
+                        MessageBox.Show("Username not found!");
+                    }
 
-                var query2 = (from c in ent.Products
-                              where c.Product_Title.Equals(productname)
-                              select c).First();
+                    else
+                    {
+                        var datareq = new CustomerRequestHeader
+                        {
+                            Request_ID = rqid,
+                            Customer_ID = usrnm, // cst00000 = Guest
+                            Request_Date = DateTime.Now,
+                            Payment_Type = paymentmethod,
+                            cardnumber = creditcard,
+                            Staff_ID = getStaffID(userid)
+                        };
+                        ent.CustomerRequestHeaders.Add(datareq);
+                        ent.SaveChanges();
 
-                query2.Stock_Qty = getQuantityOfProductByName(dataCart.CurrentRow.Cells[0].Value.ToString()) - Convert.ToInt32(dataCart.CurrentRow.Cells[1].Value.ToString());
-                ent.SaveChanges();
-                refreshBookData();
-                MessageBox.Show("Purchase done!");
-                dataCart.DataSource = null;
-                refreshRequestData();
-                refreshBookData();
-                rbCash.Checked = false;
-                rbCreditCard.Checked = false;
-                btnCheckout.Enabled = false;
+                        int idtr = Int32.Parse(getLastTr().Substring(2)) + 1;
+                        String trid = "TR" + idtr.ToString().PadLeft(6, '0');
+
+                        for (int i = 0; i < listOfPurchase.Count; i++)
+                        {
+                            var data = new CustomerRequestDetail
+                            {
+                                Request_ID = rqid,
+                                Req_Status = "Done",
+                                Product_ID = getProductID(listOfPurchase[i]),
+                                Quantity = 0,
+                                Price = getPrice(listOfPurchase[i])
+                            };
+                            ent.CustomerRequestDetails.Add(data);
+                            ent.SaveChanges();
+
+                            var dt = new Transaction
+                            {
+                                Request_ID = rqid,
+                                Transaction_ID = trid,
+                                Product_ID = getProductID(listOfPurchase[i]),
+                                Quantity = Convert.ToInt32(dataCart.CurrentRow.Cells[1].Value.ToString()),
+                                Transaction_Date = DateTime.Now
+                            };
+                            ent.Transactions.Add(dt);
+                            ent.SaveChanges();
+                        }
+
+                        refreshRequestData();
+
+                        var query2 = (from c in ent.Products
+                                      where c.Product_Title.Equals(productname)
+                                      select c).First();
+
+                        query2.Stock_Qty = getQuantityOfProductByName(dataCart.CurrentRow.Cells[0].Value.ToString()) - Convert.ToInt32(dataCart.CurrentRow.Cells[1].Value.ToString());
+                        ent.SaveChanges();
+                        refreshBookData();
+                        listOfPurchase.Clear();
+                        txtCustUsername.Text = "";
+                        MessageBox.Show("Purchase done!");
+                        dataCart.DataSource = null;
+                        refreshRequestData();
+                        refreshBookData();
+                        rbCash.Checked = false;
+                        rbCreditCard.Checked = false;
+                        btnCheckout.Enabled = false;
+                        refreshTrHeaderData();
+                    }
+                }
             }
         }
 
-        private static Random random = new Random();
-        public static string RandomString(int length)
+        private void txtSearchBooks_TextChanged(object sender, EventArgs e)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
+            try
+            {
+                var query = from c in ent.Products
+                            where c.Product_Title.Contains(txtSearchBooks.Text)
+                            select new { BookTitle = c.Product_Title };
+                dataBook.DataSource = query.ToList();
+            }
+            catch
+            {
+
+            }
         }
 
-        private void btnAddVoucher_Click(object sender, EventArgs e)
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            
+            refreshRequestData();
         }
     }
 }
